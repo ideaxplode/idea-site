@@ -50,10 +50,15 @@
   };
 
   function applyIconFallbacks() {
-    var uses = document.querySelectorAll('use[href^="/static/icon_libraries/"]');
+    var uses = document.querySelectorAll('svg[data-icon-set] use[href], svg[data-icon-set] use[xlink\\:href]');
     uses.forEach(function (useNode) {
-      var href = useNode.getAttribute('href') || '';
-      var iconId = href.split('#')[1] || '';
+      var href = useNode.getAttribute('href') || useNode.getAttribute('xlink:href') || '';
+      var iconId = '';
+      if (href.indexOf('#') !== -1) {
+        iconId = href.split('#')[1] || '';
+      } else {
+        iconId = href;
+      }
       if (!iconId) return;
 
       var svg = useNode.closest('svg');
@@ -100,6 +105,36 @@
 
   applyIconFallbacks();
   applyFaClassFallbacks();
+
+  // Top-nav hover interaction: highlight text + show down-arrow icon.
+  function initTopNavHoverState() {
+    var hoverLabels = new Set(['About', 'Technology', 'Methodology', 'Pricing', 'Contact']);
+
+    document.querySelectorAll('.clickable-element').forEach(function (node) {
+      var labelNode = node.querySelector('.bubble-element.Text');
+      if (!labelNode) return;
+
+      var label = (labelNode.textContent || '').trim();
+      if (!hoverLabels.has(label)) return;
+
+      var iconButton = node.querySelector('.bubble-element.Icon');
+      if (!iconButton) return;
+
+      function setActive(active) {
+        labelNode.style.color = active
+          ? 'rgba(var(--color_text_default_rgb), 1)'
+          : 'rgba(var(--color_text_default_rgb), 0.7)';
+        iconButton.style.opacity = active ? '1' : '0';
+      }
+
+      node.addEventListener('mouseenter', function () { setActive(true); });
+      node.addEventListener('mouseleave', function () { setActive(false); });
+      node.addEventListener('focusin', function () { setActive(true); });
+      node.addEventListener('focusout', function () { setActive(false); });
+    });
+  }
+
+  initTopNavHoverState();
 
   // Bubble workflows are absent in standalone mode, so wire nav/CTA clicks by visible label.
   document.querySelectorAll('.clickable-element').forEach(function (node) {

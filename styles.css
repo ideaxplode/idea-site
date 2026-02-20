@@ -6477,9 +6477,9 @@ html, body {
   overflow-y: hidden !important;
 }
 
-/* Icon sprite paths from Bubble may be missing in standalone mode. */
-svg use[href^='/static/icon_libraries/'] {
+/* Standalone icon placeholders until scripts.js injects inline paths. */
+svg[data-icon-set] use[href] {
   opacity: 0.9;
-}
+}
 
 
