@@ -103,8 +103,63 @@
     }
   }
 
+  function toOpaqueRgb(colorValue) {
+    var rgba = colorValue.match(/^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*[\d.]+\s*\)$/i);
+    if (!rgba) return colorValue;
+    return 'rgb(' + rgba[1] + ', ' + rgba[2] + ', ' + rgba[3] + ')';
+  }
+
+  function wireNavLinkHoverStates() {
+    var navLabels = {
+      'About': true,
+      'Technology': true,
+      'Methodology': true,
+      'Pricing': true,
+      'Contact': true
+    };
+
+    document.querySelectorAll('.clickable-element.bubble-element.Group').forEach(function (node) {
+      var labelNode = null;
+      var iconNode = null;
+
+      Array.prototype.forEach.call(node.children, function (child) {
+        if (!labelNode && child.classList && child.classList.contains('Text')) labelNode = child;
+        if (!iconNode && child.classList && child.classList.contains('Icon')) iconNode = child;
+      });
+
+      if (!labelNode || !iconNode) return;
+
+      var label = (labelNode.textContent || '').trim();
+      if (!navLabels[label]) return;
+
+      var baseTextColor = window.getComputedStyle(labelNode).color;
+      var hoverTextColor = toOpaqueRgb(baseTextColor);
+      var baseIconOpacity = window.getComputedStyle(iconNode).opacity || '0';
+
+      if (!labelNode.style.transition) {
+        labelNode.style.transition = 'color 400ms';
+      }
+
+      function activate() {
+        labelNode.style.color = hoverTextColor;
+        iconNode.style.opacity = '1';
+      }
+
+      function deactivate() {
+        labelNode.style.color = baseTextColor;
+        iconNode.style.opacity = baseIconOpacity;
+      }
+
+      node.addEventListener('mouseenter', activate);
+      node.addEventListener('mouseleave', deactivate);
+      node.addEventListener('focusin', activate);
+      node.addEventListener('focusout', deactivate);
+    });
+  }
+
   applyIconFallbacks();
   applyFaClassFallbacks();
+  wireNavLinkHoverStates();
 
   // Top-nav hover interaction: highlight text + show down-arrow icon.
   function initTopNavHoverState() {
