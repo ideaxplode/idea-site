@@ -1,4 +1,4 @@
-﻿/* inlined from index_files/css */
+/* inlined from index_files/css */
 /* devanagari */
 @font-face {
   font-family: 'Poppins';
@@ -3529,8 +3529,8 @@ html[dir=rtl] .bubble-r-container > *:not(.bubble-r-container) {
  */
 @font-face {
   font-family: "FontAwesome";
-  src: url("/static/fonts/fontawesome-webfont.eot");
-  src: url("/static/fonts/fontawesome-webfont.eot") format("embedded-opentype"), url("/static/fonts/fontawesome-webfont.woff2") format("woff2"), url("/static/fonts/fontawesome-webfont.woff") format("woff"), url("/static/fonts/fontawesome-webfont.ttf") format("truetype"), url("/static/fonts/fontawesome-webfont.svg") format("svg");
+  src: url("./assets/fonts/fontawesome-webfont.eot");
+  src: url("./assets/fonts/fontawesome-webfont.eot") format("embedded-opentype"), url("./assets/fonts/fontawesome-webfont.woff2") format("woff2"), url("./assets/fonts/fontawesome-webfont.woff") format("woff"), url("./assets/fonts/fontawesome-webfont.ttf") format("truetype"), url("./assets/fonts/fontawesome-webfont.svg") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -6477,9 +6477,10 @@ html, body {
   overflow-y: hidden !important;
 }
 
-/* Standalone icon placeholders until scripts.js injects inline paths. */
-svg[data-icon-set] use[href] {
-  opacity: 0.9;
+/* Font Awesome runtime conversion output */
+.ix-fa-icon {
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-
-
