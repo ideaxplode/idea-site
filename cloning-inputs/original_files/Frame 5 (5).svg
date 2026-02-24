@@ -1,0 +1,33 @@
+<svg width="1594" height="3139" viewBox="0 0 1594 3139" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_61_26)">
+<g opacity="0.4" filter="url(#filter0_f_61_26)">
+<path d="M584 1381.46C584 1680.04 732.977 2083.64 1019.83 2083.64C1306.68 2083.64 1379.82 2218.46 1379.82 1919.88C1379.82 1621.3 1567.2 1595.33 1280.35 1595.33C993.5 1595.33 584 1082.88 584 1381.46Z" fill="url(#paint0_linear_61_26)"/>
+</g>
+<g opacity="0.4" filter="url(#filter1_f_61_26)">
+<path d="M694.115 877.452C468.614 1159.47 798.543 1491.25 1139.01 1491.25C1479.48 1491.25 1593.5 1941.57 1593.5 1587.5C1593.5 1233.43 1492.71 694.789 1152.25 694.789C811.78 694.789 694.115 523.38 694.115 877.452Z" fill="url(#paint1_linear_61_26)"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_61_26" x="34" y="738.017" width="1955.94" height="1925.99" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="275" result="effect1_foregroundBlur_61_26"/>
+</filter>
+<filter id="filter1_f_61_26" x="70.0342" y="103.31" width="2073.47" height="2169.97" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="275" result="effect1_foregroundBlur_61_26"/>
+</filter>
+<linearGradient id="paint0_linear_61_26" x1="1376.5" y1="1294.81" x2="808.099" y2="2268.12" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF2E00"/>
+<stop offset="1" stop-color="#FF2E00"/>
+</linearGradient>
+<linearGradient id="paint1_linear_61_26" x1="1562.08" y1="1005.68" x2="888.337" y2="2160.41" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0778FA"/>
+<stop offset="1" stop-color="#0778FA"/>
+</linearGradient>
+<clipPath id="clip0_61_26">
+<rect width="1594" height="3139" fill="white" transform="matrix(1 0 0 -1 0 3139)"/>
+</clipPath>
+</defs>
+</svg>

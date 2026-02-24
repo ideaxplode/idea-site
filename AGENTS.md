@@ -12,6 +12,7 @@
   * For this project, we’re cloning from the original to rebuild it EXACTLY using plain HTML+CSS+JS.   
   * The index.html was originally saved from Chrome using the “web page, complete” option.  
   * We have changed/edited the index.html so far to make it standalone without having any [Bubble.io](http://Bubble.io) dependencies; we also should continue to do so.  
+  * You can still find a copy of the originally saved Chrome files at `./cloning-inputs/original.html` and the folder `original_files` in the same path. You can use this for your reference while cloning/editing various aspects of the site/page that we're developing.
   * You can find the complete, scrolled screenshot, for your reference, here: **./cloning-inputs/screenshot.png**  
   * You can also browse the live site (at aforementioned URL) to compare with your implementation using the browser tool; you may have to hover/click on items to understand their true behaviours.
 

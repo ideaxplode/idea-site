@@ -1,0 +1,33 @@
+<svg width="1594" height="2929" viewBox="0 0 1594 2929" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_61_26)">
+<g opacity="0.35" filter="url(#filter0_f_61_26)">
+<path d="M1816.5 1445.3C1816.5 1132.14 1666.05 708.842 1376.36 708.842C1086.67 708.842 1012.8 567.44 1012.8 880.598C1012.8 1193.76 877.945 1284.71 1167.64 1284.71C1457.33 1284.71 1816.5 1758.46 1816.5 1445.3Z" fill="url(#paint0_linear_61_26)"/>
+</g>
+<g opacity="0.35" filter="url(#filter1_f_61_26)">
+<path d="M1705.29 1979.92C1933.03 1684.13 1599.83 1336.16 1255.99 1336.16C912.154 1336.16 797 863.848 797 1235.2C797 1606.56 898.785 2171.5 1242.62 2171.5C1586.46 2171.5 1705.29 2351.27 1705.29 1979.92Z" fill="url(#paint1_linear_61_26)"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_61_26" x="431.45" y="127.001" width="1935.05" height="1975.33" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="275" result="effect1_foregroundBlur_61_26"/>
+</filter>
+<filter id="filter1_f_61_26" x="247" y="542.8" width="2083.11" height="2222.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="275" result="effect1_foregroundBlur_61_26"/>
+</filter>
+<linearGradient id="paint0_linear_61_26" x1="1016.15" y1="1536.19" x2="1623.14" y2="535.349" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF2E00"/>
+<stop offset="1" stop-color="#FF2E00"/>
+</linearGradient>
+<linearGradient id="paint1_linear_61_26" x1="828.734" y1="1845.43" x2="1548.24" y2="658.018" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0778FA"/>
+<stop offset="1" stop-color="#0778FA"/>
+</linearGradient>
+<clipPath id="clip0_61_26">
+<rect width="1594" height="2929" fill="white" transform="matrix(1 0 0 -1 0 2929)"/>
+</clipPath>
+</defs>
+</svg>
