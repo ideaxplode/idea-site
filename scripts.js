@@ -49,6 +49,7 @@
     };
 
     document.querySelectorAll('.clickable-element.bubble-element.Group').forEach(function (node) {
+      if (node.closest('#groupFooter')) return;
       var labelNode = null;
       var iconNode = null;
 
@@ -94,7 +95,8 @@
     }
   }
 
-  applyFaClassFallbacks();
+  // Skip fallback auto-apply because Font Awesome is already loaded in this clone.
+  // Applying fallback text here creates duplicate icons (e.g., in footer contact rows).
   wireNavLinkHoverStates();
 
   // Top-nav hover interaction: highlight text + show down-arrow icon.
@@ -102,6 +104,7 @@
     var hoverLabels = new Set(['About', 'Technology', 'Methodology', 'Pricing', 'Contact']);
 
     document.querySelectorAll('.clickable-element').forEach(function (node) {
+      if (node.closest('#groupFooter')) return;
       var labelNode = node.querySelector('.bubble-element.Text');
       if (!labelNode) return;
 
@@ -126,6 +129,14 @@
   }
 
   initTopNavHoverState();
+
+  // Ensure footer section links stay white and are not affected by top-nav hover styles.
+  document.querySelectorAll('#groupFooter .clickable-element .bubble-element.Text').forEach(function (labelNode) {
+    var label = (labelNode.textContent || '').trim();
+    if (label === 'About' || label === 'Technology' || label === 'Methodology' || label === 'Pricing') {
+      labelNode.style.color = 'var(--color_primary_contrast_default)';
+    }
+  });
 
   // Bubble workflows are absent in standalone mode, so wire nav/CTA clicks by visible label.
   document.querySelectorAll('.clickable-element').forEach(function (node) {
