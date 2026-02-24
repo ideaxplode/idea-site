@@ -142,29 +142,107 @@
   });
 
   // Accordion-like expand/collapse for groups that were previously controlled by Bubble workflows.
+  function getAccordionLabelNode(trigger) {
+    return trigger.querySelector('.label-item, .bubble-element.Text');
+  }
+
+  function getReferenceTextColor(group) {
+    var parent = group.parentElement;
+    if (!parent) return '';
+    var children = Array.prototype.slice.call(parent.children);
+    var idx = children.indexOf(group);
+    for (var i = idx - 1; i >= 0; i--) {
+      var el = children[i];
+      if (el.classList && el.classList.contains('Text')) {
+        return window.getComputedStyle(el).color;
+      }
+    }
+    return '';
+  }
+
+  function getDirectContentTexts(group, trigger) {
+    return Array.prototype.filter.call(group.children, function (el) {
+      if (el === trigger) return false;
+      return el.classList && el.classList.contains('Text');
+    });
+  }
+
+  function refreshOpenAncestors(group) {
+    var current = group.parentElement;
+    while (current) {
+      if (current.classList && current.classList.contains('no-scrolling') && current.dataset.expanded === 'true') {
+        current.style.maxHeight = 'none';
+      }
+      current = current.parentElement;
+    }
+  }
+
   document.querySelectorAll('.no-scrolling').forEach(function (group) {
-    var trigger = group.querySelector('.clickable-element');
+    var trigger = group.querySelector(':scope > .clickable-element') || group.querySelector('.clickable-element');
     if (!trigger) return;
 
+    var labelNode = getAccordionLabelNode(trigger);
+    var referenceColor = getReferenceTextColor(group);
+    var collapsedMax = group.style.maxHeight || '36px';
+    var directTexts = getDirectContentTexts(group, trigger);
+
     group.dataset.expanded = 'false';
+    group.dataset.collapsedMax = collapsedMax;
+    if (labelNode) {
+      group.dataset.baseLabel = (labelNode.textContent || '').trim();
+    }
+
+    directTexts.forEach(function (t) {
+      t.style.opacity = '0.2';
+      if (referenceColor) t.style.color = referenceColor;
+    });
+
+    group.__ixAccordion = {
+      trigger: trigger,
+      labelNode: labelNode,
+      referenceColor: referenceColor,
+      directTexts: directTexts
+    };
+
+    trigger.classList.add('ix-accordion-trigger');
+    trigger.__ixAccordionGroup = group;
 
     trigger.addEventListener('click', function (e) {
       e.preventDefault();
-      var isOpen = group.dataset.expanded === 'true';
-
-      if (isOpen) {
-        group.style.maxHeight = '36px';
-        group.dataset.expanded = 'false';
-        group.querySelectorAll('.bubble-element.Text').forEach(function (t, idx) {
-          if (idx > 0) t.style.opacity = '0.2';
-        });
-      } else {
-        group.style.maxHeight = group.scrollHeight + 'px';
-        group.dataset.expanded = 'true';
-        group.querySelectorAll('.bubble-element.Text').forEach(function (t, idx) {
-          if (idx > 0) t.style.opacity = '1';
-        });
-      }
+      e.stopPropagation();
+      toggleAccordionGroup(group);
     });
   });
+
+  function toggleAccordionGroup(group) {
+    if (!group || !group.__ixAccordion) return;
+
+    var meta = group.__ixAccordion;
+    var isOpen = group.dataset.expanded === 'true';
+
+    if (isOpen) {
+      group.style.maxHeight = group.dataset.collapsedMax || '36px';
+      group.dataset.expanded = 'false';
+      if (meta.labelNode) {
+        meta.labelNode.textContent = group.dataset.baseLabel || 'Tell me more';
+      }
+      meta.directTexts.forEach(function (t) {
+        t.style.opacity = '0.2';
+        if (meta.referenceColor) t.style.color = meta.referenceColor;
+      });
+    } else {
+      group.style.maxHeight = 'none';
+      group.dataset.expanded = 'true';
+      if (meta.labelNode) {
+        meta.labelNode.textContent = 'Hide';
+      }
+      meta.directTexts.forEach(function (t) {
+        t.style.opacity = '1';
+        if (meta.referenceColor) t.style.color = meta.referenceColor;
+      });
+    }
+
+    refreshOpenAncestors(group);
+  }
+
 })();
