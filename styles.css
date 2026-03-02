@@ -281,6 +281,18 @@ button {
 }
 
 /* HTML5 display-role reset for older browsers */
+/* Circular hover effect for Client Story navigation arrows */
+.baTaUaQaZ,
+.baTaUaQd {
+  transition: box-shadow 0.18s, background 0.18s;
+}
+.baTaUaQaZ:hover,
+.baTaUaQd:hover {
+  background: #fff;
+  box-shadow: 0 0 0 6px rgba(0,0,0,0.07), 0 2px 8px 0 rgba(0,0,0,0.10);
+  color: #c53d8f;
+  opacity: 1;
+}
 article,
 aside,
 details,
