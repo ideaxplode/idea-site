@@ -471,7 +471,35 @@
 
     btn.addEventListener('click', function (e) {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      function scrollNodeToTop(node) {
+        if (!node || typeof node.scrollTop !== 'number') return;
+        if (typeof node.scrollTo === 'function') {
+          try {
+            node.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          } catch (_) {}
+        }
+        node.scrollTop = 0;
+      }
+
+      // Window/page scroll
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      } catch (_) {
+        window.scrollTo(0, 0);
+      }
+
+      // Root scroll targets
+      scrollNodeToTop(document.scrollingElement);
+      scrollNodeToTop(document.documentElement);
+      scrollNodeToTop(document.body);
+
+      // Any active nested scroller
+      var scrollers = Array.prototype.slice.call(document.querySelectorAll('*')).filter(function (node) {
+        return node && typeof node.scrollTop === 'number' && node.scrollTop > 0;
+      });
+      scrollers.forEach(scrollNodeToTop);
     });
 
     window.addEventListener('scroll', syncVisibility, { passive: true });
