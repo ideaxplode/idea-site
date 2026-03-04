@@ -5,10 +5,7 @@
     'Methodology': 'groupMethodology',
     'Pricing': 'groupPricing',
     'Contact': 'groupContact',
-    'How fast can you build?': 'groupFastDevelopment',
-    'Learn more about methodology': 'groupMethodology',
-    'Discuss tech choices': 'groupTechnology',
-    'Discuss about pricing': 'groupPricing'
+    'How fast can you build?': 'groupFastDevelopment'
   };
 
   function applyFaClassFallbacks() {
@@ -456,8 +453,16 @@
     var btn = document.getElementById('scrollTopBtn');
     if (!btn) return;
 
-    function syncVisibility() {
-      if (window.scrollY > 420) {
+    function getActiveScrollY(event) {
+      var y = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      if (event && event.target && typeof event.target.scrollTop === 'number') {
+        y = Math.max(y, event.target.scrollTop);
+      }
+      return y;
+    }
+
+    function syncVisibility(event) {
+      if (getActiveScrollY(event) > 180) {
         btn.classList.add('visible');
       } else {
         btn.classList.remove('visible');
@@ -470,6 +475,8 @@
     });
 
     window.addEventListener('scroll', syncVisibility, { passive: true });
+    document.addEventListener('scroll', syncVisibility, true);
+    window.addEventListener('resize', syncVisibility, { passive: true });
     syncVisibility();
   }
 
@@ -491,37 +498,52 @@
 
     modal.innerHTML =
       '<div class="ix-modal" role="dialog" aria-modal="true" aria-labelledby="ixModalTitle">' +
-        '<button type="button" class="ix-modal-close" aria-label="Close">x</button>' +
+        '<button type="button" class="ix-modal-close" aria-label="Close"><i class="fa fa-times"></i></button>' +
         '<div class="ix-modal-header">' +
           '<span class="ix-modal-icon" aria-hidden="true"><i class="fa fa-whatsapp"></i></span>' +
-          '<h3 id="ixModalTitle">Chat with Rathan</h3>' +
+          '<h3 id="ixModalTitle">Chat with Rathan through WhatsApp</h3>' +
         '</div>' +
-        '<p class="ix-modal-copy">You will be redirected to WhatsApp with a prefilled message.</p>' +
-        '<p class="ix-modal-prefill">Message: <strong id="ixModalMessage">Hi Rathan!</strong></p>' +
+        '<div class="ix-modal-subhead">' +
+          '<p class="ix-modal-copy">You can chat with Rathan, CEO of ideaXplode - he will personally respond to all your chats.</p>' +
+          '<img class="ix-modal-avatar" src="./assets/images/Rathan&#39;s Profile Pic 3.png" alt="Rathan">' +
+        '</div>' +
+        '<textarea id="ixModalMessage" class="ix-modal-message" aria-label="WhatsApp message">Hi Rathan!</textarea>' +
         '<button type="button" class="ix-modal-cta">' +
-          '<span class="ix-icon" aria-hidden="true"><i class="fa fa-whatsapp"></i></span>' +
-          '<span>Continue in WhatsApp</span>' +
+          '<span class="ix-modal-cta-icon" aria-hidden="true"><i class="fa fa-paper-plane-o"></i></span>' +
+          '<span>Send chat</span>' +
         '</button>' +
+        '<button type="button" class="ix-modal-fallback">I don\'t use WhatsApp!</button>' +
       '</div>';
 
     document.body.appendChild(modal);
   }
 
   function initWhatsAppModal() {
-    var trigger = document.querySelector('.baTaSaTaB');
-    if (!trigger) return;
-
     buildWhatsAppModal();
 
     var modal = document.getElementById('ixWhatsAppModal');
     var messageNode = modal.querySelector('#ixModalMessage');
     var closeBtn = modal.querySelector('.ix-modal-close');
     var ctaBtn = modal.querySelector('.ix-modal-cta');
+    var fallbackBtn = modal.querySelector('.ix-modal-fallback');
     var activeMessage = 'Hi Rathan!';
+    var whatsappNumber = '916383953022';
+
+    var triggerMap = [
+      { selector: '.baTaSaTaB', message: 'Hi Rathan!' },
+      { selector: '.baTaSoaB', message: 'Hey Rathan, I\'d like to take up the one-week challenge!' },
+      { selector: '.baTaUlv', message: 'Hi Rathan, let\'s discuss the best tech choices for my app/idea.' },
+      { selector: '.baTaUaJaE', message: 'Hi Rathan, tell me more about your methodology -- Agentic Agile.' },
+      { selector: '.baTaUaKq', message: 'Hi Rathan, let\'s discuss pricing.' },
+      { selector: '.baTaUwt', message: 'Hi Rathan, please share the credentials for a demo app.' },
+      { selector: '.baTaUyaO', message: 'Hi Rathan, I\'d like to sign an NDA before discussing my idea.' },
+      { selector: '.baTaUyr', message: 'Hi Rathan, I\'d like to join the ideaXplode team. Please find my resume below..' }
+    ];
 
     function openModal(message) {
       activeMessage = message || 'Hi Rathan!';
       messageNode.textContent = activeMessage;
+      messageNode.value = activeMessage;
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('ix-modal-open');
@@ -533,9 +555,14 @@
       document.body.classList.remove('ix-modal-open');
     }
 
-    trigger.addEventListener('click', function (e) {
-      e.preventDefault();
-      openModal('Hi Rathan!');
+    triggerMap.forEach(function (item) {
+      document.querySelectorAll(item.selector).forEach(function (trigger) {
+        trigger.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openModal(item.message);
+        });
+      });
     });
 
     closeBtn.addEventListener('click', function () {
@@ -553,9 +580,19 @@
     });
 
     ctaBtn.addEventListener('click', function () {
-      var phone = '916383953022';
-      var url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(activeMessage);
+      var finalMessage = (messageNode.value || activeMessage || '').trim();
+      if (!finalMessage) finalMessage = activeMessage;
+      var url = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(finalMessage);
       window.open(url, '_blank', 'noopener');
+      closeModal();
+    });
+
+    fallbackBtn.addEventListener('click', function () {
+      var finalMessage = (messageNode.value || activeMessage || '').trim();
+      if (!finalMessage) finalMessage = activeMessage;
+      var subject = encodeURIComponent('Discussion with ideaXplode');
+      var body = encodeURIComponent(finalMessage);
+      window.location.href = 'mailto:hola@ideaxplode.com?subject=' + subject + '&body=' + body;
       closeModal();
     });
   }

@@ -3697,8 +3697,8 @@ html, body {
 /* Scroll-to-top button (standalone isolated style) */
 #scrollTopBtn.scroll-top-button {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  right: 22px;
+  bottom: 22px;
   width: 52px;
   height: 52px;
   border: none;
@@ -3709,18 +3709,18 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
   transform: translateY(10px) scale(0.96);
   transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease, box-shadow 220ms ease;
-  z-index: 1200;
+  z-index: 9999 !important;
 }
 
 #scrollTopBtn.scroll-top-button.visible {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
   transform: translateY(0) scale(1);
 }
 
@@ -3747,7 +3747,7 @@ body.ix-modal-open {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(18, 18, 18, 0.46);
+  background: rgba(0, 0, 0, 0.54);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -3762,32 +3762,37 @@ body.ix-modal-open {
 }
 
 .ix-modal {
-  position: relative;
-  width: min(460px, 100%);
-  border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  position: fixed;
+  left: 50%;
+  top: 38.6%;
+  width: min(700px, calc(46vw - 12px));
+  height: 380px;
+  border-radius: 14px;
+  border: 1px solid #e9e9e9;
   background: #fff;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
-  padding: 24px;
-  transform: translateY(8px) scale(0.98);
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.24);
+  padding: 34px 33px 22px;
+  transform: translate(-50%, -50%) scale(0.98);
   transition: transform 220ms ease;
 }
 
 .ix-modal-overlay.is-open .ix-modal {
-  transform: translateY(0) scale(1);
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .ix-modal-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 34px;
-  height: 34px;
+  top: 26px;
+  right: 28px;
+  width: 30px;
+  height: 30px;
   border: none;
   border-radius: 50%;
-  background: #f2f4f7;
-  color: #272727;
-  font-size: 24px;
+  background: transparent;
+  color: rgba(111, 111, 111, 0.62);
+  opacity: 0.72;
+  font-size: 30px;
+  font-weight: 400;
   line-height: 1;
   cursor: pointer;
 }
@@ -3795,46 +3800,83 @@ body.ix-modal-open {
 .ix-modal-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
 .ix-modal-icon {
-  color: #21a15b;
-  font-size: 28px;
+  color: #18ad48;
+  font-size: 40px;
   line-height: 1;
 }
 
 .ix-modal-header h3 {
   margin: 0;
   font-family: var(--font_default);
-  font-size: 22px;
-  font-weight: 600;
-  color: #111;
+  font-size: 26px;
+  font-weight: 550;
+  letter-spacing: -0.4px;
+  color: #1f1f1f;
+}
+
+.ix-modal-subhead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.ix-modal-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-top: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .ix-modal-copy,
 .ix-modal-prefill {
   margin: 0;
   font-family: var(--font_default);
-  color: #4a4a4a;
-  line-height: 1.5;
+  color: #4c4f56;
+  line-height: 1.35;
 }
 
-.ix-modal-prefill {
-  margin-top: 8px;
+.ix-modal-copy {
+  max-width: 700px;
+  font-size: 18px;
+  font-weight: 500;
+  padding-left: 2px;
+}
+
+.ix-modal-message {
+  margin-top: 18px;
+  width: 94%;
+  min-height: 65px;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+  background: #fff;
+  padding: 13px 15px;
+  font-family: var(--font_default);
+  font-size: 17px;
+  font-weight: 400;
+  color: #1f1f1f;
+  resize: vertical;
+  outline: none;
 }
 
 .ix-modal-cta {
-  margin-top: 18px;
+  margin-top: 22px;
   width: 100%;
   border: none;
-  border-radius: 12px;
-  padding: 12px 16px;
-  background: #21a15b;
+  border-radius: 10px;
+  padding: 16px 18px;
+  background: #12a53a;
   color: #fff;
   font-family: var(--font_default);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
@@ -3844,7 +3886,45 @@ body.ix-modal-open {
   gap: 8px;
 }
 
-.ix-modal-cta .ix-icon {
-  font-size: 19px;
+.ix-modal-cta .ix-modal-cta-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
+}
+
+.ix-modal-fallback {
+  margin: 30px auto 0;
+  border: none;
+  background: transparent;
+  color: #4f5f77;
+  font-family: var(--font_default);
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .ix-modal {
+    width: min(680px, calc(100vw - 30px));
+    padding: 24px 20px 20px;
+  }
+
+  .ix-modal-header h3 {
+    font-size: 28px;
+  }
+
+  .ix-modal-icon {
+    font-size: 30px;
+  }
+
+  .ix-modal-avatar {
+    width: 84px;
+    height: 84px;
+  }
+
+  .ix-modal-cta {
+    font-size: 17px;
+  }
 }
