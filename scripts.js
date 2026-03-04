@@ -450,3 +450,117 @@
   }
 
 })();
+
+(function () {
+  function initScrollToTopButton() {
+    var btn = document.getElementById('scrollTopBtn');
+    if (!btn) return;
+
+    function syncVisibility() {
+      if (window.scrollY > 420) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', syncVisibility, { passive: true });
+    syncVisibility();
+  }
+
+  function initFooterYearAutoUpdate() {
+    var footerCredit = document.querySelector('.baTaUaFa div');
+    if (!footerCredit) return;
+
+    var currentYear = new Date().getFullYear();
+    footerCredit.textContent = footerCredit.textContent.replace(/\d{4}\s*$/, String(currentYear));
+  }
+
+  function buildWhatsAppModal() {
+    if (document.getElementById('ixWhatsAppModal')) return;
+
+    var modal = document.createElement('div');
+    modal.id = 'ixWhatsAppModal';
+    modal.className = 'ix-modal-overlay';
+    modal.setAttribute('aria-hidden', 'true');
+
+    modal.innerHTML =
+      '<div class="ix-modal" role="dialog" aria-modal="true" aria-labelledby="ixModalTitle">' +
+        '<button type="button" class="ix-modal-close" aria-label="Close">x</button>' +
+        '<div class="ix-modal-header">' +
+          '<span class="ix-modal-icon" aria-hidden="true"><i class="fa fa-whatsapp"></i></span>' +
+          '<h3 id="ixModalTitle">Chat with Rathan</h3>' +
+        '</div>' +
+        '<p class="ix-modal-copy">You will be redirected to WhatsApp with a prefilled message.</p>' +
+        '<p class="ix-modal-prefill">Message: <strong id="ixModalMessage">Hi Rathan!</strong></p>' +
+        '<button type="button" class="ix-modal-cta">' +
+          '<span class="ix-icon" aria-hidden="true"><i class="fa fa-whatsapp"></i></span>' +
+          '<span>Continue in WhatsApp</span>' +
+        '</button>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+  }
+
+  function initWhatsAppModal() {
+    var trigger = document.querySelector('.baTaSaTaB');
+    if (!trigger) return;
+
+    buildWhatsAppModal();
+
+    var modal = document.getElementById('ixWhatsAppModal');
+    var messageNode = modal.querySelector('#ixModalMessage');
+    var closeBtn = modal.querySelector('.ix-modal-close');
+    var ctaBtn = modal.querySelector('.ix-modal-cta');
+    var activeMessage = 'Hi Rathan!';
+
+    function openModal(message) {
+      activeMessage = message || 'Hi Rathan!';
+      messageNode.textContent = activeMessage;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('ix-modal-open');
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('ix-modal-open');
+    }
+
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      openModal('Hi Rathan!');
+    });
+
+    closeBtn.addEventListener('click', function () {
+      closeModal();
+    });
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+
+    ctaBtn.addEventListener('click', function () {
+      var phone = '916383953022';
+      var url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(activeMessage);
+      window.open(url, '_blank', 'noopener');
+      closeModal();
+    });
+  }
+
+  initScrollToTopButton();
+  initFooterYearAutoUpdate();
+  initWhatsAppModal();
+})();

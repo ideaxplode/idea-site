@@ -1,4 +1,91 @@
-﻿/* inlined from index_files/css */
+﻿#scrollTopBtn.scroll-top-button {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff;
+  color: #c53d8f;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+  border: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(30px);
+  transition: opacity 0.28s cubic-bezier(.4,0,.2,1), transform 0.28s cubic-bezier(.4,0,.2,1);
+  z-index: 1002;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#scrollTopBtn.scroll-top-button.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+#scrollTopBtn.scroll-top-button .ix-icon {
+  font-size: 1.7rem;
+  color: #c53d8f;
+  transition: color 0.18s;
+  line-height: 1;
+  display: block;
+}
+#scrollTopBtn.scroll-top-button .fa-arrow-circle-up {
+  font-size: 1.7rem;
+  color: #c53d8f;
+  line-height: 1;
+  display: block;
+}
+#scrollTopBtn.scroll-top-button:hover {
+  background: #f7e9f2;
+  box-shadow: 0 4px 18px 0 rgba(197,61,143,0.10);
+}
+#scrollTopBtn.scroll-top-button:hover .ix-icon,
+#scrollTopBtn.scroll-top-button:hover .fa-arrow-circle-up {
+  color: #a82c7a;
+}
+#scrollTopBtn.scroll-top-button {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff;
+  color: #c53d8f;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+  border: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(30px);
+  transition: opacity 0.28s cubic-bezier(.4,0,.2,1), transform 0.28s cubic-bezier(.4,0,.2,1);
+  z-index: 1002;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#scrollTopBtn.scroll-top-button.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+#scrollTopBtn.scroll-top-button i.fa-solid.fa-chevron-up {
+  font-size: 1.7rem;
+  color: #c53d8f;
+  transition: color 0.18s;
+  line-height: 1;
+  display: block;
+}
+#scrollTopBtn.scroll-top-button:hover {
+  background: #f7e9f2;
+  box-shadow: 0 4px 18px 0 rgba(197,61,143,0.10);
+}
+#scrollTopBtn.scroll-top-button:hover i.fa-solid.fa-chevron-up {
+  color: #a82c7a;
+}
+/* inlined from index_files/css */
 /* devanagari */
 @font-face {
   font-family: 'Poppins';
@@ -292,6 +379,40 @@ button {
   box-shadow: 0 0 0 6px rgba(0,0,0,0.07), 0 2px 8px 0 rgba(0,0,0,0.10);
   color: #c53d8f;
   opacity: 1;
+}
+
+/* Scroll-to-top button styles */
+#scrollTopBtn.scroll-top-button {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff;
+  color: #c53d8f;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+  border: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(30px);
+  transition: opacity 0.28s cubic-bezier(.4,0,.2,1), transform 0.28s cubic-bezier(.4,0,.2,1);
+  z-index: 1002;
+  cursor: pointer;
+}
+#scrollTopBtn.scroll-top-button.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+#scrollTopBtn.scroll-top-button svg {
+  display: block;
+  margin: auto;
+  color: #c53d8f;
+}
+#scrollTopBtn.scroll-top-button:hover {
+  background: #f7e9f2;
+  box-shadow: 0 4px 18px 0 rgba(197,61,143,0.10);
 }
 article,
 aside,
@@ -3571,4 +3692,159 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Scroll-to-top button (standalone isolated style) */
+#scrollTopBtn.scroll-top-button {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #272727;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.96);
+  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease, box-shadow 220ms ease;
+  z-index: 1200;
+}
+
+#scrollTopBtn.scroll-top-button.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+#scrollTopBtn.scroll-top-button .ix-icon,
+#scrollTopBtn.scroll-top-button .fa-arrow-circle-up {
+  color: #272727;
+  font-size: 24px;
+  line-height: 1;
+}
+
+#scrollTopBtn.scroll-top-button:hover {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+
+/* WhatsApp modal */
+body.ix-modal-open {
+  overflow: hidden;
+}
+
+.ix-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(18, 18, 18, 0.46);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 220ms ease, visibility 220ms ease;
+  z-index: 1600;
+}
+
+.ix-modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.ix-modal {
+  position: relative;
+  width: min(460px, 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+  padding: 24px;
+  transform: translateY(8px) scale(0.98);
+  transition: transform 220ms ease;
+}
+
+.ix-modal-overlay.is-open .ix-modal {
+  transform: translateY(0) scale(1);
+}
+
+.ix-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: #f2f4f7;
+  color: #272727;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ix-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ix-modal-icon {
+  color: #21a15b;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.ix-modal-header h3 {
+  margin: 0;
+  font-family: var(--font_default);
+  font-size: 22px;
+  font-weight: 600;
+  color: #111;
+}
+
+.ix-modal-copy,
+.ix-modal-prefill {
+  margin: 0;
+  font-family: var(--font_default);
+  color: #4a4a4a;
+  line-height: 1.5;
+}
+
+.ix-modal-prefill {
+  margin-top: 8px;
+}
+
+.ix-modal-cta {
+  margin-top: 18px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: #21a15b;
+  color: #fff;
+  font-family: var(--font_default);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ix-modal-cta .ix-icon {
+  font-size: 19px;
+  line-height: 1;
 }
