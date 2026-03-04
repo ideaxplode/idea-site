@@ -3770,14 +3770,15 @@ body.ix-modal-open {
 .ix-modal {
   position: fixed;
   left: 50%;
-  top: 38.6%;
-  width: min(700px, calc(46vw - 12px));
-  height: 380px;
+  top: 50%;
+  width: min(700px, calc(100vw - 48px));
+  max-height: calc(100dvh - 48px);
   border-radius: 10px;
   border: 1px solid #e9e9e9;
   background: #fff;
   box-shadow: 0 22px 52px rgba(0, 0, 0, 0.24);
   padding: 34px 33px 22px;
+  overflow: auto;
   transform: translate(-50%, -50%) scale(0.98);
   transition: transform 220ms ease;
 }
@@ -3925,6 +3926,109 @@ body.ix-modal-open {
   color: #425168;
 }
 
+/* Responsive menu (mobile/tablet) */
+.ix-responsive-menu-toggle {
+  display: none;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  background: #f3f3f3;
+  color: #222;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.ix-responsive-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.16);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 200ms ease, visibility 200ms ease;
+  z-index: 1500;
+}
+
+.ix-responsive-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.ix-menu-open {
+  overflow: hidden;
+}
+
+.ix-responsive-menu-card {
+  position: absolute;
+  left: 50%;
+  top: 84px;
+  transform: translateX(-50%);
+  width: min(720px, calc(100vw - 18px));
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  padding: 10px 10px 12px;
+}
+
+.ix-responsive-menu-links {
+  margin-top: 0;
+}
+
+.ix-responsive-menu-link {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid #ececec;
+  background: transparent;
+  padding: 14px 8px;
+  font-family: var(--font_default);
+  font-size: 17px;
+  font-weight: 400;
+  color: rgba(var(--color_text_default_rgb), 0.75);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ix-responsive-menu-link-icon {
+  width: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(var(--color_text_default_rgb), 0.88);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.ix-responsive-menu-link-label {
+  line-height: 1.2;
+}
+
+.ix-responsive-menu-chat {
+  width: 100%;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 12px;
+  height: 46px;
+  background: #0f1014;
+  color: #fff;
+  font-family: var(--font_default);
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
 @media (max-width: 900px) {
   .ix-modal {
     width: min(680px, calc(100vw - 30px));
@@ -3946,5 +4050,430 @@ body.ix-modal-open {
 
   .ix-modal-cta {
     font-size: 17px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ix-modal {
+    width: min(360px, calc(100vw - 24px));
+    max-height: calc(100dvh - 24px);
+    padding: 20px 16px 16px;
+  }
+
+  .ix-modal-header h3 {
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 1.25;
+  }
+
+  .ix-modal-message {
+    width: 100%;
+  }
+
+  .ix-modal-copy {
+    font-size: 17px;
+  }
+}
+
+@media (max-height: 560px) {
+  .ix-modal {
+    max-height: calc(100dvh - 12px);
+    padding: 16px 14px 12px;
+  }
+
+  .ix-modal-header {
+    margin-bottom: 10px;
+  }
+
+  .ix-modal-copy {
+    font-size: 16px;
+  }
+
+  .ix-modal-message {
+    margin-top: 12px;
+    min-height: 64px;
+  }
+
+  .ix-modal-cta {
+    margin-top: 14px;
+  }
+
+  .ix-modal-fallback {
+    margin-top: 16px;
+  }
+}
+
+/* Responsive fixes for tablet/mobile breakpoints without changing content */
+@media (max-width: 1024px) {
+  html,
+  body,
+  .main-page {
+    overflow-x: hidden !important;
+  }
+
+  .baTaSaSq {
+    min-width: 44px !important;
+    width: auto !important;
+    flex-grow: 0 !important;
+    justify-content: flex-end !important;
+  }
+
+  .baTaSaSl {
+    padding: 0 16px !important;
+    min-height: 78px !important;
+    max-height: none !important;
+    height: auto !important;
+    margin-top: 12px !important;
+  }
+
+  .baTaSaSp {
+    min-width: 230px !important;
+    max-width: 230px !important;
+    width: 230px !important;
+  }
+
+  /* Collapse desktop nav links on tablet/mobile; keep menu trigger behavior from page logic */
+  .baTaSaSq > .clickable-element.bubble-element.Group,
+  .baTaSaSq > .clickable-element.bubble-element.Button {
+    display: none !important;
+  }
+
+  .ix-responsive-menu-toggle {
+    display: inline-flex;
+  }
+
+  body.ix-menu-open .baTaSaTaB {
+    display: none !important;
+  }
+
+  /* Keep only one Chat with Rathan button on mobile/tablet (inside menu) */
+  .baTaSaTaB {
+    display: none !important;
+  }
+
+  .baTaSkaZ {
+    padding: 0 16px !important;
+    margin: 14px 0 30px !important;
+  }
+
+  .baTaSke {
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+  }
+
+  /* "Technology has evolved" cards: prevent horizontal overflow */
+  .baTaSih {
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+  }
+
+  .baTaSih > .bubble-element.Group[data-outline="true"] {
+    min-width: 0 !important;
+    width: calc(50% - 8px) !important;
+    max-width: calc(50% - 8px) !important;
+    flex: 1 1 calc(50% - 8px) !important;
+    box-sizing: border-box !important;
+  }
+
+  .baTaSkj {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    border-right: none !important;
+    padding: 8px 0 0 !important;
+    row-gap: 18px !important;
+  }
+
+  .baTaSkf {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .baTaSkk {
+    min-width: 0 !important;
+    font-size: clamp(50px, 7.4vw, 72px) !important;
+    line-height: 1.18 !important;
+  }
+
+  .baTaSkp {
+    row-gap: 18px !important;
+    margin-top: 8px !important;
+  }
+
+  .baTaSkr {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .baTaSaYf .bubble-rg {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .baTaUxd,
+  .baTaUxl,
+  .baTaUym {
+    flex-wrap: wrap !important;
+    margin-top: 0 !important;
+  }
+
+  .baTaUxaH,
+  .baTaUyaP,
+  .baTaUys {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .baTaUwt,
+  .baTaUyaO,
+  .baTaUyr {
+    align-self: flex-start !important;
+  }
+
+  #groupFooter {
+    padding: 52px 20px 58px !important;
+  }
+
+  #groupFooter .baTaTaGaC {
+    flex-wrap: wrap !important;
+    gap: 26px !important;
+  }
+
+  /* Mobile menu drawer card style (applies when drawer is opened by existing behavior) */
+  .baTaTaJaP {
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .baTaSkf #cube-container {
+    width: min(100%, 240px) !important;
+    height: 180px !important;
+  }
+
+  .baTaSkf .face-content {
+    padding: 16px !important;
+  }
+
+  .baTaSkf .face-content > .big-text {
+    font-size: 21px !important;
+  }
+
+  .baTaSkf .face-content > .small-text {
+    font-size: 13px !important;
+  }
+
+  .ix-responsive-menu-card {
+    width: calc(100vw - 12px);
+    top: 72px;
+  }
+
+  .ix-responsive-menu-link {
+    font-size: 16px;
+    padding: 12px 8px;
+  }
+
+  .ix-responsive-menu-link-icon {
+    font-size: 18px;
+  }
+
+  .baTaSaSl {
+    padding: 0 12px !important;
+    min-height: 70px !important;
+    margin-top: 8px !important;
+  }
+
+  .baTaSaSp {
+    min-width: 176px !important;
+    max-width: 176px !important;
+    width: 176px !important;
+  }
+
+  .baTaSkaZ {
+    padding: 0 12px !important;
+    margin: 10px 0 22px !important;
+  }
+
+  .baTaSkk {
+    font-size: clamp(32px, 11.2vw, 52px) !important;
+    letter-spacing: -1px !important;
+    line-height: 1.12 !important;
+  }
+
+  .baTaSkr {
+    font-size: clamp(18px, 5.3vw, 24px) !important;
+  }
+
+  .baTaSkq {
+    min-height: 40px !important;
+    padding: 8px 14px !important;
+  }
+
+  .baTaSaYf .bubble-rg {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Make No-Code / Low-Code / AI-Code / AI-Build cards stack without overflow */
+  .baTaSih {
+    gap: 12px !important;
+  }
+
+  .baTaSih > .bubble-element.Group[data-outline="true"] {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+    padding: 16px !important;
+  }
+
+  /* Client Story nav arrows fully inside viewport */
+  .baTaUaQaX {
+    width: 100% !important;
+    margin: 24px 0 0 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .baTaUaQaZ,
+  .baTaUaQd {
+    min-width: 44px !important;
+    max-width: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .baTaUaOaT {
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+  }
+
+  .baTaUaPaD,
+  .baTaUaQaM {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .baTaUaPaP {
+    font-size: 16px !important;
+    line-height: 1.45 !important;
+  }
+
+  .baTaUaPaV {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+  }
+
+  .baTaUaPb {
+    min-width: 72px !important;
+    max-width: 72px !important;
+    width: 72px !important;
+  }
+
+  #groupCTA {
+    padding: 26px 12px !important;
+    row-gap: 30px !important;
+  }
+
+  .baTaUwt,
+  .baTaUyaO,
+  .baTaUyr {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  #groupFooter {
+    padding: 42px 14px 46px !important;
+  }
+
+  #groupFooter .baTaTaHaE,
+  #groupFooter .baTaUaGd,
+  #groupFooter .baTaTaGaH {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .baTaTaHd {
+    min-width: 190px !important;
+    max-width: 190px !important;
+    width: 190px !important;
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .ix-responsive-menu-card {
+    top: 56px;
+    max-height: calc(100dvh - 68px);
+    overflow: auto;
+  }
+
+  .ix-responsive-menu-link {
+    font-size: 16px;
+    padding: 8px 8px;
+  }
+
+  .baTaSaSl {
+    min-height: 62px !important;
+  }
+
+  .baTaSkk {
+    font-size: clamp(28px, 6.5vw, 42px) !important;
+  }
+
+  .baTaSkf {
+    max-width: 320px !important;
+    margin: 0 auto !important;
+  }
+
+  .baTaTaJaP {
+    max-height: 74dvh !important;
+    overflow-y: auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ix-modal {
+    width: min(344px, calc(100vw - 20px)) !important;
+    padding: 18px 14px 14px !important;
+  }
+
+  .ix-modal-close {
+    top: 12px;
+    right: 12px;
+    font-size: 18px;
+  }
+
+  .ix-modal-header {
+    margin-bottom: 10px;
+  }
+
+  .ix-modal-header h3 {
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+  }
+
+  .ix-modal-subhead {
+    gap: 12px;
+  }
+
+  .ix-modal-avatar {
+    width: 56px !important;
+    height: 56px !important;
+    margin-top: 0;
+  }
+
+  .ix-modal-copy {
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+  }
+
+  .ix-modal-message {
+    min-height: 74px !important;
+    margin-top: 12px !important;
   }
 }

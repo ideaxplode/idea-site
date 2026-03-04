@@ -494,12 +494,25 @@
       scrollNodeToTop(document.scrollingElement);
       scrollNodeToTop(document.documentElement);
       scrollNodeToTop(document.body);
+      scrollNodeToTop(document.querySelector('.main-page'));
+      scrollNodeToTop(document.querySelector('.baTaSaNaH'));
 
       // Any active nested scroller
       var scrollers = Array.prototype.slice.call(document.querySelectorAll('*')).filter(function (node) {
         return node && typeof node.scrollTop === 'number' && node.scrollTop > 0;
       });
       scrollers.forEach(scrollNodeToTop);
+
+      // Extra fallback for mobile/odd scrolling containers
+      window.setTimeout(function () {
+        try {
+          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        } catch (_) {
+          window.scrollTo(0, 0);
+        }
+        if (document.documentElement) document.documentElement.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+      }, 40);
     });
 
     window.addEventListener('scroll', syncVisibility, { passive: true });
@@ -514,6 +527,112 @@
 
     var currentYear = new Date().getFullYear();
     footerCredit.textContent = footerCredit.textContent.replace(/\d{4}\s*$/, String(currentYear));
+  }
+
+  function initResponsiveMenu() {
+    var headerRow = document.querySelector('.baTaSaSl');
+    if (!headerRow) return;
+
+    var navWrap = headerRow.querySelector('.baTaSaSq') || headerRow;
+    if (!navWrap) return;
+
+    var menuItems = [
+      { label: 'About', icon: 'fa-building-o' },
+      { label: 'Technology', icon: 'fa-rocket' },
+      { label: 'Methodology', icon: 'fa-superpowers' },
+      { label: 'Pricing', icon: 'fa-usd' },
+      { label: 'Contact', icon: 'fa-map-marker' }
+    ];
+
+    var toggleBtn = document.getElementById('ixResponsiveMenuToggle');
+    if (!toggleBtn) {
+      toggleBtn = document.createElement('button');
+      toggleBtn.id = 'ixResponsiveMenuToggle';
+      toggleBtn.type = 'button';
+      toggleBtn.className = 'ix-responsive-menu-toggle';
+      toggleBtn.setAttribute('aria-label', 'Open menu');
+      toggleBtn.innerHTML = '<i class="fa fa-bars" aria-hidden="true"></i>';
+      navWrap.appendChild(toggleBtn);
+    }
+
+    var menu = document.getElementById('ixResponsiveMenu');
+    if (!menu) {
+      menu = document.createElement('div');
+      menu.id = 'ixResponsiveMenu';
+      menu.className = 'ix-responsive-menu';
+      menu.innerHTML =
+        '<div class="ix-responsive-menu-card">' +
+          '<div class="ix-responsive-menu-links"></div>' +
+          '<button type="button" class="ix-responsive-menu-chat"><i class="fa fa-whatsapp" aria-hidden="true"></i><span>Chat with Rathan</span></button>' +
+        '</div>';
+      document.body.appendChild(menu);
+    }
+
+    var linksWrap = menu.querySelector('.ix-responsive-menu-links');
+    if (linksWrap && !linksWrap.children.length) {
+      menuItems.forEach(function (item) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ix-responsive-menu-link';
+        btn.innerHTML =
+          '<span class="ix-responsive-menu-link-icon" aria-hidden="true"><i class="fa ' + item.icon + '"></i></span>' +
+          '<span class="ix-responsive-menu-link-label">' + item.label + '</span>';
+        btn.addEventListener('click', function () {
+          smoothTo(sectionMap[item.label]);
+          closeMenu();
+        });
+        linksWrap.appendChild(btn);
+      });
+    }
+
+    var chatBtn = menu.querySelector('.ix-responsive-menu-chat');
+
+    function isMobileOrTablet() {
+      return window.innerWidth <= 1024;
+    }
+
+    function openMenu() {
+      if (!isMobileOrTablet()) return;
+      menu.classList.add('is-open');
+      document.body.classList.add('ix-menu-open');
+      toggleBtn.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
+      toggleBtn.setAttribute('aria-label', 'Close menu');
+    }
+
+    function closeMenu() {
+      menu.classList.remove('is-open');
+      document.body.classList.remove('ix-menu-open');
+      toggleBtn.innerHTML = '<i class="fa fa-bars" aria-hidden="true"></i>';
+      toggleBtn.setAttribute('aria-label', 'Open menu');
+    }
+
+    toggleBtn.addEventListener('click', function () {
+      if (!isMobileOrTablet()) return;
+      if (menu.classList.contains('is-open')) closeMenu();
+      else openMenu();
+    });
+
+    menu.addEventListener('click', function (e) {
+      if (e.target === menu) closeMenu();
+    });
+
+    if (chatBtn) {
+      chatBtn.addEventListener('click', function () {
+        var trigger = document.querySelector('.baTaSaTaB');
+        if (trigger) trigger.click();
+        closeMenu();
+      });
+    }
+
+    window.addEventListener('resize', function () {
+      if (!isMobileOrTablet()) closeMenu();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+        closeMenu();
+      }
+    });
   }
 
   function buildWhatsAppModal() {
@@ -627,5 +746,6 @@
 
   initScrollToTopButton();
   initFooterYearAutoUpdate();
+  initResponsiveMenu();
   initWhatsAppModal();
 })();
