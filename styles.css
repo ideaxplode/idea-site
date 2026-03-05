@@ -4459,6 +4459,45 @@ body.ix-menu-open {
     margin: 0 auto !important;
   }
 
+  .baTaUaPaP {
+    font-size: clamp(26px, 4.2vw, 32px) !important;
+    line-height: 1.36 !important;
+  }
+
+  .baTaUaPaV {
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+  }
+
+  .baTaUxd,
+  .baTaUxl,
+  .baTaUym {
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  .baTaUxaH,
+  .baTaUyaP,
+  .baTaUys {
+    min-width: 0 !important;
+    width: auto !important;
+    flex: 1 1 auto !important;
+  }
+
+  .baTaUwt,
+  .baTaUyaO,
+  .baTaUyr {
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-left: auto !important;
+  }
+
+  #groupFooter {
+    padding: 56px 24px 62px !important;
+  }
+
   .ix-modal {
     width: min(560px, calc(100vw - 18px)) !important;
     max-height: calc(100dvh - 16px) !important;
@@ -4479,6 +4518,45 @@ body.ix-menu-open {
   .ix-modal {
     width: min(520px, calc(100vw - 34px)) !important;
     max-height: calc(100dvh - 34px) !important;
+  }
+
+  .baTaUaPaP {
+    font-size: clamp(30px, 4.8vw, 38px) !important;
+    line-height: 1.38 !important;
+  }
+
+  .baTaUaPaV {
+    font-size: 17px !important;
+    line-height: 1.35 !important;
+  }
+
+  .baTaUxd,
+  .baTaUxl,
+  .baTaUym {
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  .baTaUxaH,
+  .baTaUyaP,
+  .baTaUys {
+    min-width: 0 !important;
+    width: auto !important;
+    flex: 1 1 auto !important;
+  }
+
+  .baTaUwt,
+  .baTaUyaO,
+  .baTaUyr {
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-left: auto !important;
+  }
+
+  #groupFooter {
+    padding: 62px 28px 70px !important;
   }
 }
 
