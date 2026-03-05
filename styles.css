@@ -3963,6 +3963,24 @@ body.ix-menu-open {
   overflow: hidden;
 }
 
+/* Hero rotating square card polish */
+.baTaSkf #cube-container {
+  border: 1px solid rgba(84, 84, 84, 0.22);
+  border-radius: 22px;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.baTaSkf #cube .face {
+  border: 1px solid rgba(84, 84, 84, 0.14);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.baTaSkf .face-content {
+  padding: 22px;
+}
+
 .ix-responsive-menu-card {
   position: absolute;
   left: 50%;
@@ -4213,15 +4231,7 @@ body.ix-menu-open {
   .baTaUxd,
   .baTaUxl,
   .baTaUym {
-    flex-wrap: wrap !important;
     margin-top: 0 !important;
-  }
-
-  .baTaUxaH,
-  .baTaUyaP,
-  .baTaUys {
-    min-width: 0 !important;
-    width: 100% !important;
   }
 
   .baTaUwt,
@@ -4309,22 +4319,23 @@ body.ix-menu-open {
   .baTaSkq {
     min-height: 40px !important;
     padding: 8px 14px !important;
+    margin-top: 10px !important;
   }
 
   .baTaSaYf .bubble-rg {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 
-  /* Make No-Code / Low-Code / AI-Code / AI-Build cards stack without overflow */
+  /* Keep "How do we build?" cards in a 2x2 grid on mobile like original */
   .baTaSih {
     gap: 12px !important;
   }
 
   .baTaSih > .bubble-element.Group[data-outline="true"] {
     min-width: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    flex: 1 1 100% !important;
+    width: calc(50% - 6px) !important;
+    max-width: calc(50% - 6px) !important;
+    flex: 1 1 calc(50% - 6px) !important;
     padding: 16px !important;
   }
 
@@ -4345,18 +4356,6 @@ body.ix-menu-open {
     max-height: 44px !important;
     width: 44px !important;
     height: 44px !important;
-  }
-
-  .baTaUaOaT {
-    flex-wrap: wrap !important;
-    gap: 16px !important;
-  }
-
-  .baTaUaPaD,
-  .baTaUaQaM {
-    min-width: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
   }
 
   .baTaUaPaP {
@@ -4380,22 +4379,52 @@ body.ix-menu-open {
     row-gap: 30px !important;
   }
 
+  .baTaUxd,
+  .baTaUxl,
+  .baTaUym {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    align-items: flex-start !important;
+  }
+
+  .baTaUxaH,
+  .baTaUyaP,
+  .baTaUys {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
   .baTaUwt,
   .baTaUyaO,
   .baTaUyr {
+    align-self: flex-start !important;
+    margin-top: 8px !important;
+  }
+
+  .baTaVaBaT0 {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .baTaUaOaT {
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+  }
+
+  .baTaUaPaD,
+  .baTaUaQaM {
+    min-width: 0 !important;
     width: 100% !important;
-    justify-content: center !important;
+    max-width: 100% !important;
+  }
+
+  .baTaUaPb img {
+    object-fit: cover !important;
   }
 
   #groupFooter {
-    padding: 42px 14px 46px !important;
-  }
-
-  #groupFooter .baTaTaHaE,
-  #groupFooter .baTaUaGd,
-  #groupFooter .baTaTaGaH {
-    min-width: 0 !important;
-    width: 100% !important;
+    padding: 48px 16px 52px !important;
   }
 
   .baTaTaHd {
@@ -4430,9 +4459,26 @@ body.ix-menu-open {
     margin: 0 auto !important;
   }
 
+  .ix-modal {
+    width: min(560px, calc(100vw - 18px)) !important;
+    max-height: calc(100dvh - 16px) !important;
+    padding: 14px 14px 12px !important;
+  }
+
+  .ix-modal-message {
+    min-height: 58px !important;
+  }
+
   .baTaTaJaP {
     max-height: 74dvh !important;
     overflow-y: auto !important;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+  .ix-modal {
+    width: min(520px, calc(100vw - 34px)) !important;
+    max-height: calc(100dvh - 34px) !important;
   }
 }
 
@@ -4475,5 +4521,73 @@ body.ix-menu-open {
   .ix-modal-message {
     min-height: 74px !important;
     margin-top: 12px !important;
+  }
+
+  .baTaSih > .bubble-element.Group[data-outline="true"] {
+    width: calc(50% - 6px) !important;
+    max-width: calc(50% - 6px) !important;
+    padding: 14px 12px !important;
+  }
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+  /* Hero rotating square: transparent hold state + top/bottom dark rails */
+  .baTaSkf #cube-container {
+    border: none !important;
+    border-top: 1px solid rgba(17, 17, 17, 0.45) !important;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.45) !important;
+    border-radius: 0 !important;
+    padding: 8px 0 !important;
+  }
+
+  .baTaSkf #cube .face,
+  .baTaSkf #cube .face.current {
+    background: transparent !important;
+  }
+
+  /* Brand logos: exactly 2 columns in mobile portrait */
+  .baTaSaYf .bubble-rg {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* No-Code to AI-Build cards: single column stack */
+  .baTaSih > .bubble-element.Group[data-outline="true"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+
+  /* Our promise line should sit to the left */
+  .baTaVaBaT0 {
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Client story text + controls styling */
+  .baTaUaPaP {
+    font-size: clamp(22px, 8.2vw, 33px) !important;
+    line-height: 1.38 !important;
+    font-style: italic !important;
+    text-align: center !important;
+  }
+
+  .baTaUaPaV {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+  }
+
+  .baTaUaQaZ,
+  .baTaUaQd {
+    background: transparent !important;
+    box-shadow: none !important;
+    opacity: 0.45 !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    width: 40px !important;
+    height: 40px !important;
   }
 }
