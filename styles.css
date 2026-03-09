@@ -4086,10 +4086,18 @@ body.ix-menu-open {
 
   .ix-modal-message {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .ix-modal-copy {
     font-size: 17px;
+  }
+
+  .ix-modal-cta {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }
 
