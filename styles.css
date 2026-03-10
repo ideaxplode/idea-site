@@ -3901,8 +3901,19 @@ body.ix-modal-open {
   font-size: 17px;
   font-weight: 400;
   color: #1f1f1f;
-  resize: vertical;
+  resize: none;
   outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.ix-modal-message:hover {
+  border-color: #b8b8b8;
+  background-color: #fcfcfc;
+}
+
+.ix-modal-message:focus {
+  border-color: #9f9f9f;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
 }
 
 .ix-modal-cta {
@@ -4852,5 +4863,30 @@ body.ix-menu-open {
     justify-content: center !important;
     padding-top: 34px !important;
     padding-bottom: 34px !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  /* Tablet landscape: align "Our promises" rows like reference */
+  .baTaTaZz {
+    justify-content: center !important;
+    gap: 24px !important;
+  }
+
+  .baTaTaZz > .bubble-element.Group {
+    min-width: 0 !important;
+    width: calc((100% - 48px) / 3) !important;
+    flex: 0 0 calc((100% - 48px) / 3) !important;
+    margin: 0 !important;
+  }
+
+  .baTaTaZz .bubble-r-container.flex.row {
+    justify-content: space-between !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .baTaTaZz .bubble-r-container.flex.row > .bubble-element.Text {
+    text-align: left !important;
   }
 }

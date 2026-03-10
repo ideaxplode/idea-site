@@ -674,13 +674,13 @@
     var ctaBtn = modal.querySelector('.ix-modal-cta');
     var fallbackBtn = modal.querySelector('.ix-modal-fallback');
     var activeMessage = 'Hi Rathan!';
-    var whatsappNumber = '916383953022';
+    var whatsappNumber = '9962150600';
 
     var triggerMap = [
       { selector: '.baTaSaTaB', message: 'Hi Rathan!' },
       { selector: '.baTaSoaB', message: 'Hey Rathan, I\'d like to take up the one-week challenge!' },
       { selector: '.baTaUlv', message: 'Hi Rathan, let\'s discuss the best tech choices for my app/idea.' },
-      { selector: '.baTaUaJaE', message: 'Hi Rathan, tell me more about your methodology -- Agentic Agile.' },
+      { selector: '.baTaUaJaE', message: 'Hi Rathan, tell me about your methodology -- Agentic Agile.' },
       { selector: '.baTaUaKq', message: 'Hi Rathan, let\'s discuss pricing.' },
       { selector: '.baTaUwt', message: 'Hi Rathan, please share the credentials for a demo app.' },
       { selector: '.baTaUyaO', message: 'Hi Rathan, I\'d like to sign an NDA before discussing my idea.' },
