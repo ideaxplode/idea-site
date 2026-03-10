@@ -4677,3 +4677,117 @@ body.ix-menu-open {
     height: 40px !important;
   }
 }
+
+@media (max-width: 375px) and (orientation: portrait) {
+  /* Hero square placement in narrow portrait */
+  .baTaSkf {
+    display: flex !important;
+    align-items: flex-start !important;
+    min-height: 250px !important;
+    padding: 10px 0 18px !important;
+  }
+
+  .baTaSkf #cube-container {
+    margin: 10px auto 24px !important;
+  }
+
+  /* Promises: keep all "We..." lines left aligned with even row spacing */
+  .baTaTaZz {
+    gap: 12px !important;
+  }
+
+  .baTaTaZz > .bubble-element.Group {
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .baTaTaZz .bubble-r-container.flex.row {
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+
+  .baTaTaZz .bubble-r-container.flex.row > .bubble-element.Text {
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  /* Promises: keep a clean two-column rhythm in landscape */
+  .baTaTaZz {
+    gap: 14px 16px !important;
+  }
+
+  .baTaTaZz > .bubble-element.Group {
+    min-width: 0 !important;
+    width: calc(50% - 8px) !important;
+    margin: 0 !important;
+  }
+
+  .baTaTaZz .bubble-r-container.flex.row > .bubble-element.Text {
+    text-align: left !important;
+  }
+
+  /* Move the right client-story arrow slightly to the right */
+  .baTaUaQd {
+    margin-right: -6px !important;
+  }
+
+  /* Feel free section: prevent button collapse and keep copy wrapping naturally */
+  .baTaUxaH,
+  .baTaUyaP,
+  .baTaUys {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+  }
+
+  .baTaUwt,
+  .baTaUyaO,
+  .baTaUyr {
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    min-width: 176px !important;
+    padding: 8px 18px !important;
+  }
+
+  .baTaUwt .label-item,
+  .baTaUyaO .label-item,
+  .baTaUyr .label-item {
+    white-space: nowrap !important;
+  }
+
+  .baTaUwn,
+  .baTaUyaU,
+  .baTaUyx {
+    max-width: 100% !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+  /* Feel free section: keep button + description alignment and avoid compression */
+  .baTaUxaH,
+  .baTaUyaP,
+  .baTaUys {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+  }
+
+  .baTaUwt,
+  .baTaUyaO,
+  .baTaUyr {
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    min-width: 184px !important;
+    padding: 8px 18px !important;
+  }
+
+  .baTaUwn,
+  .baTaUyaU,
+  .baTaUyx {
+    max-width: 100% !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+  }
+}
