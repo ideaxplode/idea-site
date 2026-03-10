@@ -4707,6 +4707,20 @@ body.ix-menu-open {
     width: 40px !important;
     height: 40px !important;
   }
+
+  /* Promises section (mobile portrait only): remove extra "more" text + left align "We..." rows */
+  .baTaTaZz > .bubble-element.Group > .bubble-element.Text {
+    display: none !important;
+  }
+
+  .baTaTaZz .bubble-r-container.flex.row {
+    justify-content: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .baTaTaZz .bubble-r-container.flex.row > .bubble-element.Text {
+    text-align: left !important;
+  }
 }
 
 @media (max-width: 375px) and (orientation: portrait) {
