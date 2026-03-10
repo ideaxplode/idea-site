@@ -381,6 +381,20 @@ button {
   opacity: 1;
 }
 
+/* Client Story LinkedIn icon hover (match original intent) */
+.baTaUaQaG,
+.baTaUaMz {
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.baTaUaQaG:hover,
+.baTaUaMz:hover {
+  background: #0077b5 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  opacity: 1 !important;
+}
+
 /* Scroll-to-top button styles */
 #scrollTopBtn.scroll-top-button {
   position: fixed;
@@ -3705,11 +3719,11 @@ html {
   bottom: 22px;
   width: 52px;
   height: 52px;
-  border: 1px solid #111;
+  border: 1px solid #bdbdbd;
   border-radius: 50%;
-  background: #ffffff;
-  color: #111;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  background: #e3e3e3;
+  color: #6a6a6a;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3730,7 +3744,7 @@ html {
 
 #scrollTopBtn.scroll-top-button .ix-icon,
 #scrollTopBtn.scroll-top-button .fa-angle-up {
-  color: #111;
+  color: #6a6a6a;
   font-size: 22px;
   font-weight: 300;
   line-height: 1;
@@ -3738,7 +3752,14 @@ html {
 }
 
 #scrollTopBtn.scroll-top-button:hover {
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+  background: #c8c8c8;
+  border-color: #9f9f9f;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+#scrollTopBtn.scroll-top-button:hover .ix-icon,
+#scrollTopBtn.scroll-top-button:hover .fa-angle-up {
+  color: #4f4f4f;
 }
 
 /* WhatsApp modal */
@@ -3796,12 +3817,22 @@ body.ix-modal-open {
   border: none;
   border-radius: 50%;
   background: transparent;
-  color: rgba(111, 111, 111, 0.5);
-  opacity: 0.58;
+  color: rgba(68, 68, 68, 0.82);
+  opacity: 1;
   font-size: 20px;
   font-weight: 300;
   line-height: 1;
   cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.ix-modal-close i {
+  font-weight: 300;
+}
+
+.ix-modal-close:hover {
+  color: rgba(22, 22, 22, 0.9);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .ix-modal-header {
