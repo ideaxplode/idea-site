@@ -3323,6 +3323,16 @@ img.hidden-image-for-caching {
   outline: 1px dotted grey;
 }
 
+/* Disable legacy Bubble debug/focus outline marker (can appear as tiny corner square) */
+.bubble-element.clickable-element.show-outline {
+  outline: none !important;
+}
+
+/* Hide any legacy Bubble branding badge if it gets injected */
+.bubble-element.PoweredByBubble {
+  display: none !important;
+}
+
 .bad-revision {
   padding: 10px;
   font-family: Arial, sans-serif;
@@ -4916,10 +4926,15 @@ body.ix-menu-open {
 /* Scroll-to-top final color override */
 #scrollTopBtn.scroll-top-button {
   background-color: #ffffff !important;
+  display: none !important;
 }
 
 #scrollTopBtn.scroll-top-button:hover {
   background-color: #e3e3e3 !important;
+}
+
+#scrollTopBtn.scroll-top-button.visible {
+  display: flex !important;
 }
 
 #scrollTopBtn.scroll-top-button .ix-icon,
