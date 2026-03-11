@@ -472,47 +472,44 @@
     btn.addEventListener('click', function (e) {
       e.preventDefault();
 
-      function scrollNodeToTop(node) {
-        if (!node || typeof node.scrollTop !== 'number') return;
-        if (typeof node.scrollTo === 'function') {
-          try {
-            node.scrollTo({ top: 0, behavior: 'smooth' });
-            return;
-          } catch (_) {}
-        }
-        node.scrollTop = 0;
+      function prefersReducedMotion() {
+        return typeof window.matchMedia === 'function' &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       }
 
-      // Window/page scroll
+      var behavior = prefersReducedMotion() ? 'auto' : 'smooth';
+
+      // Scroll the primary page root smoothly first.
       try {
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, left: 0, behavior: behavior });
       } catch (_) {
         window.scrollTo(0, 0);
       }
 
-      // Root scroll targets
-      scrollNodeToTop(document.scrollingElement);
-      scrollNodeToTop(document.documentElement);
-      scrollNodeToTop(document.body);
-      scrollNodeToTop(document.querySelector('.main-page'));
-      scrollNodeToTop(document.querySelector('.baTaSaNaH'));
-
-      // Any active nested scroller
-      var scrollers = Array.prototype.slice.call(document.querySelectorAll('*')).filter(function (node) {
-        return node && typeof node.scrollTop === 'number' && node.scrollTop > 0;
-      });
-      scrollers.forEach(scrollNodeToTop);
-
-      // Extra fallback for mobile/odd scrolling containers
-      window.setTimeout(function () {
+      var root = document.scrollingElement || document.documentElement || document.body;
+      if (root && typeof root.scrollTo === 'function') {
         try {
-          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+          root.scrollTo({ top: 0, behavior: behavior });
         } catch (_) {
-          window.scrollTo(0, 0);
+          root.scrollTop = 0;
         }
-        if (document.documentElement) document.documentElement.scrollTop = 0;
-        if (document.body) document.body.scrollTop = 0;
-      }, 40);
+      }
+
+      // Also reset any nested active scrollers (if present) with same behavior.
+      Array.prototype.slice.call(document.querySelectorAll('*')).forEach(function (node) {
+        if (!node || typeof node.scrollTop !== 'number') return;
+        if (node.scrollTop <= 0) return;
+        if (node.scrollHeight <= node.clientHeight) return;
+        if (typeof node.scrollTo === 'function') {
+          try {
+            node.scrollTo({ top: 0, behavior: behavior });
+          } catch (_) {
+            node.scrollTop = 0;
+          }
+        } else {
+          node.scrollTop = 0;
+        }
+      });
     });
 
     window.addEventListener('scroll', syncVisibility, { passive: true });
