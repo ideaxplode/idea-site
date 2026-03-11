@@ -635,6 +635,73 @@
     });
   }
 
+  function initClientBrandLogoLinks() {
+    var brandUrlsByTitle = {
+      concreon: 'https://concreon.com/',
+      'verve vfx studio': 'https://www.vervevfxstudio.com/',
+      'bibles for america': 'https://biblesforamerica.org/',
+      nteli: 'https://nteligroup.com/',
+      'jks infotech': 'https://www.jksinfotech.in/',
+      orgware: 'https://orgware.in/',
+      orgwave: 'https://orgware.in/'
+    };
+
+    document.querySelectorAll('#clientLogosContainer .baTaSdaV').forEach(function (logoNode) {
+      var brandTitle = (logoNode.getAttribute('title') || '').trim().toLowerCase();
+      var logoImg = logoNode.querySelector('img');
+      var logoSrc = logoImg ? (logoImg.getAttribute('src') || '').toLowerCase() : '';
+      var targetUrl = brandUrlsByTitle[brandTitle];
+
+      // Fallback to image filename so logo click still works even if title differs.
+      if (!targetUrl && logoSrc.indexOf('clientbrand4') !== -1) {
+        targetUrl = 'https://orgware.in/';
+      }
+      if (!targetUrl) return;
+
+      logoNode.setAttribute('role', 'link');
+      if (!logoNode.hasAttribute('tabindex')) {
+        logoNode.setAttribute('tabindex', '0');
+      }
+
+      function openBrandSite(event) {
+        if (event) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        window.open(targetUrl, '_blank', 'noopener');
+      }
+
+      logoNode.addEventListener('click', openBrandSite);
+      logoNode.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          openBrandSite(event);
+        }
+      });
+    });
+  }
+
+  function initMethodologyButtonMobileLabel() {
+    var labelNode = document.querySelector('.baTaUaJaE .label-item');
+    if (!labelNode) return;
+
+    var isMobilePortrait = window.matchMedia('(max-width: 900px) and (orientation: portrait)');
+    var isMobileLandscape = window.matchMedia('(max-width: 900px) and (orientation: landscape)');
+    var mobileLabel = 'Learn about methodology';
+
+    if (!labelNode.dataset.originalLabel) {
+      labelNode.dataset.originalLabel = (labelNode.textContent || '').trim() || 'Learn more about methodology';
+    }
+
+    function applyLabelByViewport() {
+      var useMobileLabel = isMobilePortrait.matches || isMobileLandscape.matches;
+      labelNode.textContent = useMobileLabel ? mobileLabel : labelNode.dataset.originalLabel;
+    }
+
+    applyLabelByViewport();
+    window.addEventListener('resize', applyLabelByViewport);
+    window.addEventListener('orientationchange', applyLabelByViewport);
+  }
+
   function buildWhatsAppModal() {
     if (document.getElementById('ixWhatsAppModal')) return;
 
@@ -746,6 +813,8 @@
 
   initScrollToTopButton();
   initFooterYearAutoUpdate();
+  initClientBrandLogoLinks();
+  initMethodologyButtonMobileLabel();
   initResponsiveMenu();
   initWhatsAppModal();
 })();
