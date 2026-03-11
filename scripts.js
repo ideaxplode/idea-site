@@ -477,41 +477,39 @@
           window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       }
 
-      function scrollNodeToTop(node) {
-        if (!node) return;
-        var behavior = prefersReducedMotion() ? 'auto' : 'smooth';
+      var behavior = prefersReducedMotion() ? 'auto' : 'smooth';
 
-        if (node === window) {
-          try {
-            window.scrollTo({ top: 0, left: 0, behavior: behavior });
-          } catch (_) {
-            window.scrollTo(0, 0);
-          }
-          return;
-        }
+      // Scroll the primary page root smoothly first.
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: behavior });
+      } catch (_) {
+        window.scrollTo(0, 0);
+      }
 
-        if (typeof node.scrollTo === 'function') {
-          try {
-            node.scrollTo({ top: 0, behavior: behavior });
-          } catch (_) {}
+      var root = document.scrollingElement || document.documentElement || document.body;
+      if (root && typeof root.scrollTo === 'function') {
+        try {
+          root.scrollTo({ top: 0, behavior: behavior });
+        } catch (_) {
+          root.scrollTop = 0;
         }
       }
 
-      var targets = [
-        window,
-        document.scrollingElement,
-        document.documentElement,
-        document.body,
-        document.querySelector('.main-page'),
-        document.querySelector('.baTaSaNaH')
-      ];
-
-      // Any active nested scroller that is currently scrolled.
-      var scrollers = Array.prototype.slice.call(document.querySelectorAll('*')).filter(function (node) {
-        return node && typeof node.scrollTop === 'number' && node.scrollTop > 0;
+      // Also reset any nested active scrollers (if present) with same behavior.
+      Array.prototype.slice.call(document.querySelectorAll('*')).forEach(function (node) {
+        if (!node || typeof node.scrollTop !== 'number') return;
+        if (node.scrollTop <= 0) return;
+        if (node.scrollHeight <= node.clientHeight) return;
+        if (typeof node.scrollTo === 'function') {
+          try {
+            node.scrollTo({ top: 0, behavior: behavior });
+          } catch (_) {
+            node.scrollTop = 0;
+          }
+        } else {
+          node.scrollTop = 0;
+        }
       });
-
-      targets.concat(scrollers).forEach(scrollNodeToTop);
     });
 
     window.addEventListener('scroll', syncVisibility, { passive: true });

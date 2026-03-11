@@ -4945,3 +4945,133 @@ body.ix-menu-open {
 #scrollTopBtn.scroll-top-button:hover i.fa-solid.fa-chevron-up {
   color: #6a6a6a !important;
 }
+
+/* Final hard override: keep scroll-to-top visible state and colors consistent */
+#scrollTopBtn.scroll-top-button {
+  border: 0 !important;
+  background-color: #ffffff !important;
+}
+
+#scrollTopBtn.scroll-top-button:hover,
+#scrollTopBtn.scroll-top-button:focus-visible {
+  background-color: #e3e3e3 !important;
+}
+
+#scrollTopBtn.scroll-top-button .ix-icon,
+#scrollTopBtn.scroll-top-button .fa-angle-up {
+  color: #6a6a6a !important;
+}
+
+/* Remove tiny Bubble debug square if it appears at bottom-right */
+.show-outline,
+.show-outline::before,
+.show-outline::after {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.bubble-element.PoweredByBubble,
+#bubble_badge,
+[data-testid="powered-by-bubble"],
+[data-bubble-powered-by] {
+  display: none !important;
+}
+
+/* Offerings cards responsiveness */
+@media (max-width: 1024px) {
+  .baTaSdz {
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+  }
+
+  .baTaSdz > .bubble-element.Group[data-outline="true"] {
+    min-width: 0 !important;
+    width: calc(50% - 8px) !important;
+    max-width: calc(50% - 8px) !important;
+    flex: 1 1 calc(50% - 8px) !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .baTaSdz {
+    gap: 12px !important;
+  }
+
+  .baTaSdz > .bubble-element.Group[data-outline="true"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+}
+
+/* Final hero rotating square responsiveness (desktop/tablet/mobile) */
+.baTaSkf {
+  min-width: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+}
+
+.baTaSkf #cube-container {
+  width: clamp(210px, 24vw, 250px) !important;
+  max-width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.baTaSkf #cube {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.baTaSkf #cube .face .face-content {
+  margin-top: 0 !important;
+  min-height: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.baTaSkf #cube .face,
+.baTaSkf #cube .face.current {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 1024px) {
+  .baTaSkf #cube-container {
+    width: clamp(190px, 34vw, 240px) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .baTaSkf #cube-container {
+    width: clamp(170px, 56vw, 220px) !important;
+  }
+
+  .baTaSkf .face-content > .big-text {
+    font-size: clamp(20px, 5.5vw, 24px) !important;
+    line-height: 1.2 !important;
+  }
+
+  .baTaSkf .face-content > .small-text {
+    font-size: clamp(12px, 3.4vw, 14px) !important;
+    line-height: 1.35 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .baTaSkf #cube-container {
+    width: clamp(156px, 62vw, 205px) !important;
+  }
+}
