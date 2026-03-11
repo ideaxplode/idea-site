@@ -4734,6 +4734,15 @@ body.ix-menu-open {
   }
 }
 
+/* Our promises row title: keep single-line truncation like the original */
+.baTaTaZz .bubble-r-container.flex.row > .bubble-element.Text,
+.baTaTaZz .bubble-r-container.flex.row > .bubble-element.Text > div {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
 @media (max-width: 375px) and (orientation: portrait) {
   /* Hero square placement in narrow portrait */
   .baTaSkf {
