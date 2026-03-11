@@ -642,12 +642,20 @@
       'bibles for america': 'https://biblesforamerica.org/',
       nteli: 'https://nteligroup.com/',
       'jks infotech': 'https://www.jksinfotech.in/',
-      orgware: 'https://orgware.in/'
+      orgware: 'https://orgware.in/',
+      orgwave: 'https://orgware.in/'
     };
 
     document.querySelectorAll('#clientLogosContainer .baTaSdaV').forEach(function (logoNode) {
       var brandTitle = (logoNode.getAttribute('title') || '').trim().toLowerCase();
+      var logoImg = logoNode.querySelector('img');
+      var logoSrc = logoImg ? (logoImg.getAttribute('src') || '').toLowerCase() : '';
       var targetUrl = brandUrlsByTitle[brandTitle];
+
+      // Fallback to image filename so logo click still works even if title differs.
+      if (!targetUrl && logoSrc.indexOf('clientbrand4') !== -1) {
+        targetUrl = 'https://orgware.in/';
+      }
       if (!targetUrl) return;
 
       logoNode.setAttribute('role', 'link');

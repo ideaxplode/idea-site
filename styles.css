@@ -3721,7 +3721,7 @@ html {
   height: 52px;
   border: 1px solid #bdbdbd;
   border-radius: 50%;
-  background: #e3e3e3;
+  background: #ffffff;
   color: #6a6a6a;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   display: flex;
@@ -3759,7 +3759,7 @@ html {
 
 #scrollTopBtn.scroll-top-button:hover .ix-icon,
 #scrollTopBtn.scroll-top-button:hover .fa-angle-up {
-  color: #4f4f4f;
+  color: #6a6a6a;
 }
 
 /* WhatsApp modal */
@@ -4904,15 +4904,20 @@ body.ix-menu-open {
   transform: translateY(-1px) !important;
 }
 
-/* Scroll-to-top icon color override */
-#scrollTopBtn.scroll-top-button .ix-icon,
-#scrollTopBtn.scroll-top-button .fa-angle-up,
-#scrollTopBtn.scroll-top-button i.fa-solid.fa-chevron-up {
-  color: #ffffff !important;
+/* Scroll-to-top final color override */
+#scrollTopBtn.scroll-top-button {
+  background-color: #ffffff !important;
 }
 
+#scrollTopBtn.scroll-top-button:hover {
+  background-color: #e3e3e3 !important;
+}
+
+#scrollTopBtn.scroll-top-button .ix-icon,
+#scrollTopBtn.scroll-top-button .fa-angle-up,
+#scrollTopBtn.scroll-top-button i.fa-solid.fa-chevron-up,
 #scrollTopBtn.scroll-top-button:hover .ix-icon,
 #scrollTopBtn.scroll-top-button:hover .fa-angle-up,
 #scrollTopBtn.scroll-top-button:hover i.fa-solid.fa-chevron-up {
-  color: #d3d3d3 !important;
+  color: #6a6a6a !important;
 }
