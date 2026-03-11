@@ -472,47 +472,46 @@
     btn.addEventListener('click', function (e) {
       e.preventDefault();
 
+      function prefersReducedMotion() {
+        return typeof window.matchMedia === 'function' &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      }
+
       function scrollNodeToTop(node) {
-        if (!node || typeof node.scrollTop !== 'number') return;
+        if (!node) return;
+        var behavior = prefersReducedMotion() ? 'auto' : 'smooth';
+
+        if (node === window) {
+          try {
+            window.scrollTo({ top: 0, left: 0, behavior: behavior });
+          } catch (_) {
+            window.scrollTo(0, 0);
+          }
+          return;
+        }
+
         if (typeof node.scrollTo === 'function') {
           try {
-            node.scrollTo({ top: 0, behavior: 'smooth' });
-            return;
+            node.scrollTo({ top: 0, behavior: behavior });
           } catch (_) {}
         }
-        node.scrollTop = 0;
       }
 
-      // Window/page scroll
-      try {
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-      } catch (_) {
-        window.scrollTo(0, 0);
-      }
+      var targets = [
+        window,
+        document.scrollingElement,
+        document.documentElement,
+        document.body,
+        document.querySelector('.main-page'),
+        document.querySelector('.baTaSaNaH')
+      ];
 
-      // Root scroll targets
-      scrollNodeToTop(document.scrollingElement);
-      scrollNodeToTop(document.documentElement);
-      scrollNodeToTop(document.body);
-      scrollNodeToTop(document.querySelector('.main-page'));
-      scrollNodeToTop(document.querySelector('.baTaSaNaH'));
-
-      // Any active nested scroller
+      // Any active nested scroller that is currently scrolled.
       var scrollers = Array.prototype.slice.call(document.querySelectorAll('*')).filter(function (node) {
         return node && typeof node.scrollTop === 'number' && node.scrollTop > 0;
       });
-      scrollers.forEach(scrollNodeToTop);
 
-      // Extra fallback for mobile/odd scrolling containers
-      window.setTimeout(function () {
-        try {
-          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-        } catch (_) {
-          window.scrollTo(0, 0);
-        }
-        if (document.documentElement) document.documentElement.scrollTop = 0;
-        if (document.body) document.body.scrollTop = 0;
-      }, 40);
+      targets.concat(scrollers).forEach(scrollNodeToTop);
     });
 
     window.addEventListener('scroll', syncVisibility, { passive: true });
