@@ -5055,3 +5055,14 @@ body.ix-menu-open {
     align-self: center !important;
   }
 }
+
+@media (max-width: 480px) and (orientation: portrait) {
+  .baTaSil {
+    margin-bottom: 20px !important;
+  }
+
+  .baTaSih > .bubble-element.Group[data-outline="true"]:not(:last-child),
+  .baTaSdz > .bubble-element.Group[data-outline="true"]:not(:last-child) {
+    margin-bottom: 20px !important;
+  }
+}
