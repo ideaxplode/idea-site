@@ -1,4 +1,4 @@
-/* inlined from index_files/css */
+﻿/* inlined from index_files/css */
 /* devanagari */
 @font-face {
   font-family: 'Poppins';
@@ -3932,6 +3932,7 @@ body.ix-menu-open {
 
 .ix-responsive-menu-link {
   width: 100%;
+  min-height: 60px;
   text-align: left;
   border: 0;
   border-bottom: 1px solid #ececec;
