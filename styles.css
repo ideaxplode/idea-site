@@ -5024,3 +5024,34 @@ body.ix-menu-open {
     pointer-events: none !important;
   }
 }
+
+@media (max-width: 600px) {
+  .baTaUaJp {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 22px !important;
+    margin-top: 0 !important;
+  }
+
+  .baTaUcaF {
+    align-self: center !important;
+    order: 1 !important;
+  }
+
+  .baTaUaKf {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: 0 1 auto !important;
+    align-self: center !important;
+    order: 2 !important;
+  }
+
+  .baTaUaKaB,
+  .baTaUaKaZ,
+  .baTaUcd {
+    width: 100% !important;
+    max-width: 100% !important;
+    align-self: center !important;
+  }
+}
