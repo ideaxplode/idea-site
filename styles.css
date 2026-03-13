@@ -1,91 +1,4 @@
-﻿#scrollTopBtn.scroll-top-button {
-  position: fixed;
-  right: 32px;
-  bottom: 32px;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: #fff;
-  color: #c53d8f;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
-  border: none;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(30px);
-  transition: opacity 0.28s cubic-bezier(.4,0,.2,1), transform 0.28s cubic-bezier(.4,0,.2,1);
-  z-index: 1002;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#scrollTopBtn.scroll-top-button.visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-#scrollTopBtn.scroll-top-button .ix-icon {
-  font-size: 1.7rem;
-  color: #c53d8f;
-  transition: color 0.18s;
-  line-height: 1;
-  display: block;
-}
-#scrollTopBtn.scroll-top-button .fa-arrow-circle-up {
-  font-size: 1.7rem;
-  color: #c53d8f;
-  line-height: 1;
-  display: block;
-}
-#scrollTopBtn.scroll-top-button:hover {
-  background: #f7e9f2;
-  box-shadow: 0 4px 18px 0 rgba(197,61,143,0.10);
-}
-#scrollTopBtn.scroll-top-button:hover .ix-icon,
-#scrollTopBtn.scroll-top-button:hover .fa-arrow-circle-up {
-  color: #a82c7a;
-}
-#scrollTopBtn.scroll-top-button {
-  position: fixed;
-  right: 32px;
-  bottom: 32px;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: #fff;
-  color: #c53d8f;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
-  border: none;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(30px);
-  transition: opacity 0.28s cubic-bezier(.4,0,.2,1), transform 0.28s cubic-bezier(.4,0,.2,1);
-  z-index: 1002;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#scrollTopBtn.scroll-top-button.visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-#scrollTopBtn.scroll-top-button i.fa-solid.fa-chevron-up {
-  font-size: 1.7rem;
-  color: #c53d8f;
-  transition: color 0.18s;
-  line-height: 1;
-  display: block;
-}
-#scrollTopBtn.scroll-top-button:hover {
-  background: #f7e9f2;
-  box-shadow: 0 4px 18px 0 rgba(197,61,143,0.10);
-}
-#scrollTopBtn.scroll-top-button:hover i.fa-solid.fa-chevron-up {
-  color: #a82c7a;
-}
-/* inlined from index_files/css */
+﻿/* inlined from index_files/css */
 /* devanagari */
 @font-face {
   font-family: 'Poppins';
@@ -395,39 +308,6 @@ button {
   opacity: 1 !important;
 }
 
-/* Scroll-to-top button styles */
-#scrollTopBtn.scroll-top-button {
-  position: fixed;
-  right: 32px;
-  bottom: 32px;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: #fff;
-  color: #c53d8f;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
-  border: none;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(30px);
-  transition: opacity 0.28s cubic-bezier(.4,0,.2,1), transform 0.28s cubic-bezier(.4,0,.2,1);
-  z-index: 1002;
-  cursor: pointer;
-}
-#scrollTopBtn.scroll-top-button.visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-#scrollTopBtn.scroll-top-button svg {
-  display: block;
-  margin: auto;
-  color: #c53d8f;
-}
-#scrollTopBtn.scroll-top-button:hover {
-  background: #f7e9f2;
-  box-shadow: 0 4px 18px 0 rgba(197,61,143,0.10);
-}
 article,
 aside,
 details,
@@ -4052,6 +3932,7 @@ body.ix-menu-open {
 
 .ix-responsive-menu-link {
   width: 100%;
+  min-height: 60px;
   text-align: left;
   border: 0;
   border-bottom: 1px solid #ececec;
@@ -4620,6 +4501,26 @@ body.ix-menu-open {
   }
 }
 
+@media (min-width: 700px) and (max-width: 1024px) and (orientation: portrait) {
+  /* About-us team photo stack: avoid bottom clipping on tablet portrait */
+  .baTaUaOaT {
+    align-items: flex-start !important;
+  }
+
+  .baTaUaPaD {
+    margin-top: 0 !important;
+    margin-bottom: 14px !important;
+    min-height: 420px !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  #photo-stack {
+    margin-bottom: 14px !important;
+  }
+}
+
 @media (max-width: 480px) {
   .ix-modal {
     width: min(344px, calc(100vw - 20px)) !important;
@@ -4729,6 +4630,14 @@ body.ix-menu-open {
     height: 40px !important;
   }
 
+  .baTaUaQaZ .ix-icon,
+  .baTaUaQaZ .material-symbols-rounded,
+  .baTaUaQd .ix-icon,
+  .baTaUaQd .material-symbols-rounded {
+    font-size: 25px !important;
+    line-height: 1 !important;
+  }
+
   /* Promises section (mobile portrait only): remove extra "more" text + left align "We..." rows */
   .baTaTaZz > .bubble-element.Group > .bubble-element.Text {
     display: none !important;
@@ -4741,6 +4650,17 @@ body.ix-menu-open {
 
   .baTaTaZz .bubble-r-container.flex.row > .bubble-element.Text {
     text-align: left !important;
+  }
+
+  /* Keep accordion detail text visible when "How?" is expanded */
+  .baTaTaZz > .bubble-element.Group.no-scrolling > .bubble-element.Text {
+    display: block !important;
+  }
+
+  /* Improve touch reliability for mobile portrait accordion triggers */
+  .baTaTaZz .ix-accordion-trigger {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
   }
 }
 
@@ -4925,11 +4845,13 @@ body.ix-menu-open {
 
 /* Scroll-to-top final color override */
 #scrollTopBtn.scroll-top-button {
+  border: 0 !important;
   background-color: #ffffff !important;
   display: none !important;
 }
 
-#scrollTopBtn.scroll-top-button:hover {
+#scrollTopBtn.scroll-top-button:hover,
+#scrollTopBtn.scroll-top-button:focus-visible {
   background-color: #e3e3e3 !important;
 }
 
@@ -4943,22 +4865,6 @@ body.ix-menu-open {
 #scrollTopBtn.scroll-top-button:hover .ix-icon,
 #scrollTopBtn.scroll-top-button:hover .fa-angle-up,
 #scrollTopBtn.scroll-top-button:hover i.fa-solid.fa-chevron-up {
-  color: #6a6a6a !important;
-}
-
-/* Final hard override: keep scroll-to-top visible state and colors consistent */
-#scrollTopBtn.scroll-top-button {
-  border: 0 !important;
-  background-color: #ffffff !important;
-}
-
-#scrollTopBtn.scroll-top-button:hover,
-#scrollTopBtn.scroll-top-button:focus-visible {
-  background-color: #e3e3e3 !important;
-}
-
-#scrollTopBtn.scroll-top-button .ix-icon,
-#scrollTopBtn.scroll-top-button .fa-angle-up {
   color: #6a6a6a !important;
 }
 
@@ -5073,5 +4979,90 @@ body.ix-menu-open {
 @media (max-width: 480px) {
   .baTaSkf #cube-container {
     width: clamp(156px, 62vw, 205px) !important;
+  }
+}
+
+/* Mobile/tablet only: suppress tiny bottom-right debug square */
+@media (max-width: 1024px) {
+  .bubble-r-line.debug,
+  .bubble-r-line .bubble-r-box.debug,
+  .show-outline,
+  .show-outline::before,
+  .show-outline::after,
+  .bubble-element.clickable-element.show-outline,
+  #bubble_badge,
+  .bubble-element.PoweredByBubble,
+  [data-testid="powered-by-bubble"],
+  [data-bubble-powered-by] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    pointer-events: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  input[type=checkbox]:focus,
+  input[type=radio]:focus,
+  button:focus,
+  [tabindex]:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Fallback for injected fixed corner marker nodes */
+  body > div[style*="position: fixed"][style*="right: 0"][style*="bottom: 0"],
+  body > span[style*="position: fixed"][style*="right: 0"][style*="bottom: 0"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .baTaUaJp {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 22px !important;
+    margin-top: 0 !important;
+  }
+
+  .baTaUcaF {
+    align-self: center !important;
+    order: 1 !important;
+  }
+
+  .baTaUaKf {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: 0 1 auto !important;
+    align-self: center !important;
+    order: 2 !important;
+  }
+
+  .baTaUaKaB,
+  .baTaUaKaZ,
+  .baTaUcd {
+    width: 100% !important;
+    max-width: 100% !important;
+    align-self: center !important;
+  }
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+  .baTaSil {
+    margin-bottom: 20px !important;
+  }
+
+  .baTaSih > .bubble-element.Group[data-outline="true"]:not(:last-child),
+  .baTaSdz > .bubble-element.Group[data-outline="true"]:not(:last-child) {
+    margin-bottom: 20px !important;
   }
 }

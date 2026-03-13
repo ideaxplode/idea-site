@@ -7,29 +7,6 @@
     'Contact': 'groupContact',
     'How fast can you build?': 'groupFastDevelopment'
   };
-
-  function applyFaClassFallbacks() {
-    var faTextMap = {
-      'fa-map-marker': '📍',
-      'fa-envelope': '✉',
-      'fa-at': '@',
-      'fa-phone': '☎'
-    };
-
-    document.querySelectorAll('.fa').forEach(function (node) {
-      var cls = '';
-      Object.keys(faTextMap).forEach(function (key) {
-        if (node.classList.contains(key)) cls = key;
-      });
-      if (!cls) return;
-      node.textContent = faTextMap[cls] + ' ';
-      node.style.display = 'inline-block';
-      node.style.fontStyle = 'normal';
-      node.style.fontWeight = '600';
-      node.style.marginRight = '4px';
-    });
-  }
-
   function toOpaqueRgb(colorValue) {
     var rgba = colorValue.match(/^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*[\d.]+\s*\)$/i);
     if (!rgba) return colorValue;
@@ -449,6 +426,64 @@
 })();
 
 (function () {
+  function hideTinyCornerArtifactsOnMobileTablet() {
+    if (window.innerWidth > 1024) return;
+
+    var vw = window.innerWidth || document.documentElement.clientWidth || 0;
+    var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+    if (!vw || !vh) return;
+
+    var SAFE_SELECTOR = '#scrollTopBtn, #ixResponsiveMenuToggle, #ixResponsiveMenu, #ixWhatsAppModal';
+
+    document.querySelectorAll('body *').forEach(function (node) {
+      if (!(node instanceof HTMLElement)) return;
+      if (node.matches(SAFE_SELECTOR) || node.closest(SAFE_SELECTOR)) return;
+      if (node.dataset.ixKeepTiny === 'true') return;
+
+      var style = window.getComputedStyle(node);
+      if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return;
+      if (style.position !== 'fixed') return;
+
+      var rect = node.getBoundingClientRect();
+      var isSmall = rect.width > 0 && rect.height > 0 && rect.width <= 42 && rect.height <= 42;
+      var nearRightEdge = rect.right >= vw - 44;
+      var nearBottomEdge = rect.bottom >= vh - 44;
+      if (!isSmall || !nearRightEdge || !nearBottomEdge) return;
+
+      node.style.setProperty('display', 'none', 'important');
+      node.style.setProperty('visibility', 'hidden', 'important');
+      node.style.setProperty('pointer-events', 'none', 'important');
+      node.style.setProperty('border', '0', 'important');
+      node.style.setProperty('outline', '0', 'important');
+      node.style.setProperty('box-shadow', 'none', 'important');
+      node.dataset.ixHiddenTinyCorner = 'true';
+    });
+  }
+
+  function initTinyCornerArtifactGuard() {
+    var rafId = 0;
+    function run() {
+      rafId = 0;
+      hideTinyCornerArtifactsOnMobileTablet();
+    }
+    function queueRun() {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(run);
+    }
+
+    queueRun();
+    window.addEventListener('resize', queueRun, { passive: true });
+    window.addEventListener('scroll', queueRun, { passive: true });
+    document.addEventListener('click', queueRun, true);
+
+    if (typeof MutationObserver === 'function') {
+      var observer = new MutationObserver(function () {
+        queueRun();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
   function initScrollToTopButton() {
     var btn = document.getElementById('scrollTopBtn');
     if (!btn) return;
@@ -814,4 +849,5 @@
   initMethodologyButtonMobileLabel();
   initResponsiveMenu();
   initWhatsAppModal();
+  initTinyCornerArtifactGuard();
 })();
