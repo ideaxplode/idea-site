@@ -4630,6 +4630,14 @@ body.ix-menu-open {
     height: 40px !important;
   }
 
+  .baTaUaQaZ .ix-icon,
+  .baTaUaQaZ .material-symbols-rounded,
+  .baTaUaQd .ix-icon,
+  .baTaUaQd .material-symbols-rounded {
+    font-size: 25px !important;
+    line-height: 1 !important;
+  }
+
   /* Promises section (mobile portrait only): remove extra "more" text + left align "We..." rows */
   .baTaTaZz > .bubble-element.Group > .bubble-element.Text {
     display: none !important;
