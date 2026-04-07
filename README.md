@@ -2,4 +2,4 @@
 
 ## How to start local development server?
 
-`npm serve`
+`npx serve .`
