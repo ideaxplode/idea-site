@@ -433,7 +433,7 @@
     var vh = window.innerHeight || document.documentElement.clientHeight || 0;
     if (!vw || !vh) return;
 
-    var SAFE_SELECTOR = '#scrollTopBtn, #ixResponsiveMenuToggle, #ixResponsiveMenu, #ixWhatsAppModal';
+    var SAFE_SELECTOR = '#scrollTopBtn, #ixResponsiveMenuToggle, #ixResponsiveMenu, #ixWhatsAppModal, #ixEmailModal';
 
     document.querySelectorAll('body *').forEach(function (node) {
       if (!(node instanceof HTMLElement)) return;
@@ -764,16 +764,56 @@
     document.body.appendChild(modal);
   }
 
+  function buildEmailModal() {
+    if (document.getElementById('ixEmailModal')) return;
+
+    var modal = document.createElement('div');
+    modal.id = 'ixEmailModal';
+    modal.className = 'ix-modal-overlay';
+    modal.setAttribute('aria-hidden', 'true');
+
+    modal.innerHTML =
+      '<div class="ix-modal ix-modal-email" role="dialog" aria-modal="true" aria-labelledby="ixEmailModalTitle">' +
+        '<button type="button" class="ix-modal-close" aria-label="Close"><i class="fa fa-times"></i></button>' +
+        '<div class="ix-modal-header">' +
+          '<span class="ix-modal-icon" aria-hidden="true"><i class="fa fa-envelope-o"></i></span>' +
+          '<h3 id="ixEmailModalTitle">Chat with Rathan through Email</h3>' +
+        '</div>' +
+        '<div class="ix-modal-subhead">' +
+          '<div>' +
+            '<p class="ix-modal-copy">If you don\'t use WhatsApp, you can email Rathan directly. He will personally respond to your email.</p>' +
+            '<p class="ix-modal-prefill">To: hola@ideaxplode.com</p>' +
+          '</div>' +
+          '<img class="ix-modal-avatar" src="./assets/images/Rathan&#39;s Profile Pic 3.png" alt="Rathan">' +
+        '</div>' +
+        '<input id="ixEmailSubject" class="ix-modal-input" type="text" aria-label="Email subject" value="Discussion with ideaXplode">' +
+        '<textarea id="ixEmailMessage" class="ix-modal-message" aria-label="Email message">Hi Rathan!</textarea>' +
+        '<button type="button" class="ix-modal-cta">' +
+          '<span class="ix-modal-cta-icon" aria-hidden="true"><i class="fa fa-paper-plane-o"></i></span>' +
+          '<span>Send email</span>' +
+        '</button>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+  }
+
   function initWhatsAppModal() {
     buildWhatsAppModal();
+    buildEmailModal();
 
     var modal = document.getElementById('ixWhatsAppModal');
+    var emailModal = document.getElementById('ixEmailModal');
     var messageNode = modal.querySelector('#ixModalMessage');
     var closeBtn = modal.querySelector('.ix-modal-close');
     var ctaBtn = modal.querySelector('.ix-modal-cta');
     var fallbackBtn = modal.querySelector('.ix-modal-fallback');
+    var emailCloseBtn = emailModal.querySelector('.ix-modal-close');
+    var emailCtaBtn = emailModal.querySelector('.ix-modal-cta');
+    var emailSubjectNode = emailModal.querySelector('#ixEmailSubject');
+    var emailMessageNode = emailModal.querySelector('#ixEmailMessage');
     var activeMessage = 'Hi Rathan!';
     var whatsappNumber = '9962150600';
+    var emailAddress = 'hola@ideaxplode.com';
 
     var triggerMap = [
       { selector: '.baTaSaTaB', message: 'Hi Rathan!' },
@@ -786,19 +826,35 @@
       { selector: '.baTaUyr', message: 'Hi Rathan, I\'d like to join the ideaXplode team. Please find my resume below..' }
     ];
 
+    function syncBodyModalState() {
+      var hasOpenModal = document.querySelector('.ix-modal-overlay.is-open');
+      document.body.classList.toggle('ix-modal-open', !!hasOpenModal);
+    }
+
     function openModal(message) {
       activeMessage = message || 'Hi Rathan!';
       messageNode.textContent = activeMessage;
       messageNode.value = activeMessage;
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('ix-modal-open');
+      syncBodyModalState();
     }
 
-    function closeModal() {
-      modal.classList.remove('is-open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('ix-modal-open');
+    function openEmailModal(message) {
+      activeMessage = message || activeMessage || 'Hi Rathan!';
+      emailSubjectNode.value = 'Discussion with ideaXplode';
+      emailMessageNode.textContent = activeMessage;
+      emailMessageNode.value = activeMessage;
+      emailModal.classList.add('is-open');
+      emailModal.setAttribute('aria-hidden', 'false');
+      syncBodyModalState();
+    }
+
+    function closeModal(targetModal) {
+      if (!targetModal) return;
+      targetModal.classList.remove('is-open');
+      targetModal.setAttribute('aria-hidden', 'true');
+      syncBodyModalState();
     }
 
     triggerMap.forEach(function (item) {
@@ -812,16 +868,27 @@
     });
 
     closeBtn.addEventListener('click', function () {
-      closeModal();
+      closeModal(modal);
+    });
+
+    emailCloseBtn.addEventListener('click', function () {
+      closeModal(emailModal);
     });
 
     modal.addEventListener('click', function (e) {
-      if (e.target === modal) closeModal();
+      if (e.target === modal) closeModal(modal);
+    });
+
+    emailModal.addEventListener('click', function (e) {
+      if (e.target === emailModal) closeModal(emailModal);
     });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-        closeModal();
+        closeModal(modal);
+      }
+      if (e.key === 'Escape' && emailModal.classList.contains('is-open')) {
+        closeModal(emailModal);
       }
     });
 
@@ -830,16 +897,25 @@
       if (!finalMessage) finalMessage = activeMessage;
       var url = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(finalMessage);
       window.open(url, '_blank', 'noopener');
-      closeModal();
+      closeModal(modal);
     });
 
     fallbackBtn.addEventListener('click', function () {
       var finalMessage = (messageNode.value || activeMessage || '').trim();
       if (!finalMessage) finalMessage = activeMessage;
-      var subject = encodeURIComponent('Discussion with ideaXplode');
-      var body = encodeURIComponent(finalMessage);
-      window.location.href = 'mailto:hola@ideaxplode.com?subject=' + subject + '&body=' + body;
-      closeModal();
+      closeModal(modal);
+      openEmailModal(finalMessage);
+    });
+
+    emailCtaBtn.addEventListener('click', function () {
+      var subject = (emailSubjectNode.value || 'Discussion with ideaXplode').trim();
+      var body = (emailMessageNode.value || activeMessage || '').trim();
+      var mailtoUrl =
+        'mailto:' + emailAddress +
+        '?subject=' + encodeURIComponent(subject || 'Discussion with ideaXplode') +
+        '&body=' + encodeURIComponent(body || activeMessage);
+      window.location.href = mailtoUrl;
+      closeModal(emailModal);
     });
   }
 

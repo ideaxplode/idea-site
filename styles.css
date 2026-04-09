@@ -3779,6 +3779,39 @@ body.ix-modal-open {
   padding-left: 2px;
 }
 
+.ix-modal-prefill {
+  margin-top: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #5c6270;
+}
+
+.ix-modal-input {
+  margin-top: 16px;
+  width: 95%;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+  background: #fff;
+  padding: 0 15px;
+  font-family: var(--font_default);
+  font-size: 16px;
+  font-weight: 400;
+  color: #1f1f1f;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.ix-modal-input:hover {
+  border-color: #b8b8b8;
+  background-color: #fcfcfc;
+}
+
+.ix-modal-input:focus {
+  border-color: #9f9f9f;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+}
+
 .ix-modal-message {
   margin-top: 18px;
   width: 95%;
@@ -3856,6 +3889,18 @@ body.ix-modal-open {
 .ix-modal-fallback:hover {
   background: #dadada;
   color: #425168;
+}
+
+.ix-modal-email .ix-modal-icon {
+  color: #1d74f5;
+}
+
+.ix-modal-email .ix-modal-cta {
+  background: #1d74f5;
+}
+
+.ix-modal-email .ix-modal-cta:hover {
+  background: #1767db;
 }
 
 /* Responsive menu (mobile/tablet) */
@@ -4018,6 +4063,12 @@ body.ix-menu-open {
   }
 
   .ix-modal-message {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .ix-modal-input {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
