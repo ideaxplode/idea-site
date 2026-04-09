@@ -3587,6 +3587,17 @@ html {
   display: none !important;
 }
 
+.ix-accordion-icon {
+  display: inline-block;
+  transform: rotate(0deg);
+  transform-origin: center;
+  transition: transform 300ms ease-in-out;
+}
+
+.ix-accordion-trigger.is-open .ix-accordion-icon {
+  transform: rotate(180deg);
+}
+
 .HorizontalScrollingGroup,
 .HorizontalScrollingGroup > div,
 .HorizontalScrollingGroup > div > div {

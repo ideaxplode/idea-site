@@ -299,6 +299,10 @@
     return trigger.querySelector('.label-item, .bubble-element.Text');
   }
 
+  function getAccordionIconNode(trigger) {
+    return trigger.querySelector('.material-symbols-rounded');
+  }
+
   function getReferenceTextColor(group) {
     var parent = group.parentElement;
     if (!parent) return '';
@@ -335,6 +339,7 @@
     if (!trigger) return;
 
     var labelNode = getAccordionLabelNode(trigger);
+    var iconNode = getAccordionIconNode(trigger);
     var referenceColor = getReferenceTextColor(group);
     var collapsedMax = group.style.maxHeight || '36px';
     var directTexts = getDirectContentTexts(group, trigger);
@@ -354,12 +359,16 @@
     group.__ixAccordion = {
       trigger: trigger,
       labelNode: labelNode,
+      iconNode: iconNode,
       referenceColor: referenceColor,
       directTexts: directTexts,
       triggerBaseBg: triggerBaseBg
     };
 
     trigger.classList.add('ix-accordion-trigger');
+    if (iconNode) {
+      iconNode.classList.add('ix-accordion-icon');
+    }
     trigger.__ixAccordionGroup = group;
 
     trigger.addEventListener('click', function (e) {
@@ -390,6 +399,8 @@
       void group.offsetHeight;
       group.style.maxHeight = group.dataset.collapsedMax || '36px';
       group.dataset.expanded = 'false';
+      meta.trigger.classList.remove('is-open');
+      meta.trigger.setAttribute('aria-expanded', 'false');
       meta.trigger.style.backgroundColor = meta.triggerBaseBg;
       if (meta.labelNode) {
         meta.labelNode.textContent = group.dataset.baseLabel || 'Tell me more';
@@ -406,6 +417,8 @@
       var expandedHeight = group.scrollHeight;
       group.style.maxHeight = expandedHeight + 'px';
       group.dataset.expanded = 'true';
+      meta.trigger.classList.add('is-open');
+      meta.trigger.setAttribute('aria-expanded', 'true');
       meta.trigger.style.backgroundColor = 'rgba(255, 255, 255, 1)';
       if (meta.labelNode) {
         meta.labelNode.textContent = 'Hide';
