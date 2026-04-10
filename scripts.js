@@ -851,29 +851,50 @@
       document.body.classList.toggle('ix-modal-open', !!hasOpenModal);
     }
 
-    function openModal(message) {
-      activeMessage = message || 'Hi Rathan!';
-      messageNode.textContent = activeMessage;
-      messageNode.value = activeMessage;
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-      syncBodyModalState();
-    }
-
-    function openEmailModal(message) {
-      activeMessage = message || activeMessage || 'Hi Rathan!';
-      emailMessageNode.textContent = activeMessage;
-      emailMessageNode.value = activeMessage;
-      emailModal.classList.add('is-open');
-      emailModal.setAttribute('aria-hidden', 'false');
+    function showModal(targetModal) {
+      if (!targetModal) return;
+      targetModal.classList.add('is-open');
+      targetModal.setAttribute('aria-hidden', 'false');
       syncBodyModalState();
     }
 
     function closeModal(targetModal) {
       if (!targetModal) return;
       targetModal.classList.remove('is-open');
+      targetModal.classList.remove('is-switching-in');
+      targetModal.classList.remove('is-switching-out');
       targetModal.setAttribute('aria-hidden', 'true');
       syncBodyModalState();
+    }
+
+    function openModal(message) {
+      activeMessage = message || 'Hi Rathan!';
+      messageNode.textContent = activeMessage;
+      messageNode.value = activeMessage;
+      showModal(modal);
+    }
+
+    function openEmailModal(message) {
+      activeMessage = message || activeMessage || 'Hi Rathan!';
+      emailMessageNode.textContent = activeMessage;
+      emailMessageNode.value = activeMessage;
+      showModal(emailModal);
+    }
+
+    function switchModal(fromModal, toModal, prepareNext) {
+      if (!fromModal || !toModal) return;
+      if (typeof prepareNext === 'function') prepareNext();
+
+      fromModal.classList.add('is-switching-out');
+
+      window.setTimeout(function () {
+        closeModal(fromModal);
+        toModal.classList.add('is-switching-in');
+        showModal(toModal);
+        window.setTimeout(function () {
+          toModal.classList.remove('is-switching-in');
+        }, 240);
+      }, 160);
     }
 
     triggerMap.forEach(function (item) {
@@ -922,8 +943,11 @@
     fallbackBtn.addEventListener('click', function () {
       var finalMessage = (messageNode.value || activeMessage || '').trim();
       if (!finalMessage) finalMessage = activeMessage;
-      closeModal(modal);
-      openEmailModal(finalMessage);
+      switchModal(modal, emailModal, function () {
+        activeMessage = finalMessage;
+        emailMessageNode.textContent = finalMessage;
+        emailMessageNode.value = finalMessage;
+      });
     });
 
     emailCtaBtn.addEventListener('click', function () {
@@ -934,14 +958,9 @@
         '&to=' + encodeURIComponent(emailAddress) +
         '&su=' + encodeURIComponent(emailSubject) +
         '&body=' + encodeURIComponent(finalBody);
-      var mailtoUrl =
-        'mailto:' + emailAddress +
-        '?subject=' + encodeURIComponent(emailSubject) +
-        '&body=' + encodeURIComponent(finalBody);
-
       var popup = window.open(gmailUrl, '_blank', 'noopener');
       if (!popup) {
-        window.location.href = mailtoUrl;
+        window.location.href = gmailUrl;
       }
       closeModal(emailModal);
     });
@@ -949,8 +968,11 @@
     emailBackBtn.addEventListener('click', function () {
       var finalMessage = (emailMessageNode.value || activeMessage || '').trim();
       if (!finalMessage) finalMessage = activeMessage;
-      closeModal(emailModal);
-      openModal(finalMessage);
+      switchModal(emailModal, modal, function () {
+        activeMessage = finalMessage;
+        messageNode.textContent = finalMessage;
+        messageNode.value = finalMessage;
+      });
     });
   }
 
