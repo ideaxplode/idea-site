@@ -1,5 +1,5 @@
 (function () {
-  var sectionMap = {
+  var sectionMap = window.__ixSectionMap || {
     'About': 'groupAboutUs',
     'Technology': 'groupTechnology',
     'Methodology': 'groupMethodology',
@@ -7,6 +7,17 @@
     'Contact': 'groupContact',
     'How fast can you build?': 'groupFastDevelopment'
   };
+  window.__ixSectionMap = sectionMap;
+
+  function smoothTo(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  window.__ixSmoothTo = smoothTo;
+
   function toOpaqueRgb(colorValue) {
     var rgba = colorValue.match(/^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*[\d.]+\s*\)$/i);
     if (!rgba) return colorValue;
@@ -60,13 +71,6 @@
       node.addEventListener('focusin', activate);
       node.addEventListener('focusout', deactivate);
     });
-  }
-
-  function smoothTo(id) {
-    var el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   }
 
   // Skip fallback auto-apply because Font Awesome is already loaded in this clone.
@@ -439,6 +443,14 @@
 })();
 
 (function () {
+  var sectionMap = window.__ixSectionMap || {};
+  var smoothTo = window.__ixSmoothTo || function (id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   function hideTinyCornerArtifactsOnMobileTablet() {
     if (window.innerWidth > 1024) return;
 
@@ -623,8 +635,10 @@
           '<span class="ix-responsive-menu-link-icon" aria-hidden="true"><i class="fa ' + item.icon + '"></i></span>' +
           '<span class="ix-responsive-menu-link-label">' + item.label + '</span>';
         btn.addEventListener('click', function () {
-          smoothTo(sectionMap[item.label]);
           closeMenu();
+          window.requestAnimationFrame(function () {
+            smoothTo(sectionMap[item.label]);
+          });
         });
         linksWrap.appendChild(btn);
       });
