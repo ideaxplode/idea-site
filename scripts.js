@@ -612,7 +612,7 @@
     var menuItems = [
       { label: 'About', icon: 'fa-building-o' },
       { label: 'Technology', icon: 'fa-rocket' },
-      { label: 'Methodology', icon: 'fa-superpowers' },
+    { label: 'Methodology', icon: 'fa-cogs' },
       { label: 'Pricing', icon: 'fa-usd' },
       { label: 'Contact', icon: 'fa-map-marker' }
     ];
