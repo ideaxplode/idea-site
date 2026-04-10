@@ -5301,7 +5301,7 @@ body.ix-menu-open {
 
 @media (max-width: 768px) {
   .ix-section-divider {
-    margin: 12px 0 !important;
+    margin: 8px 0 !important;
   }
 
   #gradient-text {
@@ -5370,7 +5370,7 @@ body.ix-menu-open {
 
 @media (max-width: 480px) {
   .ix-section-divider {
-    margin: 8px 0 !important;
+    margin: 4px 0 !important;
   }
 
   #gradient-text {
