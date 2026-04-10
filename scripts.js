@@ -790,21 +790,27 @@
         '<button type="button" class="ix-modal-close" aria-label="Close"><i class="fa fa-times"></i></button>' +
         '<div class="ix-modal-header">' +
           '<span class="ix-modal-icon" aria-hidden="true"><i class="fa fa-envelope-o"></i></span>' +
-          '<h3 id="ixEmailModalTitle">Chat with Rathan through Email</h3>' +
+          '<h3 id="ixEmailModalTitle">Email Rathan</h3>' +
         '</div>' +
         '<div class="ix-modal-subhead">' +
           '<div>' +
-            '<p class="ix-modal-copy">If you don\'t use WhatsApp, you can email Rathan directly. He will personally respond to your email.</p>' +
-            '<p class="ix-modal-prefill">To: hola@ideaxplode.com</p>' +
+            '<p class="ix-modal-copy">You can email Rathan, CEO of ideaXplode &mdash; he will personally respond to all your emails.</p>' +
           '</div>' +
           '<img class="ix-modal-avatar" src="./assets/images/Rathan&#39;s Profile Pic 3.png" alt="Rathan">' +
         '</div>' +
-        '<input id="ixEmailSubject" class="ix-modal-input" type="text" aria-label="Email subject" value="Discussion with ideaXplode">' +
         '<textarea id="ixEmailMessage" class="ix-modal-message" aria-label="Email message">Hi Rathan!</textarea>' +
         '<button type="button" class="ix-modal-cta">' +
-          '<span class="ix-modal-cta-icon" aria-hidden="true"><i class="fa fa-paper-plane-o"></i></span>' +
+          '<span class="ix-modal-cta-icon" aria-hidden="true"><i class="fa fa-envelope-o"></i></span>' +
           '<span>Send email</span>' +
         '</button>' +
+        '<button type="button" class="ix-modal-fallback ix-modal-backlink">&larr; Switch back to WhatsApp</button>' +
+        '<div class="ix-modal-footer">' +
+          '<a class="ix-modal-footer-link" href="https://www.linkedin.com/in/rathanidea/" target="_blank" rel="noopener">' +
+            '<span class="ix-modal-footer-icon" aria-hidden="true"><i class="fa fa-linkedin-square"></i></span>' +
+            '<span>Connect through LinkedIn <span aria-hidden="true">&#8599;</span></span>' +
+          '</a>' +
+          '<span class="ix-modal-footer-text">Or, simply email to rathan@ideaxplode.com</span>' +
+        '</div>' +
       '</div>';
 
     document.body.appendChild(modal);
@@ -822,11 +828,12 @@
     var fallbackBtn = modal.querySelector('.ix-modal-fallback');
     var emailCloseBtn = emailModal.querySelector('.ix-modal-close');
     var emailCtaBtn = emailModal.querySelector('.ix-modal-cta');
-    var emailSubjectNode = emailModal.querySelector('#ixEmailSubject');
     var emailMessageNode = emailModal.querySelector('#ixEmailMessage');
+    var emailBackBtn = emailModal.querySelector('.ix-modal-backlink');
     var activeMessage = 'Hi Rathan!';
     var whatsappNumber = '9962150600';
-    var emailAddress = 'hola@ideaxplode.com';
+    var emailAddress = 'rathan@ideaxplode.com';
+    var emailSubject = 'From ideaXplode website';
 
     var triggerMap = [
       { selector: '.baTaSaTaB', message: 'Hi Rathan!' },
@@ -855,7 +862,6 @@
 
     function openEmailModal(message) {
       activeMessage = message || activeMessage || 'Hi Rathan!';
-      emailSubjectNode.value = 'Discussion with ideaXplode';
       emailMessageNode.textContent = activeMessage;
       emailMessageNode.value = activeMessage;
       emailModal.classList.add('is-open');
@@ -921,14 +927,30 @@
     });
 
     emailCtaBtn.addEventListener('click', function () {
-      var subject = (emailSubjectNode.value || 'Discussion with ideaXplode').trim();
       var body = (emailMessageNode.value || activeMessage || '').trim();
+      var finalBody = body || activeMessage || 'Hi Rathan!';
+      var gmailUrl =
+        'https://mail.google.com/mail/?view=cm&fs=1' +
+        '&to=' + encodeURIComponent(emailAddress) +
+        '&su=' + encodeURIComponent(emailSubject) +
+        '&body=' + encodeURIComponent(finalBody);
       var mailtoUrl =
         'mailto:' + emailAddress +
-        '?subject=' + encodeURIComponent(subject || 'Discussion with ideaXplode') +
-        '&body=' + encodeURIComponent(body || activeMessage);
-      window.location.href = mailtoUrl;
+        '?subject=' + encodeURIComponent(emailSubject) +
+        '&body=' + encodeURIComponent(finalBody);
+
+      var popup = window.open(gmailUrl, '_blank', 'noopener');
+      if (!popup) {
+        window.location.href = mailtoUrl;
+      }
       closeModal(emailModal);
+    });
+
+    emailBackBtn.addEventListener('click', function () {
+      var finalMessage = (emailMessageNode.value || activeMessage || '').trim();
+      if (!finalMessage) finalMessage = activeMessage;
+      closeModal(emailModal);
+      openModal(finalMessage);
     });
   }
 

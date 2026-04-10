@@ -3906,12 +3906,118 @@ body.ix-modal-open {
   color: #1d74f5;
 }
 
+.ix-modal-email {
+  width: min(710px, calc(100vw - 48px));
+  border-radius: 14px;
+  padding: 28px 30px 26px;
+}
+
+.ix-modal-email .ix-modal-header {
+  margin-bottom: 12px;
+}
+
+.ix-modal-email .ix-modal-icon {
+  font-size: 36px;
+}
+
+.ix-modal-email .ix-modal-header h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.ix-modal-email .ix-modal-copy {
+  max-width: 540px;
+  font-size: 17px;
+  font-weight: 500;
+  color: #5c6068;
+}
+
+.ix-modal-email .ix-modal-subhead {
+  align-items: center;
+  gap: 16px;
+}
+
+.ix-modal-email .ix-modal-avatar {
+  width: 56px;
+  height: 56px;
+  margin-top: 0;
+}
+
+.ix-modal-email .ix-modal-message {
+  width: 100%;
+  min-height: 94px;
+  margin-top: 24px;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 16px;
+}
+
 .ix-modal-email .ix-modal-cta {
-  background: #1d74f5;
+  margin-top: 22px;
+  height: 46px;
+  min-height: 46px;
+  border-radius: 12px;
+  background: #2f63eb;
+  font-size: 16px;
 }
 
 .ix-modal-email .ix-modal-cta:hover {
-  background: #1767db;
+  background: #2758d7;
+}
+
+.ix-modal-backlink {
+  margin-top: 18px;
+  padding: 0;
+  background: transparent;
+  color: #737985;
+  font-size: 15px;
+}
+
+.ix-modal-backlink:hover {
+  background: transparent;
+  color: #515866;
+}
+
+.ix-modal-footer {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.ix-modal-footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #5f6674;
+  text-decoration: none;
+  font-family: var(--font_default);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.ix-modal-footer-link:hover {
+  color: #3f4756;
+}
+
+.ix-modal-footer-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #0a66c2;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.ix-modal-footer-text {
+  color: #727887;
+  font-family: var(--font_default);
+  font-size: 15px;
+  font-weight: 500;
 }
 
 /* Responsive menu (mobile/tablet) */
