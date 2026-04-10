@@ -1,4 +1,6 @@
 (function () {
+  var RATHAN_LINKEDIN_URL = 'https://www.linkedin.com/in/rathan-xplode';
+  window.__ixRathanLinkedInUrl = RATHAN_LINKEDIN_URL;
   var sectionMap = window.__ixSectionMap || {
     'About': 'groupAboutUs',
     'Technology': 'groupTechnology',
@@ -107,6 +109,19 @@
   }
 
   initTopNavHoverState();
+
+  function initFounderLinkedInButton() {
+    var founderLinkedInButton = document.querySelector('.baTaUaMz');
+    if (!founderLinkedInButton) return;
+
+    founderLinkedInButton.title = "Visit Rathan's LinkedIn profile";
+    founderLinkedInButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.open(RATHAN_LINKEDIN_URL, '_blank', 'noopener');
+    });
+  }
+
+  initFounderLinkedInButton();
 
   function initFooterLinksHoverState() {
     var footerHoverLabels = new Set(['About', 'Technology', 'Methodology', 'Pricing']);
@@ -443,6 +458,7 @@
 })();
 
 (function () {
+  var RATHAN_LINKEDIN_URL = window.__ixRathanLinkedInUrl || 'https://www.linkedin.com/in/rathan-xplode';
   var sectionMap = window.__ixSectionMap || {};
   var smoothTo = window.__ixSmoothTo || function (id) {
     var el = document.getElementById(id);
@@ -819,11 +835,11 @@
         '</button>' +
         '<button type="button" class="ix-modal-fallback ix-modal-backlink">&larr; Switch back to WhatsApp</button>' +
         '<div class="ix-modal-footer">' +
-          '<a class="ix-modal-footer-link" href="https://www.linkedin.com/in/rathanidea/" target="_blank" rel="noopener">' +
+          '<a class="ix-modal-footer-link" href="' + RATHAN_LINKEDIN_URL + '" target="_blank" rel="noopener">' +
             '<span class="ix-modal-footer-icon" aria-hidden="true"><i class="fa fa-linkedin-square"></i></span>' +
             '<span>Connect through LinkedIn <span aria-hidden="true">&#8599;</span></span>' +
           '</a>' +
-          '<span class="ix-modal-footer-text">Or, simply email to rathan@ideaxplode.com</span>' +
+          '<a class="ix-modal-footer-text ix-modal-footer-email" href="mailto:rathan@ideaxplode.com">Or, simply email to rathan@ideaxplode.com</a>' +
         '</div>' +
       '</div>';
 
@@ -848,6 +864,9 @@
     var whatsappNumber = '9962150600';
     var emailAddress = 'rathan@ideaxplode.com';
     var emailSubject = 'From ideaXplode website';
+    var MODAL_ENTER_MS = 340;
+    var MODAL_CLOSE_MS = 300;
+    var MODAL_SWITCH_OUT_MS = 180;
 
     var triggerMap = [
       { selector: '.baTaSaTaB', message: 'Hi Rathan!' },
@@ -861,54 +880,89 @@
     ];
 
     function syncBodyModalState() {
-      var hasOpenModal = document.querySelector('.ix-modal-overlay.is-open');
+      var hasOpenModal = document.querySelector(
+        '.ix-modal-overlay.is-open, .ix-modal-overlay.is-closing, .ix-modal-overlay.is-switching-out'
+      );
       document.body.classList.toggle('ix-modal-open', !!hasOpenModal);
     }
 
-    function showModal(targetModal) {
+    function clearModalState(targetModal) {
       if (!targetModal) return;
+      if (targetModal.__ixCloseTimer) {
+        window.clearTimeout(targetModal.__ixCloseTimer);
+        targetModal.__ixCloseTimer = null;
+      }
+      if (targetModal.__ixEnterTimer) {
+        window.clearTimeout(targetModal.__ixEnterTimer);
+        targetModal.__ixEnterTimer = null;
+      }
+    }
+
+    function showModal(targetModal, useEnterMotion) {
+      if (!targetModal) return;
+      clearModalState(targetModal);
+      targetModal.classList.remove('is-closing');
+      targetModal.classList.remove('is-switching-out');
+      if (useEnterMotion) {
+        targetModal.classList.remove('is-switching-in');
+        void targetModal.offsetWidth;
+        targetModal.classList.add('is-switching-in');
+        targetModal.__ixEnterTimer = window.setTimeout(function () {
+          targetModal.classList.remove('is-switching-in');
+          targetModal.__ixEnterTimer = null;
+        }, MODAL_ENTER_MS);
+      }
       targetModal.classList.add('is-open');
       targetModal.setAttribute('aria-hidden', 'false');
       syncBodyModalState();
     }
 
-    function closeModal(targetModal) {
+    function closeModal(targetModal, options) {
       if (!targetModal) return;
-      targetModal.classList.remove('is-open');
+      options = options || {};
+      clearModalState(targetModal);
       targetModal.classList.remove('is-switching-in');
-      targetModal.classList.remove('is-switching-out');
-      targetModal.setAttribute('aria-hidden', 'true');
+      targetModal.classList.remove('is-open');
+      targetModal.classList.add(options.keepBackdrop ? 'is-switching-out' : 'is-closing');
       syncBodyModalState();
+
+      targetModal.__ixCloseTimer = window.setTimeout(function () {
+        targetModal.classList.remove('is-open');
+        targetModal.classList.remove('is-closing');
+        targetModal.classList.remove('is-switching-in');
+        targetModal.classList.remove('is-switching-out');
+        targetModal.setAttribute('aria-hidden', 'true');
+        targetModal.__ixCloseTimer = null;
+        syncBodyModalState();
+      }, options.duration || MODAL_CLOSE_MS);
     }
 
     function openModal(message) {
       activeMessage = message || 'Hi Rathan!';
       messageNode.textContent = activeMessage;
       messageNode.value = activeMessage;
-      showModal(modal);
+      showModal(modal, true);
     }
 
     function openEmailModal(message) {
       activeMessage = message || activeMessage || 'Hi Rathan!';
       emailMessageNode.textContent = activeMessage;
       emailMessageNode.value = activeMessage;
-      showModal(emailModal);
+      showModal(emailModal, true);
     }
 
     function switchModal(fromModal, toModal, prepareNext) {
       if (!fromModal || !toModal) return;
       if (typeof prepareNext === 'function') prepareNext();
 
-      fromModal.classList.add('is-switching-out');
+      closeModal(fromModal, {
+        keepBackdrop: true,
+        duration: MODAL_SWITCH_OUT_MS
+      });
 
       window.setTimeout(function () {
-        closeModal(fromModal);
-        toModal.classList.add('is-switching-in');
-        showModal(toModal);
-        window.setTimeout(function () {
-          toModal.classList.remove('is-switching-in');
-        }, 240);
-      }, 160);
+        showModal(toModal, true);
+      }, MODAL_SWITCH_OUT_MS - 10);
     }
 
     triggerMap.forEach(function (item) {
