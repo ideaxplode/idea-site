@@ -5293,7 +5293,17 @@ body.ix-menu-open {
   }
 }
 
+.ix-section-divider {
+  align-self: stretch !important;
+  width: 100% !important;
+  flex-grow: 0 !important;
+}
+
 @media (max-width: 768px) {
+  .ix-section-divider {
+    margin: 12px 0 !important;
+  }
+
   #gradient-text {
     line-height: 1.18 !important;
     letter-spacing: -1.2px !important;
@@ -5359,6 +5369,10 @@ body.ix-menu-open {
 }
 
 @media (max-width: 480px) {
+  .ix-section-divider {
+    margin: 8px 0 !important;
+  }
+
   #gradient-text {
     letter-spacing: -1px !important;
   }
