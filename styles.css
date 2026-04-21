@@ -3620,7 +3620,7 @@ html {
   bottom: 22px;
   width: 52px;
   height: 52px;
-  border: 1px solid #bdbdbd;
+  border: 1px solid #000000;
   border-radius: 50%;
   background: #ffffff;
   color: #6a6a6a;
@@ -3628,11 +3628,12 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
   transform: translateY(10px) scale(0.96);
-  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease, box-shadow 220ms ease;
+  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease, box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease;
   z-index: 9999 !important;
 }
 
@@ -3653,9 +3654,9 @@ html {
 }
 
 #scrollTopBtn.scroll-top-button:hover {
-  background: #c8c8c8;
-  border-color: #9f9f9f;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  background: #fafafa;
+  border-color: #cfcfcf;
+  box-shadow: 0 9px 22px rgba(0, 0, 0, 0.14);
 }
 
 #scrollTopBtn.scroll-top-button:hover .ix-icon,
