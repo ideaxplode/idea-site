@@ -4597,6 +4597,13 @@ body.ix-menu-open {
     max-width: 100% !important;
   }
 
+  /* Client story container should grow with quote length on mobile */
+  .baTaUaPaJ {
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
   .baTaUaPb img {
     object-fit: cover !important;
   }
@@ -4854,6 +4861,11 @@ body.ix-menu-open {
     line-height: 1.3 !important;
   }
 
+  /* Keep the next heading visually separated from the testimonial block */
+  .baTaUaPaJ + .baTaVaBaC {
+    margin-top: 16px !important;
+  }
+
   .baTaUaQaZ,
   .baTaUaQd {
     background: transparent !important;
@@ -4949,6 +4961,34 @@ body.ix-menu-open {
 }
 
 @media (max-width: 768px) and (orientation: landscape) {
+  /* Client story: keep stable section height in landscape to avoid overlap with next heading */
+  .baTaUaPaJ {
+    min-height: 400px !important;
+    height: 400px !important;
+    max-height: 400px !important;
+  }
+
+  /* Client story: tune quote typography so full content fits in short landscape viewport */
+  .baTaUaQaM {
+    row-gap: 14px !important;
+  }
+
+  .baTaUaPaP {
+    font-size: clamp(20px, 3.2vw, 26px) !important;
+    line-height: 1.3 !important;
+  }
+
+  .baTaUaPaV {
+    font-size: 14px !important;
+    line-height: 1.28 !important;
+  }
+
+  .baTaUaPb {
+    min-width: 68px !important;
+    max-width: 68px !important;
+    width: 68px !important;
+  }
+
   /* Promises: keep a clean two-column rhythm in landscape */
   .baTaTaZz {
     gap: 14px 16px !important;
@@ -4966,7 +5006,8 @@ body.ix-menu-open {
 
   /* Move the right client-story arrow slightly to the right */
   .baTaUaQd {
-    margin-right: -6px !important;
+    margin-right: 0 !important;
+    margin-left: -10px !important;
   }
 
   /* Feel free section: prevent button collapse and keep copy wrapping naturally */
@@ -4998,6 +5039,97 @@ body.ix-menu-open {
     max-width: 100% !important;
     white-space: normal !important;
     overflow-wrap: break-word !important;
+  }
+}
+
+@media (max-height: 430px) and (orientation: landscape) {
+  /* Keep close (X) always tappable above the menu card */
+  body.ix-menu-open #ixResponsiveMenuToggle {
+    position: fixed;
+    top: 8px;
+    right: 12px;
+    z-index: 1701;
+  }
+
+  /* Responsive menu: keep header/chat fixed and allow link list scrolling in short landscape */
+  .ix-responsive-menu {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ix-responsive-menu-card {
+    top: 48px !important;
+    width: min(760px, calc(100vw - 28px)) !important;
+    max-height: calc(100dvh - 68px) !important;
+    border-radius: 14px !important;
+    padding: 8px 10px 10px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ix-responsive-menu-links {
+    overflow: visible;
+    padding-bottom: 4px;
+  }
+
+  .ix-responsive-menu-link {
+    min-height: 48px;
+    padding: 10px 8px;
+    font-size: 15px;
+  }
+
+  .ix-responsive-menu-link-icon {
+    width: 18px;
+    font-size: 18px;
+  }
+
+  .ix-responsive-menu-chat {
+    margin-top: 10px;
+    height: 42px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  /* Client story in short landscape screens (e.g. 800x360): avoid spill into next heading */
+  .baTaUaPaJ {
+    min-height: 400px !important;
+    height: 400px !important;
+    max-height: 400px !important;
+  }
+
+  .baTaUaQaM {
+    row-gap: 10px !important;
+  }
+
+  .baTaUaPaP {
+    font-size: clamp(16px, 2.3vw, 22px) !important;
+    line-height: 1.22 !important;
+    padding: 0 8px !important;
+  }
+
+  .baTaUaPaV {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+
+  .baTaUaPi {
+    gap: 8px !important;
+  }
+
+  .baTaUaPb {
+    min-width: 58px !important;
+    max-width: 58px !important;
+    width: 58px !important;
+  }
+
+  .baTaUaQaG {
+    min-width: 24px !important;
+    max-width: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+    width: 24px !important;
+    height: 24px !important;
   }
 }
 
