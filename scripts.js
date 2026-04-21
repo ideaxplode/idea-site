@@ -299,6 +299,32 @@
     }
   });
 
+  // Footer quick-links: bind explicit section targets so clicks work reliably on all viewports/devices.
+  function initFooterQuickLinksNavigation() {
+    var footerTargets = [
+      { selector: '#groupFooter .baTaUaHq', target: 'groupAboutUs' },
+      { selector: '#groupFooter .baTaUaHw', target: 'groupTechnology' },
+      { selector: '#groupFooter .baTaUaIaC', target: 'groupMethodology' },
+      { selector: '#groupFooter .baTaUaIaI', target: 'groupPricing' }
+    ];
+
+    footerTargets.forEach(function (item) {
+      var node = document.querySelector(item.selector);
+      if (!node) return;
+
+      function navigateFromFooterLink(e) {
+        e.preventDefault();
+        smoothTo(item.target);
+      }
+
+      node.addEventListener('click', navigateFromFooterLink);
+      var iconBtn = node.querySelector('button');
+      if (iconBtn) iconBtn.addEventListener('click', navigateFromFooterLink);
+    });
+  }
+
+  initFooterQuickLinksNavigation();
+
   // Bubble workflows are absent in standalone mode, so wire nav/CTA clicks by visible label.
   document.querySelectorAll('.clickable-element').forEach(function (node) {
     var labelNode = node.querySelector('.label-item, .bubble-element.Text');
