@@ -5104,14 +5104,14 @@ body.ix-menu-open {
   }
 
   .baTaUaPaP {
-    font-size: clamp(16px, 2.3vw, 22px) !important;
-    line-height: 1.22 !important;
+    font-size: clamp(26px, 4.2vw, 32px) !important;
+    line-height: 1.36 !important;
     padding: 0 8px !important;
   }
 
   .baTaUaPaV {
-    font-size: 12px !important;
-    line-height: 1.2 !important;
+    font-size: 16px !important;
+    line-height: 1.35 !important;
   }
 
   .baTaUaPi {
@@ -5131,6 +5131,11 @@ body.ix-menu-open {
     max-height: 24px !important;
     width: 24px !important;
     height: 24px !important;
+  }
+
+  .baTaUaQd {
+    margin-left: 0 !important;
+    margin-right: 14px !important;
   }
 }
 
