@@ -1052,9 +1052,15 @@
         '&to=' + encodeURIComponent(emailAddress) +
         '&su=' + encodeURIComponent(emailSubject) +
         '&body=' + encodeURIComponent(finalBody);
-      var popup = window.open(gmailUrl, '_blank', 'noopener');
-      if (!popup) {
-        window.location.href = gmailUrl;
+      var popup = window.open(gmailUrl, '_blank');
+      if (popup) {
+        popup.opener = null;
+      } else {
+        var mailtoUrl =
+          'mailto:' + encodeURIComponent(emailAddress) +
+          '?subject=' + encodeURIComponent(emailSubject) +
+          '&body=' + encodeURIComponent(finalBody);
+        window.open(mailtoUrl, '_blank');
       }
       closeModal(emailModal);
     });
