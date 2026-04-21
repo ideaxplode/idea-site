@@ -5435,6 +5435,70 @@ body.ix-menu-open {
   }
 }
 
+.ix-section-divider {
+  align-self: stretch !important;
+  width: 100% !important;
+  flex-grow: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .ix-section-divider {
+    margin: 8px 0 !important;
+  }
+
+  #gradient-text {
+    line-height: 1.18 !important;
+    letter-spacing: -1.2px !important;
+  }
+
+  #gradient-text[style*="font-size: 48px"] {
+    font-size: 37px !important;
+  }
+
+  #gradient-text[style*="font-size: 41px"] {
+    font-size: 30px !important;
+  }
+
+  #gradient-text[style*="font-size: 36px"][style*="font-style: italic"] {
+    font-size: 30px !important;
+  }
+
+  #gradient-text[style*="font-size: 34px"] {
+    font-size: 26px !important;
+  }
+
+  .baTaSkk {
+    font-size: 43px !important;
+    line-height: 1.16 !important;
+    letter-spacing: -1.4px !important;
+    min-width: 0 !important;
+  }
+
+  .baTaSlt {
+    font-size: 39px !important;
+  }
+
+  h4.bubble-element.Text[style*="font-size: 38px"] {
+    font-size: 34px !important;
+  }
+
+  h4.bubble-element.Text[style*="font-size: 32px"] {
+    font-size: 40px !important;
+  }
+
+  h4.bubble-element.Text[style*="font-size: 26px"] {
+    font-size: 22px !important;
+  }
+
+  .baTaVaBaT0 {
+    align-self: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
 @media (max-width: 480px) and (orientation: portrait) {
   .baTaSil {
     margin-bottom: 20px !important;
@@ -5443,5 +5507,61 @@ body.ix-menu-open {
   .baTaSih > .bubble-element.Group[data-outline="true"]:not(:last-child),
   .baTaSdz > .bubble-element.Group[data-outline="true"]:not(:last-child) {
     margin-bottom: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ix-section-divider {
+    margin: 4px 0 !important;
+  }
+
+  #gradient-text {
+    letter-spacing: -1px !important;
+  }
+
+  #gradient-text[style*="font-size: 48px"] {
+    font-size: 33px !important;
+  }
+
+  #gradient-text[style*="font-size: 41px"] {
+    font-size: 28px !important;
+  }
+
+  #gradient-text[style*="font-size: 36px"][style*="font-style: italic"] {
+    font-size: 27px !important;
+  }
+
+  #gradient-text[style*="font-size: 34px"] {
+    font-size: 23px !important;
+  }
+
+  .baTaSkk {
+    font-size: 37px !important;
+    line-height: 1.15 !important;
+    letter-spacing: -1px !important;
+  }
+
+  .baTaSlt {
+    font-size: 35px !important;
+  }
+
+  h4.bubble-element.Text[style*="font-size: 38px"] {
+    font-size: 31px !important;
+  }
+
+  h4.bubble-element.Text[style*="font-size: 32px"] {
+    font-size: 35px !important;
+  }
+
+  h4.bubble-element.Text[style*="font-size: 26px"] {
+    font-size: 20px !important;
+  }
+
+  .baTaVaBaT0 {
+    align-self: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 }
