@@ -5374,8 +5374,9 @@ body.ix-menu-open {
 
 @media (max-width: 768px) {
   .baTaSkf #cube-container {
-    width: clamp(170px, 56vw, 240px) !important;
-    height: 220px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 240px !important;
   }
 
   .baTaSkf .face-content > .big-text {
@@ -5391,8 +5392,9 @@ body.ix-menu-open {
 
 @media (max-width: 480px) {
   .baTaSkf #cube-container {
-    width: clamp(156px, 62vw, 220px) !important;
-    height: 205px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 220px !important;
   }
 }
 
