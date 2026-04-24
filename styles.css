@@ -3620,7 +3620,7 @@ html {
   bottom: 22px;
   width: 52px;
   height: 52px;
-  border: 1px solid #000000;
+  border: 1px solid #b7acac;
   border-radius: 50%;
   background: #ffffff;
   color: #6a6a6a;
@@ -5224,7 +5224,7 @@ body.ix-menu-open {
 
 /* Scroll-to-top final color override */
 #scrollTopBtn.scroll-top-button {
-  border: 0 !important;
+  border: 1px solid #8f8f8f !important;
   background-color: #ffffff !important;
   display: none !important;
 }
@@ -5341,7 +5341,7 @@ body.ix-menu-open {
 
 @media (max-width: 1024px) {
   .baTaSkf #cube-container {
-    width: 360px !important;
+    width: 345px !important;
     height: 260px !important;
     border: none !important;
     border-top: 1px solid #111 !important;
@@ -5351,7 +5351,7 @@ body.ix-menu-open {
 
 @media (max-width: 768px) {
   .baTaSkf #cube-container {
-    width: 360px !important;
+    width: 345px !important;
     height: 260px !important;
   }
 
@@ -5368,7 +5368,7 @@ body.ix-menu-open {
 
 @media (max-width: 480px) {
   .baTaSkf #cube-container {
-    width: 360px !important;
+    width: 345px !important;
     height: 260px !important;
   }
 }
