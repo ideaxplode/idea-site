@@ -5395,6 +5395,8 @@ body.ix-menu-open {
   .baTaSkf {
     position: relative !important;
     overflow: visible !important;
+    margin-top: 22px !important;
+    margin-bottom: 22px !important;
     padding-top: 14px !important;
     padding-bottom: 14px !important;
   }
