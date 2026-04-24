@@ -5392,12 +5392,41 @@ body.ix-menu-open {
 }
 
 @media (max-width: 1024px) {
+  .baTaSkf {
+    position: relative !important;
+    overflow: visible !important;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+  }
+
+  .baTaSkf::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 220vw !important;
+    border-top: 1px solid rgba(84, 84, 84, 0.2) !important;
+    pointer-events: none !important;
+  }
+
+  .baTaSkf::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 220vw !important;
+    border-top: 1px solid rgba(84, 84, 84, 0.2) !important;
+    pointer-events: none !important;
+  }
+
   .baTaSkf #cube-container {
     width: 355px !important;
     height: 268px !important;
     border: none !important;
-    border-top: 1px solid #111 !important;
-    border-bottom: 1px solid #111 !important;
+    border-top: none !important;
+    border-bottom: none !important;
   }
 }
 
@@ -5405,6 +5434,8 @@ body.ix-menu-open {
   .baTaSkf #cube-container {
     width: 355px !important;
     height: 268px !important;
+    border-top: none !important;
+    border-bottom: none !important;
   }
 
   .baTaSkf .face-content > .big-text {
