@@ -5241,7 +5241,7 @@ body.ix-menu-open {
 
 /* Scroll-to-top final color override */
 #scrollTopBtn.scroll-top-button {
-  border: 1px solid #8f8f8f !important;
+  border: 1px solid rgba(84, 84, 84, 0.2) !important;
   background-color: #ffffff !important;
   display: none !important;
 }
@@ -5249,6 +5249,7 @@ body.ix-menu-open {
 #scrollTopBtn.scroll-top-button:hover,
 #scrollTopBtn.scroll-top-button:focus-visible {
   background-color: #e3e3e3 !important;
+  border-color: rgba(84, 84, 84, 0.2) !important;
 }
 
 #scrollTopBtn.scroll-top-button.visible {
