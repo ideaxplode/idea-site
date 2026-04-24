@@ -5007,8 +5007,8 @@ body.ix-menu-open {
 
   /* Move the right client-story arrow slightly to the right */
   .baTaUaQd {
-    margin-right: 0 !important;
-    margin-left: -10px !important;
+    margin-left: 0 !important;
+    margin-right: -14px !important;
   }
 
   /* Feel free section: prevent button collapse and keep copy wrapping naturally */
@@ -5040,6 +5040,12 @@ body.ix-menu-open {
     max-width: 100% !important;
     white-space: normal !important;
     overflow-wrap: break-word !important;
+  }
+
+  /* Tablet portrait only: nudge client story right arrow slightly right */
+  .baTaUaQd {
+    margin-right: -6px !important;
+    margin-left: 0 !important;
   }
 }
 
@@ -5135,7 +5141,7 @@ body.ix-menu-open {
 
   .baTaUaQd {
     margin-left: 0 !important;
-    margin-right: 14px !important;
+    margin-right: -14px !important;
   }
 }
 
@@ -5163,6 +5169,12 @@ body.ix-menu-open {
     max-width: 100% !important;
     white-space: normal !important;
     overflow-wrap: break-word !important;
+  }
+
+  /* Tablet portrait only: move client story right arrow a little to the right */
+  .baTaUaQd {
+    margin-right: -12px !important;
+    margin-left: 0 !important;
   }
 }
 
@@ -5206,6 +5218,12 @@ body.ix-menu-open {
 
   .baTaTaZz .bubble-r-container.flex.row > .bubble-element.Text {
     text-align: left !important;
+  }
+
+  /* Tablet landscape only: nudge client story right arrow slightly left */
+  .baTaUaQd {
+    margin-right: 10px !important;
+    margin-left: 0 !important;
   }
 }
 
