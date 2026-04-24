@@ -189,7 +189,7 @@
     /* ? opacity at edge (0?Ã¢â‚¬â€œ?1) */
     --gradient-opacity-end: 0.3;
 
-    width: 250px;
+    width: 280px;
     height: 200px;
     perspective: 600px;
     margin: auto;
@@ -345,7 +345,7 @@
   }
 
   function positionFaces() {
-    const width = cube.offsetWidth || cube.clientWidth || 250;
+    const width = cube.offsetWidth || cube.clientWidth || 280;
     const radius = (width / 2) / Math.tan(Math.PI / sides);
     faces.forEach((face, i) => {
       face.style.transform = `rotateY(${-i * angle}deg) translateZ(${radius}px)`;

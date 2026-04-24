@@ -5301,20 +5301,25 @@ body.ix-menu-open {
 }
 
 .baTaSkf #cube-container {
-  width: clamp(210px, 24vw, 250px) !important;
+  width: 345px !important;
   max-width: 100% !important;
-  aspect-ratio: 1 / 1 !important;
-  height: auto !important;
+  height: 260px !important;
   margin: 0 auto !important;
   box-sizing: border-box !important;
   background: transparent !important;
   border: none !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
 }
 
 .baTaSkf #cube {
-  width: 100% !important;
-  height: 100% !important;
+  width: 230px !important;
+  height: 230px !important;
+  border-radius: 0 !important;
 }
 
 .baTaSkf #cube .face .face-content {
@@ -5330,18 +5335,21 @@ body.ix-menu-open {
 .baTaSkf #cube .face.current {
   background: transparent !important;
   border: none !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
 }
 
 @media (max-width: 1024px) {
   .baTaSkf #cube-container {
-    width: clamp(190px, 34vw, 240px) !important;
+    width: 360px !important;
+    height: 260px !important;
   }
 }
 
 @media (max-width: 768px) {
   .baTaSkf #cube-container {
-    width: clamp(170px, 56vw, 220px) !important;
+    width: 360px !important;
+    height: 260px !important;
   }
 
   .baTaSkf .face-content > .big-text {
@@ -5357,7 +5365,8 @@ body.ix-menu-open {
 
 @media (max-width: 480px) {
   .baTaSkf #cube-container {
-    width: clamp(156px, 62vw, 205px) !important;
+    width: 360px !important;
+    height: 260px !important;
   }
 }
 
