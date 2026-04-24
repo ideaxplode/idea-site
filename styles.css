@@ -5343,6 +5343,9 @@ body.ix-menu-open {
   .baTaSkf #cube-container {
     width: 360px !important;
     height: 260px !important;
+    border: none !important;
+    border-top: 1px solid #111 !important;
+    border-bottom: 1px solid #111 !important;
   }
 }
 
