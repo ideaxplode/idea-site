@@ -4455,7 +4455,7 @@ body.ix-menu-open {
   }
 
   .ix-responsive-menu-card {
-    width: calc(100vw - 12px);
+    width: calc(100vw - 32px);
     top: 72px;
   }
 
@@ -5397,8 +5397,8 @@ body.ix-menu-open {
     overflow: visible !important;
     margin-top: 22px !important;
     margin-bottom: 22px !important;
-    padding-top: 14px !important;
-    padding-bottom: 14px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .baTaSkf::before {
