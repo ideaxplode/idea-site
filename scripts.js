@@ -311,15 +311,40 @@
     footerTargets.forEach(function (item) {
       var node = document.querySelector(item.selector);
       if (!node) return;
+      var ignoreNextClick = false;
 
       function navigateFromFooterLink(e) {
-        e.preventDefault();
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         smoothTo(item.target);
       }
 
-      node.addEventListener('click', navigateFromFooterLink);
+      function onFooterClick(e) {
+        if (ignoreNextClick) {
+          ignoreNextClick = false;
+          e.preventDefault();
+          return;
+        }
+        navigateFromFooterLink(e);
+      }
+
+      function onFooterTouch(e) {
+        ignoreNextClick = true;
+        navigateFromFooterLink(e);
+        window.setTimeout(function () {
+          ignoreNextClick = false;
+        }, 500);
+      }
+
+      node.addEventListener('click', onFooterClick);
+      node.addEventListener('touchend', onFooterTouch, { passive: false });
       var iconBtn = node.querySelector('button');
-      if (iconBtn) iconBtn.addEventListener('click', navigateFromFooterLink);
+      if (iconBtn) {
+        iconBtn.addEventListener('click', onFooterClick);
+        iconBtn.addEventListener('touchend', onFooterTouch, { passive: false });
+      }
     });
   }
 
@@ -1052,15 +1077,42 @@
         '&to=' + encodeURIComponent(emailAddress) +
         '&su=' + encodeURIComponent(emailSubject) +
         '&body=' + encodeURIComponent(finalBody);
-      var popup = window.open(gmailUrl, '_blank');
-      if (popup) {
-        popup.opener = null;
-      } else {
-        var mailtoUrl =
-          'mailto:' + encodeURIComponent(emailAddress) +
-          '?subject=' + encodeURIComponent(emailSubject) +
+      var mailtoUrl =
+        'mailto:' + encodeURIComponent(emailAddress) +
+        '?subject=' + encodeURIComponent(emailSubject) +
+        '&body=' + encodeURIComponent(finalBody);
+      var ua = navigator.userAgent || '';
+      var isAndroid = /Android/i.test(ua);
+      var isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+      // Mobile: prefer opening Gmail app directly, with safe fallback.
+      if (isAndroid) {
+        var gmailIntentUrl =
+          'intent://mail.google.com/mail/?view=cm&fs=1' +
+          '&to=' + encodeURIComponent(emailAddress) +
+          '&su=' + encodeURIComponent(emailSubject) +
+          '&body=' + encodeURIComponent(finalBody) +
+          '#Intent;scheme=https;package=com.google.android.gm;S.browser_fallback_url=' +
+          encodeURIComponent(gmailUrl) +
+          ';end';
+        window.location.href = gmailIntentUrl;
+      } else if (isIOS) {
+        var gmailDeepLinkUrl =
+          'googlegmail://co?' +
+          'to=' + encodeURIComponent(emailAddress) +
+          '&subject=' + encodeURIComponent(emailSubject) +
           '&body=' + encodeURIComponent(finalBody);
-        window.open(mailtoUrl, '_blank');
+        window.location.href = gmailDeepLinkUrl;
+        setTimeout(function () {
+          window.location.href = mailtoUrl;
+        }, 900);
+      } else {
+        var popup = window.open(gmailUrl, '_blank');
+        if (popup) {
+          popup.opener = null;
+        } else {
+          window.open(mailtoUrl, '_blank');
+        }
       }
       closeModal(emailModal);
     });
