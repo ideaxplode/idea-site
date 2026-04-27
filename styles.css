@@ -5424,11 +5424,39 @@ body.ix-menu-open {
   }
 
   .baTaSkf #cube-container {
-    width: 355px !important;
-    height: 268px !important;
     border: none !important;
     border-top: none !important;
     border-bottom: none !important;
+  }
+}
+
+/* Tablet portrait: keep cube and container sizing isolated from desktop/mobile */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+  .baTaSkf #cube-container {
+    width: 430px !important;
+    height: 268px !important;
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+
+  .baTaSkf #cube {
+    width: 250px !important;
+    height: 240px !important;
+  }
+}
+
+/* Tablet landscape: keep cube and container sizing isolated from desktop/mobile */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .baTaSkf #cube-container {
+    width: 540px !important;
+    height: 268px !important;
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+
+  .baTaSkf #cube {
+    width: 300px !important;
+    height: 240px !important;
   }
 }
 
@@ -5438,6 +5466,11 @@ body.ix-menu-open {
     height: 268px !important;
     border-top: none !important;
     border-bottom: none !important;
+  }
+
+  .baTaSkf #cube {
+    width: 250px !important;
+    height: 240px !important;
   }
 
   .baTaSkf .face-content > .big-text {
@@ -5455,6 +5488,24 @@ body.ix-menu-open {
   .baTaSkf #cube-container {
     width: 355px !important;
     height: 268px !important;
+  }
+
+  .baTaSkf #cube {
+    width: 250px !important;
+    height: 240px !important;
+  }
+}
+
+/* Mobile landscape only: increase cube widths without affecting other modes */
+@media (max-width: 768px) and (orientation: landscape) {
+  .baTaSkf {
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .baTaSkf #cube-container {
+    width: 385px !important;
+    max-width: none !important;
   }
 }
 
