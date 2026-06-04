@@ -171,8 +171,8 @@
       },
       {
         quote: 'The team is easy to work with and very responsive. We always knew what was happening with our project.',
-        name: 'Silvaster',
-        titleLines: ['CEO, OrgWare'],
+        name: 'Silvaster Antony',
+        titleLines: ['CEO, <i>OrgWare</i>,<br />CEO, <i>Neurify</i>'],
         photo: './assets/images/ClientPhoto-4.jpg',
         linkedin: 'https://www.linkedin.com/in/silvaster'
       },
@@ -768,8 +768,7 @@
       'bibles for america': 'https://biblesforamerica.org/',
       nteli: 'https://nteligroup.com/',
       'jks infotech': 'https://www.jksinfotech.in/',
-      orgware: 'https://orgware.in/',
-      orgwave: 'https://orgware.in/'
+      neurify: 'https://www.neurifytech.ai/'
     };
 
     document.querySelectorAll('#clientLogosContainer .baTaSdaV').forEach(function (logoNode) {
@@ -780,7 +779,7 @@
 
       // Fallback to image filename so logo click still works even if title differs.
       if (!targetUrl && logoSrc.indexOf('clientbrand4') !== -1) {
-        targetUrl = 'https://orgware.in/';
+        targetUrl = 'https://www.neurifytech.ai/';
       }
       if (!targetUrl) return;
 
