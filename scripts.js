@@ -165,7 +165,7 @@
       {
         quote: "I have worked with numerous offshore software consultants but Rathan's team is at least 100 times better.",
         name: 'Philip Bradley',
-        titleLines: ['Senior Dev, <i>Bibles for America</i>,<br />CTO, <i>Lencomms Inc.</i>'],
+        titleLines: ['Senior Developer, <i>Bibles for America</i>,<br />CTO, <i>Lencomms Inc.</i>'],
         photo: './assets/images/ClientPhoto-1.jpg',
         linkedin: 'https://www.linkedin.com/in/bradleyphilip/'
       },
