@@ -3620,7 +3620,7 @@ html {
   bottom: 22px;
   width: 52px;
   height: 52px;
-  border: 1px solid #bdbdbd;
+  border: 1px solid #b7acac;
   border-radius: 50%;
   background: #ffffff;
   color: #6a6a6a;
@@ -3628,11 +3628,12 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
   transform: translateY(10px) scale(0.96);
-  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease, box-shadow 220ms ease;
+  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease, box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease;
   z-index: 9999 !important;
 }
 
@@ -3653,9 +3654,9 @@ html {
 }
 
 #scrollTopBtn.scroll-top-button:hover {
-  background: #c8c8c8;
-  border-color: #9f9f9f;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  background: #fafafa;
+  border-color: #cfcfcf;
+  box-shadow: 0 9px 22px rgba(0, 0, 0, 0.14);
 }
 
 #scrollTopBtn.scroll-top-button:hover .ix-icon,
@@ -3702,14 +3703,14 @@ body.ix-modal-open {
   padding: 34px 33px 22px;
   overflow-y: auto;
   overflow-x: hidden;
-  transform: translate(-50%, -47.8%) scale3d(0.94, 0.965, 1);
+  transform: translate(-50%, -49.2%) scale3d(0.965, 0.975, 1);
   transform-origin: 50% 50%;
   opacity: 0;
-  filter: blur(10px);
+  filter: blur(4px);
   transition:
-    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 260ms ease,
-    filter 320ms ease;
+    transform 360ms cubic-bezier(0.22, 0.9, 0.3, 1),
+    opacity 300ms ease,
+    filter 300ms ease;
   will-change: transform, opacity, filter;
 }
 
@@ -3726,9 +3727,9 @@ body.ix-modal-open {
 }
 
 .ix-modal-overlay.is-closing .ix-modal {
-  transform: translate(-50%, -50.9%) scale3d(0.955, 0.975, 1);
+  transform: translate(-50%, -49.2%) scale3d(0.972, 0.98, 1);
   opacity: 0;
-  filter: blur(8px);
+  filter: blur(4px);
 }
 
 .ix-modal-overlay.is-switching-out {
@@ -3738,20 +3739,20 @@ body.ix-modal-open {
 }
 
 .ix-modal-overlay.is-switching-out .ix-modal {
-  transform: translate(-50%, -50.6%) scale3d(0.965, 0.982, 1);
+  transform: translate(-50%, -49.5%) scale3d(0.976, 0.985, 1);
   opacity: 0;
-  filter: blur(6px);
+  filter: blur(3px);
 }
 
 .ix-modal-overlay.is-switching-in .ix-modal {
-  animation: ix-modal-slit-enter 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: ix-modal-slit-enter 360ms cubic-bezier(0.22, 0.9, 0.3, 1) both;
 }
 
 @keyframes ix-modal-slit-enter {
   from {
-    transform: translate(-50%, -47.4%) scale3d(0.93, 0.955, 1);
+    transform: translate(-50%, -49.2%) scale3d(0.965, 0.975, 1);
     opacity: 0;
-    filter: blur(12px);
+    filter: blur(4px);
   }
 
   to {
@@ -4129,14 +4130,14 @@ body.ix-menu-open {
 /* Hero rotating square card polish */
 .baTaSkf #cube-container {
   border: 1px solid rgba(84, 84, 84, 0.22);
-  border-radius: 22px;
+  border-radius: 0;
   padding: 6px;
   box-sizing: border-box;
 }
 
 .baTaSkf #cube .face {
   border: 1px solid rgba(84, 84, 84, 0.14);
-  border-radius: 18px;
+  border-radius: 0;
   background: rgba(255, 255, 255, 0.92);
 }
 
@@ -4454,7 +4455,7 @@ body.ix-menu-open {
   }
 
   .ix-responsive-menu-card {
-    width: calc(100vw - 12px);
+    width: calc(100vw - 32px);
     top: 72px;
   }
 
@@ -4595,6 +4596,13 @@ body.ix-menu-open {
     min-width: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
+  }
+
+  /* Client story container should grow with quote length on mobile */
+  .baTaUaPaJ {
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
   }
 
   .baTaUaPb img {
@@ -4854,6 +4862,11 @@ body.ix-menu-open {
     line-height: 1.3 !important;
   }
 
+  /* Keep the next heading visually separated from the testimonial block */
+  .baTaUaPaJ + .baTaVaBaC {
+    margin-top: 16px !important;
+  }
+
   .baTaUaQaZ,
   .baTaUaQd {
     background: transparent !important;
@@ -4865,6 +4878,10 @@ body.ix-menu-open {
     max-height: 40px !important;
     width: 40px !important;
     height: 40px !important;
+  }
+
+  .baTaUaQd {
+    margin-right: -10px !important;
   }
 
   .baTaUaQaZ .ix-icon,
@@ -4945,6 +4962,34 @@ body.ix-menu-open {
 }
 
 @media (max-width: 768px) and (orientation: landscape) {
+  /* Client story: keep stable section height in landscape to avoid overlap with next heading */
+  .baTaUaPaJ {
+    min-height: 400px !important;
+    height: 400px !important;
+    max-height: 400px !important;
+  }
+
+  /* Client story: tune quote typography so full content fits in short landscape viewport */
+  .baTaUaQaM {
+    row-gap: 14px !important;
+  }
+
+  .baTaUaPaP {
+    font-size: clamp(20px, 3.2vw, 26px) !important;
+    line-height: 1.3 !important;
+  }
+
+  .baTaUaPaV {
+    font-size: 14px !important;
+    line-height: 1.28 !important;
+  }
+
+  .baTaUaPb {
+    min-width: 68px !important;
+    max-width: 68px !important;
+    width: 68px !important;
+  }
+
   /* Promises: keep a clean two-column rhythm in landscape */
   .baTaTaZz {
     gap: 14px 16px !important;
@@ -4962,7 +5007,8 @@ body.ix-menu-open {
 
   /* Move the right client-story arrow slightly to the right */
   .baTaUaQd {
-    margin-right: -6px !important;
+    margin-left: 0 !important;
+    margin-right: -14px !important;
   }
 
   /* Feel free section: prevent button collapse and keep copy wrapping naturally */
@@ -4995,6 +5041,107 @@ body.ix-menu-open {
     white-space: normal !important;
     overflow-wrap: break-word !important;
   }
+
+  /* Tablet portrait only: nudge client story right arrow slightly right */
+  .baTaUaQd {
+    margin-right: -6px !important;
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-height: 430px) and (orientation: landscape) {
+  /* Keep close (X) always tappable above the menu card */
+  body.ix-menu-open #ixResponsiveMenuToggle {
+    position: fixed;
+    top: 8px;
+    right: 12px;
+    z-index: 1701;
+  }
+
+  /* Responsive menu: keep header/chat fixed and allow link list scrolling in short landscape */
+  .ix-responsive-menu {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ix-responsive-menu-card {
+    top: 48px !important;
+    width: min(760px, calc(100vw - 28px)) !important;
+    max-height: calc(100dvh - 68px) !important;
+    border-radius: 14px !important;
+    padding: 8px 10px 10px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ix-responsive-menu-links {
+    overflow: visible;
+    padding-bottom: 4px;
+  }
+
+  .ix-responsive-menu-link {
+    min-height: 48px;
+    padding: 10px 8px;
+    font-size: 15px;
+  }
+
+  .ix-responsive-menu-link-icon {
+    width: 18px;
+    font-size: 18px;
+  }
+
+  .ix-responsive-menu-chat {
+    margin-top: 10px;
+    height: 42px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  /* Client story in short landscape screens (e.g. 800x360): avoid spill into next heading */
+  .baTaUaPaJ {
+    min-height: 400px !important;
+    height: 400px !important;
+    max-height: 400px !important;
+  }
+
+  .baTaUaQaM {
+    row-gap: 10px !important;
+  }
+
+  .baTaUaPaP {
+    font-size: clamp(16px, 2.3vw, 22px) !important;
+    line-height: 1.22 !important;
+    padding: 0 8px !important;
+  }
+
+  .baTaUaPaV {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+
+  .baTaUaPi {
+    gap: 8px !important;
+  }
+
+  .baTaUaPb {
+    min-width: 58px !important;
+    max-width: 58px !important;
+    width: 58px !important;
+  }
+
+  .baTaUaQaG {
+    min-width: 24px !important;
+    max-width: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+    width: 24px !important;
+    height: 24px !important;
+  }
+  .baTaUaQd {
+    margin-left: 0 !important;
+    margin-right: -14px !important;
+  }
 }
 
 @media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
@@ -5021,6 +5168,12 @@ body.ix-menu-open {
     max-width: 100% !important;
     white-space: normal !important;
     overflow-wrap: break-word !important;
+  }
+
+  /* Tablet portrait only: move client story right arrow a little to the right */
+  .baTaUaQd {
+    margin-right: -12px !important;
+    margin-left: 0 !important;
   }
 }
 
@@ -5065,6 +5218,12 @@ body.ix-menu-open {
   .baTaTaZz .bubble-r-container.flex.row > .bubble-element.Text {
     text-align: left !important;
   }
+
+  /* Tablet landscape only: nudge client story right arrow slightly left */
+  .baTaUaQd {
+    margin-right: 10px !important;
+    margin-left: 0 !important;
+  }
 }
 
 /* Client testimonial LinkedIn icon: add hover parity */
@@ -5082,7 +5241,7 @@ body.ix-menu-open {
 
 /* Scroll-to-top final color override */
 #scrollTopBtn.scroll-top-button {
-  border: 0 !important;
+  border: 1px solid rgba(84, 84, 84, 0.2) !important;
   background-color: #ffffff !important;
   display: none !important;
 }
@@ -5090,6 +5249,7 @@ body.ix-menu-open {
 #scrollTopBtn.scroll-top-button:hover,
 #scrollTopBtn.scroll-top-button:focus-visible {
   background-color: #e3e3e3 !important;
+  border-color: rgba(84, 84, 84, 0.2) !important;
 }
 
 #scrollTopBtn.scroll-top-button.visible {
@@ -5159,20 +5319,27 @@ body.ix-menu-open {
 }
 
 .baTaSkf #cube-container {
-  width: clamp(210px, 24vw, 250px) !important;
+  width: 355px !important;
   max-width: 100% !important;
-  aspect-ratio: 1 / 1 !important;
-  height: auto !important;
+  height: 268px !important;
   margin: 0 auto !important;
+  overflow: hidden !important;
+  position: relative !important;
   box-sizing: border-box !important;
   background: transparent !important;
   border: none !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
 }
 
 .baTaSkf #cube {
-  width: 100% !important;
-  height: 100% !important;
+  width: 250px !important;
+  height: 240px !important;
+  border-radius: 0 !important;
 }
 
 .baTaSkf #cube .face .face-content {
@@ -5188,34 +5355,180 @@ body.ix-menu-open {
 .baTaSkf #cube .face.current {
   background: transparent !important;
   border: none !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
 }
 
-@media (max-width: 1024px) {
+.baTaSkf #cube .face .face-content {
+  color: #202020 !important;
+}
+
+.baTaSkf #cube .face .face-content .small-text {
+  color: rgba(32, 32, 32, 0.82) !important;
+}
+
+.baTaSkf #cube .face .face-content .big-text {
+  font-size: 24px !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+}
+
+.baTaSkf #cube .face .face-content .small-text {
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+}
+
+@media (min-width: 1025px) {
   .baTaSkf #cube-container {
-    width: clamp(190px, 34vw, 240px) !important;
+    width: 410px !important;
+    min-width: 410px !important;
+    max-width: 410px !important;
+    border: none !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .baTaSkf {
+    position: relative !important;
+    overflow: visible !important;
+    margin-top: 22px !important;
+    margin-bottom: 22px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .baTaSkf::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 220vw !important;
+    border-top: 1px solid rgba(84, 84, 84, 0.2) !important;
+    pointer-events: none !important;
+  }
+
+  .baTaSkf::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 220vw !important;
+    border-top: 1px solid rgba(84, 84, 84, 0.2) !important;
+    pointer-events: none !important;
+  }
+
+  .baTaSkf #cube-container {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+}
+
+/* Tablet portrait: keep cube and container sizing isolated from desktop/mobile */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+  .baTaSkf #cube-container {
+    width: 430px !important;
+    height: 268px !important;
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+
+  .baTaSkf #cube {
+    width: 250px !important;
+    height: 240px !important;
+  }
+}
+
+/* Tablet landscape: keep cube and container sizing isolated from desktop/mobile */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .baTaSkf #cube-container {
+    width: 540px !important;
+    height: 268px !important;
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+
+  .baTaSkf #cube {
+    width: 300px !important;
+    height: 240px !important;
   }
 }
 
 @media (max-width: 768px) {
   .baTaSkf #cube-container {
-    width: clamp(170px, 56vw, 220px) !important;
+    width: 355px !important;
+    height: 268px !important;
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+
+  .baTaSkf #cube {
+    width: 250px !important;
+    height: 240px !important;
   }
 
   .baTaSkf .face-content > .big-text {
-    font-size: clamp(20px, 5.5vw, 24px) !important;
-    line-height: 1.2 !important;
+    font-size: clamp(19px, 5.2vw, 23px) !important;
+    line-height: 1.18 !important;
   }
 
   .baTaSkf .face-content > .small-text {
-    font-size: clamp(12px, 3.4vw, 14px) !important;
-    line-height: 1.35 !important;
+    font-size: clamp(12px, 3.1vw, 14px) !important;
+    line-height: 1.3 !important;
   }
 }
 
 @media (max-width: 480px) {
   .baTaSkf #cube-container {
-    width: clamp(156px, 62vw, 205px) !important;
+    width: 355px !important;
+    height: 268px !important;
+  }
+
+  .baTaSkf #cube {
+    width: 250px !important;
+    height: 240px !important;
+  }
+}
+
+/* Mobile landscape only: increase cube widths without affecting other modes */
+@media (max-width: 768px) and (orientation: landscape) {
+  .baTaSkf {
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .baTaSkf #cube-container {
+    width: 385px !important;
+    max-width: none !important;
+  }
+}
+
+/* Mobile portrait: make hero cube block full width without breaking 3D layout */
+@media (max-width: 768px) and (orientation: portrait) {
+  .baTaSkf {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .baTaSkf #cube-container {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    height: 268px !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+  }
+
+  .baTaSkf #cube {
+    width: clamp(220px, 62vw, 250px) !important;
+    max-width: calc(100vw - 36px) !important;
+    height: 240px !important;
   }
 }
 

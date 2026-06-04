@@ -21,3 +21,4 @@
 1. **How to use:** For direct/manual browser actions, use **agent-browser** commands directly (example: **agent-browser \--session dev open http://localhost:\<port\>** (you can use the active dev URL), then **agent-browser \--session dev snapshot \-i**).  
 2. **Headless/Headed mode:** You should run the browser in headless mode unless you’re instructed to run the browser “visually”; finally, close the session yourself – for both headless/headed modes.  
 3. **Headed/Visual mode:** Always open browser window maximized in headed mode e.g. **agent-browser \--session dev \--headed \--args "--start-maximized" open http://localhost:3000**
+
