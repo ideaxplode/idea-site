@@ -4820,9 +4820,7 @@ body.ix-menu-open {
   width: 100%;
   padding: 104px 22px 112px;
   border-top: 1px solid rgba(84, 84, 84, 0.2);
-  background:
-    radial-gradient(circle at 8% 12%, rgba(255, 124, 96, 0.09), transparent 25%),
-    #fffcf9;
+  background: transparent;
   color: #151515;
   font-family: var(--font_default), Poppins, sans-serif;
 }

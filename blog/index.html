@@ -35,17 +35,21 @@
       </button>
 
       <nav class="primary-nav" id="primary-navigation" aria-label="Primary navigation">
-        <a href="/">Home</a>
-        <a href="/#groupOfferings">Services</a>
         <a href="/#groupAboutUs">About</a>
-        <a class="is-active" href="/blog/" aria-current="page">Blog</a>
+        <a href="/#groupTechnology">Technology</a>
+        <a href="/#groupMethodology">Methodology</a>
+        <a href="/#groupPricing">Pricing</a>
+        <a href="/#groupContact">Contact</a>
       </nav>
 
-      <a class="header-cta" href="/#groupContact">
-        Let's talk
+      <a class="header-articles-link" href="#latest" aria-label="Browse all blog articles">
         <svg aria-hidden="true" viewBox="0 0 20 20">
-          <path d="M4 10h12M11 5l5 5-5 5"/>
+          <rect x="2.5" y="2.5" width="5.5" height="5.5" rx="1"></rect>
+          <rect x="12" y="2.5" width="5.5" height="5.5" rx="1"></rect>
+          <rect x="2.5" y="12" width="5.5" height="5.5" rx="1"></rect>
+          <rect x="12" y="12" width="5.5" height="5.5" rx="1"></rect>
         </svg>
+        <span>All articles</span>
       </a>
     </div>
   </header>
@@ -239,9 +243,10 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="/" aria-label="ideaXplode home">
-          <img src="/assets/images/ideaXplode Logo.png" alt="ideaXplode" width="626" height="169">
+          <img src="/assets/images/ideaXplode Silhoutte Logo.png" alt="ideaXplode" width="480" height="99">
         </a>
         <p>AI-native product engineering, guided by human judgment.</p>
+        <span class="footer-copyright">© 2026 ideaXplode Technologies</span>
       </div>
       <nav aria-label="Footer navigation">
         <a href="/">Home</a>
@@ -250,13 +255,20 @@
         <a href="/#groupMethodology">Methodology</a>
         <a href="/#groupPricing">Pricing</a>
         <a href="/#groupContact">Contact</a>
-        <a class="footer-nav__articles" href="/blog/" aria-current="page">All articles <span aria-hidden="true">↗</span></a>
       </nav>
-      <a class="footer-contact" href="/#groupContact">Let's build something useful <span aria-hidden="true">↗</span></a>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 ideaXplode Technologies</span>
-      <span>Thoughtfully built in India.</span>
+      <section class="footer-related" aria-labelledby="footer-related-title">
+        <h2 id="footer-related-title">Related blogs</h2>
+        <div class="footer-related__list">
+          <a class="footer-related__card" href="/blog/ai-can-help-us-build-software-faster/">
+            <img src="/assets/images/blog/ai-speed-clarity.webp" alt="" width="1600" height="854" loading="lazy">
+            <span><small>Related blog</small><strong>AI can help us build software faster.</strong></span>
+          </a>
+          <a class="footer-related__card" href="/blog/what-your-mvp-actually-needs/">
+            <img src="/assets/images/blog/focused-mvp.webp" alt="" width="1600" height="819" loading="lazy">
+            <span><small>Related blog</small><strong>Your MVP does not need every feature.</strong></span>
+          </a>
+        </div>
+      </section>
     </div>
   </footer>
 </body>

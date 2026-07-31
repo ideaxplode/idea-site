@@ -52,12 +52,14 @@
         <div class="story-hero__inner">
           <h1>Your MVP does not need <em>every feature.</em></h1>
           <p class="story-deck">If your product plan keeps growing before a single user has touched it, the problem is not ambition—it is uncertainty.</p>
-          <div class="article-author" aria-label="Written by Rathan, 3 minute read">
+          <div class="article-author" aria-label="Written by Rathan, published July 31, 2026, 3 minute read">
             <img src="/assets/images/Rathan's Profile Pic 3.png" alt="" width="48" height="48">
             <div class="article-author__identity">
               <span>Written by</span>
               <strong>Rathan</strong>
             </div>
+            <span class="article-author__divider" aria-hidden="true"></span>
+            <time class="article-author__date" datetime="2026-07-31">Jul 31, 2026</time>
             <span class="article-author__divider" aria-hidden="true"></span>
             <span class="article-author__time">3 min read</span>
           </div>
@@ -73,12 +75,11 @@
       <div class="story-content" id="article-content">
         <div class="story-opening">
           <p>Many founders arrive with a sensible idea and a feature list that has quietly become a small universe.</p>
+          <blockquote class="story-pull story-pull--left">
+            <p>The first version has one job: prove that the core problem is worth solving.</p>
+          </blockquote>
           <p>Every feature feels important because every future customer might need it. The result is a longer timeline, a larger budget, and no new evidence that the product should exist. A useful MVP takes the opposite approach: it removes everything that does not help answer the biggest product question.</p>
         </div>
-
-        <blockquote class="story-pull story-pull--left">
-          <p>The first version has one job: prove that the core problem is worth solving.</p>
-        </blockquote>
 
         <section class="story-section" aria-labelledby="mvp-safety">
           <div class="story-section__label">
@@ -86,8 +87,7 @@
             <h2 id="mvp-safety">More scope feels safer. It rarely is.</h2>
           </div>
           <div class="story-section__body">
-            <p>Building more before launch can feel like reducing risk. In reality, it often converts unanswered questions into expensive code. You still do not know whether users understand the product, care enough to return, or will change their current behaviour.</p>
-            <p>The client problem is not a shortage of features. It is a <strong class="article-emphasis">shortage of evidence</strong>. The sooner the product creates <strong class="article-emphasis">one meaningful outcome for one clear user</strong>, the sooner the team can learn what deserves investment.</p>
+            <p>Building more before launch can feel like reducing risk. In reality, it often converts unanswered questions into expensive code. You still do not know whether users understand the product, care enough to return, or will change their current behaviour. The client problem is not a shortage of features. It is a <strong class="article-emphasis">shortage of evidence</strong>. The sooner the product creates <strong class="article-emphasis">one meaningful outcome for one clear user</strong>, the sooner the team can learn what deserves investment.</p>
           </div>
         </section>
 
@@ -130,8 +130,7 @@
             <h2 id="mvp-postpone">Postpone without forgetting</h2>
           </div>
           <div class="story-section__body">
-            <p>Good ideas do not need to be deleted. They need to be sequenced. Keep a visible “later” list for advanced reporting, secondary roles, deep integrations, and rare edge cases. This protects the ideas without letting them delay the first learning cycle.</p>
-            <p class="story-rule">If removing a feature does not prevent the core user from reaching the core outcome, it probably does not belong in version one.</p>
+            <p>Good ideas do not need to be deleted. They need to be sequenced. Keep a visible “later” list for advanced reporting, secondary roles, deep integrations, and rare edge cases. This protects the ideas without letting them delay the first learning cycle. If removing a feature does not prevent the core user from reaching the core outcome, it probably does not belong in version one.</p>
           </div>
         </section>
 
@@ -141,8 +140,7 @@
             <h2 id="mvp-learning">Launch small. Learn honestly.</h2>
           </div>
           <div class="story-section__body">
-            <p>A focused release is not an excuse for poor quality. The core path should still be clear, reliable, and trustworthy. The difference is that the team polishes one useful journey instead of spreading effort across ten speculative ones.</p>
-            <p>Watch where users hesitate. Ask what they expected. Measure whether the promised outcome actually happens. That evidence turns the next roadmap discussion <strong class="article-emphasis">from opinion into a decision</strong>.</p>
+            <p>A focused release is not an excuse for poor quality. The core path should still be clear, reliable, and trustworthy. The difference is that the team polishes one useful journey instead of spreading effort across ten speculative ones. Watch where users hesitate. Ask what they expected. Measure whether the promised outcome actually happens. That evidence turns the next roadmap discussion <strong class="article-emphasis">from opinion into a decision</strong>.</p>
           </div>
         </section>
 
@@ -159,15 +157,42 @@
   <footer class="site-footer">
     <div class="site-footer__inner">
       <div class="site-footer__brand">
-        <a href="/" aria-label="ideaXplode home"><img src="/assets/images/ideaXplode Logo.png" alt="ideaXplode" width="626" height="169"></a>
+        <a href="/" aria-label="ideaXplode home"><img src="/assets/images/ideaXplode Silhoutte Logo.png" alt="ideaXplode" width="480" height="99"></a>
         <p>AI-native product engineering studio building real software—fast, thoughtful, and built to last.</p>
+        <span class="site-footer__copyright">© 2026 ideaXplode Technologies</span>
       </div>
       <nav aria-label="Footer navigation">
-        <a href="/">Home</a><a href="/#groupAboutUs">About</a><a href="/#groupTechnology">Technology</a><a href="/#groupMethodology">Methodology</a><a href="/#groupPricing">Pricing</a><a href="/#groupContact">Contact</a><a class="footer-nav__articles" href="/blog/">All articles <span aria-hidden="true">↗</span></a>
+        <a href="/">Home</a><a href="/#groupAboutUs">About</a><a href="/#groupTechnology">Technology</a><a href="/#groupMethodology">Methodology</a><a href="/#groupPricing">Pricing</a><a href="/#groupContact">Contact</a>
       </nav>
-      <a class="site-footer__home" href="/#groupContact">Let's build something useful <span aria-hidden="true">↗</span></a>
+    <section class="related-articles" aria-labelledby="related-articles-title">
+      <div class="related-articles__inner">
+        <div class="related-articles__heading">
+          <p>Continue reading</p>
+          <h2 id="related-articles-title">Related blogs</h2>
+        </div>
+        <div class="related-articles__grid">
+          <article class="related-card">
+            <a class="related-card__media" href="/blog/ai-can-help-us-build-software-faster/" aria-label="Read AI can help us build software faster">
+              <img src="/assets/images/blog/ai-speed-clarity.webp" alt="AI speed and human clarity converging on one product direction" width="1600" height="854" loading="lazy">
+            </a>
+            <div class="related-card__body">
+              <span>Related blog</span>
+              <h3><a href="/blog/ai-can-help-us-build-software-faster/">AI can help us build software faster.</a></h3>
+            </div>
+          </article>
+          <article class="related-card">
+            <a class="related-card__media" href="/blog/start-ai-automation-with-one-workflow/" aria-label="Read Start AI automation with one workflow">
+              <img src="/assets/images/blog/one-workflow-ai-agent.webp" alt="A controlled AI workflow moving through connected tools" width="1600" height="878" loading="lazy">
+            </a>
+            <div class="related-card__body">
+              <span>Related blog</span>
+              <h3><a href="/blog/start-ai-automation-with-one-workflow/">Start AI automation with one workflow.</a></h3>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
     </div>
-    <div class="site-footer__bottom"><span>© 2026 ideaXplode Technologies</span><span>Thoughtfully built in India.</span></div>
   </footer>
 </body>
 </html>

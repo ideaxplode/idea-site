@@ -52,12 +52,14 @@
         <div class="story-hero__inner">
           <h1>Fast software still needs a <em>strong foundation.</em></h1>
           <p class="story-deck">A short timeline should reduce waiting—not security, stability, or the care needed to support a real business.</p>
-          <div class="article-author" aria-label="Written by Rathan, 3 minute read">
+          <div class="article-author" aria-label="Written by Rathan, published July 31, 2026, 3 minute read">
             <img src="/assets/images/Rathan's Profile Pic 3.png" alt="" width="48" height="48">
             <div class="article-author__identity">
               <span>Written by</span>
               <strong>Rathan</strong>
             </div>
+            <span class="article-author__divider" aria-hidden="true"></span>
+            <time class="article-author__date" datetime="2026-07-31">Jul 31, 2026</time>
             <span class="article-author__divider" aria-hidden="true"></span>
             <span class="article-author__time">3 min read</span>
           </div>
@@ -73,12 +75,11 @@
       <div class="story-content" id="article-content">
         <div class="story-opening">
           <p>AI can help a capable team build working software remarkably quickly.</p>
+          <blockquote class="story-pull story-pull--left">
+            <p>Fast delivery is a method. Fragile delivery is a mistake.</p>
+          </blockquote>
           <p>That speed is valuable, but it creates a client concern worth taking seriously: will the product still behave correctly with real users, <strong class="article-emphasis">private data, unexpected inputs</strong>, and a business that keeps changing?</p>
         </div>
-
-        <blockquote class="story-pull story-pull--left">
-          <p>Fast delivery is a method. Fragile delivery is a mistake.</p>
-        </blockquote>
 
         <section class="story-section" aria-labelledby="foundation-demo">
           <div class="story-section__label">
@@ -86,8 +87,7 @@
             <h2 id="foundation-demo">A convincing demo is not the finish line</h2>
           </div>
           <div class="story-section__body">
-            <p>Demos follow the happy path. Real products meet forgotten passwords, partial payments, simultaneous edits, unreliable networks, unusual permissions, and people using the system in ways nobody predicted.</p>
-            <p>The client problem is not simply getting software built. It is avoiding a fast launch that later becomes <strong class="article-emphasis">difficult to trust, expensive to change, or risky to operate</strong>.</p>
+            <p>Demos follow the happy path. Real products meet forgotten passwords, partial payments, simultaneous edits, unreliable networks, unusual permissions, and people using the system in ways nobody predicted. The client problem is not simply getting software built. It is avoiding a fast launch that later becomes <strong class="article-emphasis">difficult to trust, expensive to change, or risky to operate</strong>.</p>
           </div>
         </section>
 
@@ -136,8 +136,7 @@
             <h2 id="foundation-scale">Prepare for growth without overengineering</h2>
           </div>
           <div class="story-section__body">
-            <p>A startup does not need infrastructure designed for millions of users on day one. It does need decisions that can evolve without a complete rewrite. That means simple boundaries, reproducible database changes, sensible performance choices, and code another engineer can understand.</p>
-            <p class="story-rule">Scalability is not predicting every future. It is <strong class="article-emphasis">preserving the ability to respond</strong> when the future arrives.</p>
+            <p>A startup does not need infrastructure designed for millions of users on day one. It does need decisions that can evolve without a complete rewrite. That means simple boundaries, reproducible database changes, sensible performance choices, and code another engineer can understand. Scalability is not predicting every future. It is <strong class="article-emphasis">preserving the ability to respond</strong> when the future arrives.</p>
           </div>
         </section>
 
@@ -147,8 +146,7 @@
             <h2 id="foundation-questions">Ask what happens after the sprint</h2>
           </div>
           <div class="story-section__body">
-            <p>When evaluating a fast development partner, ask how generated code is reviewed, how private data is protected, how important workflows are tested, and how problems will be detected after launch.</p>
-            <p>Good answers should be understandable. Strong engineering is not a collection of impressive tool names; it is a disciplined way of reducing risk while keeping the product easy to change.</p>
+            <p>When evaluating a fast development partner, ask how generated code is reviewed, how private data is protected, how important workflows are tested, and how problems will be detected after launch. Good answers should be understandable. Strong engineering is not a collection of impressive tool names; it is a disciplined way of reducing risk while keeping the product easy to change.</p>
           </div>
         </section>
 
@@ -165,15 +163,42 @@
   <footer class="site-footer">
     <div class="site-footer__inner">
       <div class="site-footer__brand">
-        <a href="/" aria-label="ideaXplode home"><img src="/assets/images/ideaXplode Logo.png" alt="ideaXplode" width="626" height="169"></a>
+        <a href="/" aria-label="ideaXplode home"><img src="/assets/images/ideaXplode Silhoutte Logo.png" alt="ideaXplode" width="480" height="99"></a>
         <p>AI-native product engineering studio building real software—fast, thoughtful, and built to last.</p>
+        <span class="site-footer__copyright">© 2026 ideaXplode Technologies</span>
       </div>
       <nav aria-label="Footer navigation">
-        <a href="/">Home</a><a href="/#groupAboutUs">About</a><a href="/#groupTechnology">Technology</a><a href="/#groupMethodology">Methodology</a><a href="/#groupPricing">Pricing</a><a href="/#groupContact">Contact</a><a class="footer-nav__articles" href="/blog/">All articles <span aria-hidden="true">↗</span></a>
+        <a href="/">Home</a><a href="/#groupAboutUs">About</a><a href="/#groupTechnology">Technology</a><a href="/#groupMethodology">Methodology</a><a href="/#groupPricing">Pricing</a><a href="/#groupContact">Contact</a>
       </nav>
-      <a class="site-footer__home" href="/#groupContact">Let's build something useful <span aria-hidden="true">↗</span></a>
+    <section class="related-articles" aria-labelledby="related-articles-title">
+      <div class="related-articles__inner">
+        <div class="related-articles__heading">
+          <p>Continue reading</p>
+          <h2 id="related-articles-title">Related blogs</h2>
+        </div>
+        <div class="related-articles__grid">
+          <article class="related-card">
+            <a class="related-card__media" href="/blog/ai-can-help-us-build-software-faster/" aria-label="Read AI can help us build software faster">
+              <img src="/assets/images/blog/ai-speed-clarity.webp" alt="AI speed and human clarity converging on one product direction" width="1600" height="854" loading="lazy">
+            </a>
+            <div class="related-card__body">
+              <span>Related blog</span>
+              <h3><a href="/blog/ai-can-help-us-build-software-faster/">AI can help us build software faster.</a></h3>
+            </div>
+          </article>
+          <article class="related-card">
+            <a class="related-card__media" href="/blog/what-your-mvp-actually-needs/" aria-label="Read Your MVP does not need every feature">
+              <img src="/assets/images/blog/focused-mvp.webp" alt="A focused path through product complexity toward a clear milestone" width="1600" height="819" loading="lazy">
+            </a>
+            <div class="related-card__body">
+              <span>Related blog</span>
+              <h3><a href="/blog/what-your-mvp-actually-needs/">Your MVP does not need every feature.</a></h3>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
     </div>
-    <div class="site-footer__bottom"><span>© 2026 ideaXplode Technologies</span><span>Thoughtfully built in India.</span></div>
   </footer>
 </body>
 </html>
