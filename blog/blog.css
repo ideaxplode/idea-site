@@ -867,14 +867,18 @@ button {
 
 .related-articles {
   min-width: 0;
+  width: max-content;
+  max-width: 100%;
   padding: 0;
   border: 0;
   background: transparent;
+  justify-self: end;
 }
 
 .related-articles__inner {
-  width: min(100%, var(--page-width));
-  margin: 0 auto;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
 }
 
 .related-articles__heading {
@@ -896,17 +900,21 @@ button {
 
 .related-articles__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 218px));
+  justify-content: end;
+  gap: 34px;
 }
 
 .related-card {
   position: relative;
   min-width: 0;
+  height: 167px;
   padding: 5px;
   border: 1px solid transparent;
-  border-radius: 11px;
-  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background:
     linear-gradient(#1d1d1d, #1d1d1d) padding-box,
     linear-gradient(135deg, rgba(129, 75, 165, 0.95), rgba(197, 61, 143, 0.82)) border-box;
@@ -918,9 +926,10 @@ button {
 
 .related-card__media {
   display: block;
+  flex: 0 0 96px;
   overflow: hidden;
-  border-radius: 7px;
-  height: 78px;
+  border-radius: 11px 11px 0 0;
+  height: 96px;
   background: #252525;
 }
 
@@ -944,21 +953,14 @@ button {
 
 .related-card__body {
   padding: 8px 4px 5px;
-}
-
-.related-card__body > span {
-  display: block;
-  margin-bottom: 4px;
-  color: #df64aa;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  flex: 1;
 }
 
 .related-card h3 {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.035em;
   line-height: 1.35;
@@ -1011,10 +1013,12 @@ button {
 
 .site-footer nav {
   justify-self: center;
+  justify-items: start;
   display: grid;
   grid-template-columns: 1fr;
   gap: 9px;
-  transform: translateX(-18px);
+  text-align: left;
+  transform: translateX(48px);
 }
 
 .site-footer nav a {
@@ -1117,7 +1121,7 @@ button {
   }
 
   .related-articles__grid {
-    gap: 8px;
+    gap: 28px;
   }
 }
 
@@ -1129,7 +1133,13 @@ button {
   }
 
   .related-articles {
+    width: 100%;
     padding: 0;
+    justify-self: stretch;
+  }
+
+  .related-articles__inner {
+    width: 100%;
   }
 
   .related-articles__heading {
@@ -1137,28 +1147,12 @@ button {
   }
 
   .related-articles__grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .related-card {
-    min-height: 76px;
-    display: grid;
-    grid-template-columns: 88px minmax(0, 1fr);
-  }
-
-  .related-card__media {
     height: auto;
-    min-height: 64px;
-  }
-
-  .related-card__body {
-    padding: 7px 9px;
-    align-self: center;
-  }
-
-  .related-card h3 {
-    font-size: 14px;
+    aspect-ratio: 1.14 / 1;
   }
 
   .back-link {
@@ -1288,9 +1282,9 @@ button {
   }
 
   .site-footer nav {
-    justify-self: start;
     transform: none;
   }
+
 }
 
 @media (prefers-reduced-motion: reduce) {

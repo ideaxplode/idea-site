@@ -152,11 +152,11 @@
 }
 
 .story-pull--left {
+  position: relative;
   float: left;
   width: min(46%, 340px);
-  margin: 8px 38px 16px 0;
+  margin: 52px 38px 0 0;
   padding: 18px 28px 18px 0;
-  border-right: 2px solid var(--story-accent);
   text-align: left;
 }
 
@@ -168,12 +168,12 @@
 .story-pull--left::before,
 .story-pull--right::before {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   color: var(--story-accent);
   content: "“";
   font-family: Georgia, serif;
-  font-size: 74px;
-  line-height: 0.65;
+  font-size: clamp(132px, 11vw, 164px);
+  line-height: 0;
 }
 
 .story-content {
@@ -322,11 +322,11 @@
 }
 
 .story-pull--right {
+  position: relative;
   float: right;
   width: min(48%, 350px);
-  margin: 0 0 28px 38px;
+  margin: 44px 0 0 38px;
   padding: 18px 0 18px 28px;
-  border-left: 2px solid var(--story-accent);
   text-align: right;
 }
 
@@ -338,6 +338,24 @@
 .story-pull--right::before {
   content: "”";
   transform: none;
+}
+
+.story-pull--left::after,
+.story-pull--right::after {
+  position: absolute;
+  top: -50px;
+  bottom: 0;
+  width: 2px;
+  background: var(--story-accent);
+  content: "";
+}
+
+.story-pull--left::after {
+  right: 0;
+}
+
+.story-pull--right::after {
+  left: 0;
 }
 
 .story-conclusion {
@@ -435,14 +453,14 @@
 
   .story-pull--left::before,
   .story-pull--right::before {
-    font-size: 64px;
+    font-size: 120px;
   }
 
   .story-pull--left,
   .story-pull--right {
     float: none;
     width: 100%;
-    margin: 30px 0;
+    margin: 52px 0 0;
     padding: 22px 24px;
     border-top: 0;
     border-bottom: 0;
@@ -450,12 +468,27 @@
 
   .story-pull--left {
     border-right: 0;
-    border-left: 2px solid var(--story-accent);
+    border-left: 0;
   }
 
   .story-pull--right {
     border-left: 0;
-    border-right: 2px solid var(--story-accent);
+    border-right: 0;
+  }
+
+  .story-pull--left::after,
+  .story-pull--right::after {
+    top: -28px;
+  }
+
+  .story-pull--left::after {
+    right: auto;
+    left: 0;
+  }
+
+  .story-pull--right::after {
+    right: 0;
+    left: auto;
   }
 
   .story-opening > p,
