@@ -344,7 +344,7 @@
 .story-pull--right::after {
   position: absolute;
   top: -50px;
-  bottom: 0;
+  bottom: 18px;
   width: 2px;
   background: var(--story-accent);
   content: "";
@@ -479,6 +479,7 @@
   .story-pull--left::after,
   .story-pull--right::after {
     top: -28px;
+    bottom: 22px;
   }
 
   .story-pull--left::after {

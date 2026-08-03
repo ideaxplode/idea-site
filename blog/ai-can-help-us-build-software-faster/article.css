@@ -600,7 +600,7 @@
 .feature-article .pull-quote--right::after {
   position: absolute;
   top: -50px;
-  bottom: 0;
+  bottom: 20px;
   width: 2px;
   background: var(--coral);
   content: "";
@@ -636,6 +636,7 @@
   .feature-article .pull-quote--left::after,
   .feature-article .pull-quote--right::after {
     top: -28px;
+    bottom: 22px;
   }
 
   .feature-article .pull-quote--left::after {
