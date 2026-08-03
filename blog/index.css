@@ -280,18 +280,19 @@ input {
 }
 
 .hero__art {
+  width: calc(100% + 264px + max(0px, (100vw - 1440px) / 2));
   align-self: stretch;
-  margin-left: -72px;
+  margin-left: -264px;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 72px);
-  mask-image: linear-gradient(to right, transparent 0, #000 72px);
+  -webkit-mask-image: linear-gradient(to left, #000 0, #000 calc(100% - 264px), rgba(0, 0, 0, 0.68) calc(100% - 180px), rgba(0, 0, 0, 0.28) calc(100% - 88px), transparent 100%);
+  mask-image: linear-gradient(to left, #000 0, #000 calc(100% - 264px), rgba(0, 0, 0, 0.68) calc(100% - 180px), rgba(0, 0, 0, 0.28) calc(100% - 88px), transparent 100%);
 }
 
 .hero__art img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: right center;
   mix-blend-mode: multiply;
 }
 
@@ -856,6 +857,7 @@ input {
   }
 
   .hero__art {
+    width: auto;
     height: min(52vw, 510px);
     margin-left: 0;
     -webkit-mask-image: none;
@@ -1156,7 +1158,7 @@ input {
   }
 
   .hero__art img {
-    object-position: 63% center;
+    object-position: right center;
   }
 
   .section-heading h2,
