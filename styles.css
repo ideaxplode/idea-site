@@ -4818,7 +4818,7 @@ body.ix-menu-open {
 .ix-home-blog {
   order: 29;
   width: 100%;
-  padding: 104px 22px 112px;
+  padding: 72px 22px 24px;
   border-top: 1px solid rgba(84, 84, 84, 0.2);
   background: transparent;
   color: #151515;
@@ -4831,11 +4831,11 @@ body.ix-menu-open {
 }
 
 .ix-home-blog__header {
-  margin-bottom: 54px;
+  margin-bottom: 40px;
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
-  align-items: end;
-  gap: 64px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 32px;
 }
 
 .ix-home-blog__eyebrow {
@@ -4861,7 +4861,7 @@ body.ix-menu-open {
 }
 
 .ix-home-blog__intro {
-  padding-bottom: 5px;
+  justify-self: end;
 }
 
 .ix-home-blog__intro p {
@@ -4873,26 +4873,29 @@ body.ix-menu-open {
 }
 
 .ix-home-blog__intro a {
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 12px;
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  color: #151515;
-  font-size: 13px;
+  justify-content: center;
+  background: #151515;
+  color: #ffffff;
+  font-size: 14px;
   font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: #ff7c60;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
+  text-decoration: none;
+  transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
-.ix-home-blog__intro a span {
-  color: #e76247;
-  font-size: 18px;
-  transition: transform 180ms ease;
+.ix-home-blog__intro a:hover {
+  background: #343434;
+  box-shadow: 0 10px 24px rgba(21, 21, 21, 0.16);
+  transform: translateY(-2px);
 }
 
-.ix-home-blog__intro a:hover span {
-  transform: translateX(4px);
+.ix-home-blog__intro a:focus-visible {
+  outline: 3px solid rgba(50, 129, 220, 0.38);
+  outline-offset: 4px;
 }
 
 .ix-home-blog__grid {
@@ -4987,18 +4990,12 @@ body.ix-menu-open {
 
 @media (max-width: 900px) {
   .ix-home-blog {
-    padding-top: 84px;
-    padding-bottom: 90px;
+    padding-top: 64px;
+    padding-bottom: 20px;
   }
 
   .ix-home-blog__header {
-    grid-template-columns: 1fr;
-    align-items: start;
-    gap: 25px;
-  }
-
-  .ix-home-blog__intro {
-    max-width: 580px;
+    gap: 24px;
   }
 
   .ix-home-blog__grid {
@@ -5013,15 +5010,21 @@ body.ix-menu-open {
 
 @media (max-width: 600px) {
   .ix-home-blog {
-    padding: 72px 16px 78px;
+    padding: 56px 16px 16px;
   }
 
   .ix-home-blog__header {
-    margin-bottom: 42px;
+    margin-bottom: 34px;
+    gap: 16px;
   }
 
   .ix-home-blog h2 {
-    font-size: 41px;
+    font-size: 38px;
+  }
+
+  .ix-home-blog__intro a {
+    min-height: 44px;
+    padding: 0 18px;
   }
 
   .ix-home-blog__grid {

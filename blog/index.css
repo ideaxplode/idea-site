@@ -281,7 +281,10 @@ input {
 
 .hero__art {
   align-self: stretch;
+  margin-left: -72px;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 72px);
+  mask-image: linear-gradient(to right, transparent 0, #000 72px);
 }
 
 .hero__art img {
@@ -854,6 +857,9 @@ input {
 
   .hero__art {
     height: min(52vw, 510px);
+    margin-left: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .hero__art img {
