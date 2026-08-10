@@ -170,6 +170,13 @@
         linkedin: 'https://www.linkedin.com/in/bradleyphilip/'
       },
       {
+        quote: 'We highly recommend Rathan’s team as a trustworthy and dependable software contractor.',
+        name: 'John Peng',
+        titleLines: ['CTO, <i>Bibles for America</i>'],
+        photo: './assets/images/ClientPhoto-8.png',
+        linkedin: 'https://www.linkedin.com/in/john-peng-63b7303a/'
+      },
+      {
         quote: 'The team is easy to work with and very responsive. We always knew what was happening with our project.',
         name: 'Silvaster Antony',
         titleLines: ['CEO, <i>OrgWare</i>,<br />CEO, <i>Neurify</i>'],
