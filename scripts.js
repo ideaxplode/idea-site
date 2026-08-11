@@ -1,4 +1,5 @@
 (function () {
+  var analytics = window.IXAnalytics || { track: function () {} };
   var RATHAN_LINKEDIN_URL = 'https://www.linkedin.com/in/rathan-xplode';
   window.__ixRathanLinkedInUrl = RATHAN_LINKEDIN_URL;
   var sectionMap = window.__ixSectionMap || {
@@ -117,6 +118,12 @@
     founderLinkedInButton.title = "Visit Rathan's LinkedIn profile";
     founderLinkedInButton.addEventListener('click', function (e) {
       e.preventDefault();
+      analytics.track('profile_link_click', {
+        profile_type: 'founder',
+        profile_name: 'rathan',
+        link_platform: 'linkedin',
+        link_location: 'about'
+      });
       window.open(RATHAN_LINKEDIN_URL, '_blank', 'noopener');
     });
   }
@@ -259,6 +266,11 @@
       window.setTimeout(function () {
         currentIndex = (currentIndex + step + count) % count;
         renderCurrentStory();
+        analytics.track('testimonial_view', {
+          testimonial_name: testimonials[currentIndex].name,
+          testimonial_position: currentIndex + 1,
+          navigation_direction: direction > 0 ? 'next' : 'previous'
+        });
 
         storyWrapNode.style.transition = 'none';
         storyWrapNode.style.opacity = '0';
@@ -290,6 +302,12 @@
       var url = linkedinBtn.dataset.linkedinUrl;
       if (!url) return;
       e.preventDefault();
+      analytics.track('profile_link_click', {
+        profile_type: 'client',
+        profile_name: testimonials[currentIndex].name,
+        link_platform: 'linkedin',
+        link_location: 'testimonials'
+      });
       window.open(url, '_blank', 'noopener');
     });
 
@@ -325,6 +343,11 @@
           e.preventDefault();
           e.stopPropagation();
         }
+        analytics.track('navigation_click', {
+          navigation_type: 'section',
+          navigation_location: 'footer',
+          destination: item.target
+        });
         smoothTo(item.target);
       }
 
@@ -364,9 +387,16 @@
     var text = (labelNode.textContent || '').trim();
     var target = sectionMap[text];
     if (!target) return;
+    if (node.closest('#groupFooter')) return;
 
     node.addEventListener('click', function (e) {
       e.preventDefault();
+      var navigationLocation = node.closest('.baTaSaSl') ? 'header' : 'page_content';
+      analytics.track('navigation_click', {
+        navigation_type: 'section',
+        navigation_location: navigationLocation,
+        destination: target
+      });
       smoothTo(target);
     });
   });
@@ -401,6 +431,37 @@
     });
   }
 
+  function getAccordionSectionName(group) {
+    var section = group.closest('[id]');
+    var sectionNames = {
+      groupTechnology: 'technology',
+      groupOfferings: 'offerings',
+      groupMethodology: 'methodology',
+      groupAboutUs: 'about'
+    };
+    return section ? (sectionNames[section.id] || section.id) : 'page_content';
+  }
+
+  function getAccordionContextName(group) {
+    var section = group.closest('[id]');
+    var current = group.parentElement;
+
+    while (current && current !== section) {
+      var shortTexts = Array.prototype.filter.call(current.children || [], function (child) {
+        if (!child.classList || !child.classList.contains('Text')) return false;
+        var text = (child.textContent || '').trim().replace(/\s+/g, ' ');
+        return text && text.length <= 60;
+      }).map(function (child) {
+        return (child.textContent || '').trim().replace(/\s+/g, ' ');
+      });
+
+      if (shortTexts.length) return shortTexts[shortTexts.length - 1];
+      current = current.parentElement;
+    }
+
+    return '';
+  }
+
   function refreshOpenAncestors(group) {
     var current = group.parentElement;
     while (current) {
@@ -427,6 +488,11 @@
     if (labelNode) {
       group.dataset.baseLabel = (labelNode.textContent || '').trim();
     }
+    group.dataset.analyticsSection = getAccordionSectionName(group);
+    group.dataset.analyticsContext = getAccordionContextName(group);
+    group.dataset.analyticsLevel = group.parentElement && group.parentElement.closest('.no-scrolling')
+      ? 'nested'
+      : 'primary';
 
     directTexts.forEach(function (t) {
       t.style.opacity = '0.2';
@@ -462,6 +528,14 @@
     var isOpen = group.dataset.expanded === 'true';
     if (group.dataset.animating === 'true') return;
     group.dataset.animating = 'true';
+
+    analytics.track('content_toggle', {
+      content_name: group.dataset.baseLabel || 'details',
+      content_context: group.dataset.analyticsContext,
+      content_group: group.dataset.analyticsSection,
+      content_level: group.dataset.analyticsLevel,
+      toggle_action: isOpen ? 'collapse' : 'expand'
+    });
 
     function finishTransition(expanded) {
       if (expanded) {
@@ -516,6 +590,10 @@
 })();
 
 (function () {
+  var analytics = window.IXAnalytics || {
+    track: function () {},
+    observeSections: function () {}
+  };
   var RATHAN_LINKEDIN_URL = window.__ixRathanLinkedInUrl || 'https://www.linkedin.com/in/rathan-xplode';
   var sectionMap = window.__ixSectionMap || {};
   var smoothTo = window.__ixSmoothTo || function (id) {
@@ -605,6 +683,11 @@
 
     btn.addEventListener('click', function (e) {
       e.preventDefault();
+      analytics.track('navigation_click', {
+        navigation_type: 'scroll_to_top',
+        navigation_location: 'floating_button',
+        destination: 'page_top'
+      });
 
       function prefersReducedMotion() {
         return typeof window.matchMedia === 'function' &&
@@ -709,7 +792,12 @@
           '<span class="ix-responsive-menu-link-icon" aria-hidden="true"><i class="fa ' + item.icon + '"></i></span>' +
           '<span class="ix-responsive-menu-link-label">' + item.label + '</span>';
         btn.addEventListener('click', function () {
-          closeMenu();
+          analytics.track('navigation_click', {
+            navigation_type: 'section',
+            navigation_location: 'responsive_menu',
+            destination: sectionMap[item.label]
+          });
+          closeMenu('navigation');
           window.requestAnimationFrame(function () {
             smoothTo(sectionMap[item.label]);
           });
@@ -730,40 +818,50 @@
       document.body.classList.add('ix-menu-open');
       toggleBtn.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
       toggleBtn.setAttribute('aria-label', 'Close menu');
+      analytics.track('menu_toggle', {
+        menu_name: 'primary_navigation',
+        toggle_action: 'open'
+      });
     }
 
-    function closeMenu() {
+    function closeMenu(closeMethod) {
+      var wasOpen = menu.classList.contains('is-open');
       menu.classList.remove('is-open');
       document.body.classList.remove('ix-menu-open');
       toggleBtn.innerHTML = '<i class="fa fa-bars" aria-hidden="true"></i>';
       toggleBtn.setAttribute('aria-label', 'Open menu');
+      if (wasOpen) {
+        analytics.track('menu_toggle', {
+          menu_name: 'primary_navigation',
+          toggle_action: 'close',
+          close_method: closeMethod || 'unknown'
+        });
+      }
     }
 
     toggleBtn.addEventListener('click', function () {
       if (!isMobileOrTablet()) return;
-      if (menu.classList.contains('is-open')) closeMenu();
+      if (menu.classList.contains('is-open')) closeMenu('toggle_button');
       else openMenu();
     });
 
     menu.addEventListener('click', function (e) {
-      if (e.target === menu) closeMenu();
+      if (e.target === menu) closeMenu('backdrop');
     });
 
     if (chatBtn) {
       chatBtn.addEventListener('click', function () {
-        var trigger = document.querySelector('.baTaSaTaB');
-        if (trigger) trigger.click();
-        closeMenu();
+        closeMenu('cta_click');
       });
     }
 
     window.addEventListener('resize', function () {
-      if (!isMobileOrTablet()) closeMenu();
+      if (!isMobileOrTablet()) closeMenu('viewport_resize');
     });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menu.classList.contains('is-open')) {
-        closeMenu();
+        closeMenu('escape_key');
       }
     });
   }
@@ -800,6 +898,10 @@
           event.preventDefault();
           event.stopPropagation();
         }
+        analytics.track('client_website_click', {
+          client_name: brandTitle || 'client',
+          link_location: 'client_logos'
+        });
         window.open(targetUrl, '_blank', 'noopener');
       }
 
@@ -917,7 +1019,13 @@
     var emailCtaBtn = emailModal.querySelector('.ix-modal-cta');
     var emailMessageNode = emailModal.querySelector('#ixEmailMessage');
     var emailBackBtn = emailModal.querySelector('.ix-modal-backlink');
+    var emailLinkedInLink = emailModal.querySelector('.ix-modal-footer-link');
+    var emailDirectLink = emailModal.querySelector('.ix-modal-footer-email');
     var activeMessage = 'Hi Rathan!';
+    var initialMessage = activeMessage;
+    var activeTrigger = { name: 'chat_with_rathan', location: 'unknown' };
+    var whatsappFormStarted = false;
+    var emailFormStarted = false;
     var whatsappNumber = '9962150600';
     var emailAddress = 'rathan@ideaxplode.com';
     var emailSubject = 'From ideaXplode website';
@@ -926,14 +1034,15 @@
     var MODAL_SWITCH_OUT_MS = 180;
 
     var triggerMap = [
-      { selector: '.baTaSaTaB', message: 'Hi Rathan!' },
-      { selector: '.baTaSoaB', message: 'Hey Rathan, I\'d like to take up the one-week challenge!' },
-      { selector: '.baTaUlv', message: 'Hi Rathan, let\'s discuss the best tech choices for my app/idea.' },
-      { selector: '.baTaUaJaE', message: 'Hi Rathan, tell me about your methodology -- Agentic Agile.' },
-      { selector: '.baTaUaKq', message: 'Hi Rathan, let\'s discuss pricing.' },
-      { selector: '.baTaUwt', message: 'Hi Rathan, please share the credentials for a demo app.' },
-      { selector: '.baTaUyaO', message: 'Hi Rathan, I\'d like to sign an NDA before discussing my idea.' },
-      { selector: '.baTaUyr', message: 'Hi Rathan, I\'d like to join the ideaXplode team. Please find my resume below..' }
+      { selector: '.baTaSaTaB', name: 'chat_with_rathan', location: 'header', message: 'Hi Rathan!' },
+      { selector: '.ix-responsive-menu-chat', name: 'chat_with_rathan', location: 'responsive_menu', message: 'Hi Rathan!' },
+      { selector: '.baTaSoaB', name: 'one_week_challenge', location: 'fast_development', message: 'Hey Rathan, I\'d like to take up the one-week challenge!' },
+      { selector: '.baTaUlv', name: 'discuss_tech_choices', location: 'technology', message: 'Hi Rathan, let\'s discuss the best tech choices for my app/idea.' },
+      { selector: '.baTaUaJaE', name: 'learn_about_methodology', location: 'methodology', message: 'Hi Rathan, tell me about your methodology -- Agentic Agile.' },
+      { selector: '.baTaUaKq', name: 'discuss_pricing', location: 'pricing', message: 'Hi Rathan, let\'s discuss pricing.' },
+      { selector: '.baTaUwt', name: 'get_app_credentials', location: 'footer_cta', message: 'Hi Rathan, please share the credentials for a demo app.' },
+      { selector: '.baTaUyaO', name: 'sign_nda', location: 'footer_cta', message: 'Hi Rathan, I\'d like to sign an NDA before discussing my idea.' },
+      { selector: '.baTaUyr', name: 'apply_to_join', location: 'footer_cta', message: 'Hi Rathan, I\'d like to join the ideaXplode team. Please find my resume below..' }
     ];
 
     function syncBodyModalState() {
@@ -994,15 +1103,30 @@
       }, options.duration || MODAL_CLOSE_MS);
     }
 
-    function openModal(message) {
+    function openModal(message, triggerContext) {
       activeMessage = message || 'Hi Rathan!';
+      initialMessage = activeMessage;
+      activeTrigger = triggerContext || activeTrigger;
+      whatsappFormStarted = false;
       messageNode.textContent = activeMessage;
       messageNode.value = activeMessage;
+      analytics.track('cta_click', {
+        cta_name: activeTrigger.name,
+        cta_location: activeTrigger.location,
+        cta_destination: 'whatsapp_dialog'
+      });
+      analytics.track('modal_open', {
+        modal_name: 'whatsapp_contact',
+        trigger_name: activeTrigger.name,
+        trigger_location: activeTrigger.location
+      });
       showModal(modal, true);
     }
 
     function openEmailModal(message) {
       activeMessage = message || activeMessage || 'Hi Rathan!';
+      initialMessage = activeMessage;
+      emailFormStarted = false;
       emailMessageNode.textContent = activeMessage;
       emailMessageNode.value = activeMessage;
       showModal(emailModal, true);
@@ -1027,40 +1151,93 @@
         trigger.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
-          openModal(item.message);
+          openModal(item.message, { name: item.name, location: item.location });
         });
       });
     });
 
     closeBtn.addEventListener('click', function () {
+      analytics.track('modal_close', {
+        modal_name: 'whatsapp_contact',
+        close_method: 'close_button'
+      });
       closeModal(modal);
     });
 
     emailCloseBtn.addEventListener('click', function () {
+      analytics.track('modal_close', {
+        modal_name: 'email_contact',
+        close_method: 'close_button'
+      });
       closeModal(emailModal);
     });
 
     modal.addEventListener('click', function (e) {
-      if (e.target === modal) closeModal(modal);
+      if (e.target === modal) {
+        analytics.track('modal_close', {
+          modal_name: 'whatsapp_contact',
+          close_method: 'backdrop'
+        });
+        closeModal(modal);
+      }
     });
 
     emailModal.addEventListener('click', function (e) {
-      if (e.target === emailModal) closeModal(emailModal);
+      if (e.target === emailModal) {
+        analytics.track('modal_close', {
+          modal_name: 'email_contact',
+          close_method: 'backdrop'
+        });
+        closeModal(emailModal);
+      }
     });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        analytics.track('modal_close', {
+          modal_name: 'whatsapp_contact',
+          close_method: 'escape_key'
+        });
         closeModal(modal);
       }
       if (e.key === 'Escape' && emailModal.classList.contains('is-open')) {
+        analytics.track('modal_close', {
+          modal_name: 'email_contact',
+          close_method: 'escape_key'
+        });
         closeModal(emailModal);
       }
+    });
+
+    messageNode.addEventListener('input', function () {
+      if (whatsappFormStarted) return;
+      whatsappFormStarted = true;
+      analytics.track('form_start', {
+        form_name: 'whatsapp_contact',
+        contact_method: 'whatsapp'
+      });
+    });
+
+    emailMessageNode.addEventListener('input', function () {
+      if (emailFormStarted) return;
+      emailFormStarted = true;
+      analytics.track('form_start', {
+        form_name: 'email_contact',
+        contact_method: 'email'
+      });
     });
 
     ctaBtn.addEventListener('click', function () {
       var finalMessage = (messageNode.value || activeMessage || '').trim();
       if (!finalMessage) finalMessage = activeMessage;
       var url = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(finalMessage);
+      analytics.track('generate_lead', {
+        lead_source: 'website_whatsapp',
+        contact_method: 'whatsapp',
+        cta_name: activeTrigger.name,
+        cta_location: activeTrigger.location,
+        message_customized: finalMessage !== initialMessage
+      });
       window.open(url, '_blank', 'noopener');
       closeModal(modal);
     });
@@ -1068,8 +1245,20 @@
     fallbackBtn.addEventListener('click', function () {
       var finalMessage = (messageNode.value || activeMessage || '').trim();
       if (!finalMessage) finalMessage = activeMessage;
+      analytics.track('contact_method_switch', {
+        from_method: 'whatsapp',
+        to_method: 'email',
+        cta_name: activeTrigger.name
+      });
+      analytics.track('modal_open', {
+        modal_name: 'email_contact',
+        trigger_name: 'whatsapp_fallback',
+        trigger_location: 'whatsapp_contact'
+      });
       switchModal(modal, emailModal, function () {
         activeMessage = finalMessage;
+        initialMessage = finalMessage;
+        emailFormStarted = false;
         emailMessageNode.textContent = finalMessage;
         emailMessageNode.value = finalMessage;
       });
@@ -1090,6 +1279,14 @@
       var ua = navigator.userAgent || '';
       var isAndroid = /Android/i.test(ua);
       var isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+      analytics.track('generate_lead', {
+        lead_source: 'website_email',
+        contact_method: 'email',
+        cta_name: activeTrigger.name,
+        cta_location: activeTrigger.location,
+        message_customized: finalBody !== initialMessage
+      });
 
       // Mobile: prefer opening Gmail app directly, with safe fallback.
       if (isAndroid) {
@@ -1126,12 +1323,58 @@
     emailBackBtn.addEventListener('click', function () {
       var finalMessage = (emailMessageNode.value || activeMessage || '').trim();
       if (!finalMessage) finalMessage = activeMessage;
+      analytics.track('contact_method_switch', {
+        from_method: 'email',
+        to_method: 'whatsapp',
+        cta_name: activeTrigger.name
+      });
+      analytics.track('modal_open', {
+        modal_name: 'whatsapp_contact',
+        trigger_name: 'email_backlink',
+        trigger_location: 'email_contact'
+      });
       switchModal(emailModal, modal, function () {
         activeMessage = finalMessage;
+        initialMessage = finalMessage;
+        whatsappFormStarted = false;
         messageNode.textContent = finalMessage;
         messageNode.value = finalMessage;
       });
     });
+
+    if (emailLinkedInLink) {
+      emailLinkedInLink.addEventListener('click', function () {
+        analytics.track('contact_link_click', {
+          contact_method: 'linkedin',
+          link_location: 'email_contact'
+        });
+      });
+    }
+
+    if (emailDirectLink) {
+      emailDirectLink.addEventListener('click', function () {
+        analytics.track('generate_lead', {
+          lead_source: 'website_email_link',
+          contact_method: 'email',
+          cta_name: activeTrigger.name,
+          cta_location: 'email_contact_footer',
+          message_customized: false
+        });
+      });
+    }
+  }
+
+  function initAnalyticsSectionTracking() {
+    analytics.observeSections([
+      { selector: '#groupFastDevelopment', name: 'fast_development', position: 1 },
+      { selector: '#groupTechnology', name: 'technology', position: 2 },
+      { selector: '#groupOfferings', name: 'offerings', position: 3 },
+      { selector: '#groupMethodology', name: 'methodology', position: 4 },
+      { selector: '#groupAboutUs', name: 'about', position: 5 },
+      { selector: '#groupPricing', name: 'pricing', position: 6 },
+      { selector: '#groupCTA', name: 'footer_ctas', position: 7 },
+      { selector: '#groupContact', name: 'contact', position: 8 }
+    ]);
   }
 
   initScrollToTopButton();
@@ -1140,5 +1383,6 @@
   initMethodologyButtonMobileLabel();
   initResponsiveMenu();
   initWhatsAppModal();
+  initAnalyticsSectionTracking();
   initTinyCornerArtifactGuard();
 })();
