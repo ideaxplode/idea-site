@@ -3572,8 +3572,35 @@ html, body {
   overflow-x: hidden;
 }
 
-html {
+body {
+  height: auto !important;
+  min-height: 100%;
+}
+
+html:has(body.ix-modal-open),
+html:has(body.ix-menu-open) {
+  overflow: hidden;
+}
+
+html,
+body {
   scroll-behavior: smooth;
+}
+
+#about,
+#technology,
+#methodology,
+#pricing,
+#contact,
+#fast-development {
+  scroll-margin-top: 24px;
+}
+
+.baTaSaSq > a.clickable-element,
+#groupFooter a.clickable-element,
+a.baTaSkq,
+.ix-responsive-menu-link {
+  text-decoration: none;
 }
 
 .no-scrolling {

@@ -3,23 +3,14 @@
   var RATHAN_LINKEDIN_URL = 'https://www.linkedin.com/in/rathan-xplode';
   window.__ixRathanLinkedInUrl = RATHAN_LINKEDIN_URL;
   var sectionMap = window.__ixSectionMap || {
-    'About': 'groupAboutUs',
-    'Technology': 'groupTechnology',
-    'Methodology': 'groupMethodology',
-    'Pricing': 'groupPricing',
-    'Contact': 'groupContact',
-    'How fast can you build?': 'groupFastDevelopment'
+    'About': 'about',
+    'Technology': 'technology',
+    'Methodology': 'methodology',
+    'Pricing': 'pricing',
+    'Contact': 'contact',
+    'How fast can you build?': 'fast-development'
   };
   window.__ixSectionMap = sectionMap;
-
-  function smoothTo(id) {
-    var el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  window.__ixSmoothTo = smoothTo;
 
   function toOpaqueRgb(colorValue) {
     var rgba = colorValue.match(/^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*[\d.]+\s*\)$/i);
@@ -324,80 +315,23 @@
     }
   });
 
-  // Footer quick-links: bind explicit section targets so clicks work reliably on all viewports/devices.
-  function initFooterQuickLinksNavigation() {
-    var footerTargets = [
-      { selector: '#groupFooter .baTaUaHq', target: 'groupAboutUs' },
-      { selector: '#groupFooter .baTaUaHw', target: 'groupTechnology' },
-      { selector: '#groupFooter .baTaUaIaC', target: 'groupMethodology' },
-      { selector: '#groupFooter .baTaUaIaI', target: 'groupPricing' }
-    ];
-
-    footerTargets.forEach(function (item) {
-      var node = document.querySelector(item.selector);
-      if (!node) return;
-      var ignoreNextClick = false;
-
-      function navigateFromFooterLink(e) {
-        if (e) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-        analytics.track('navigation_click', {
-          navigation_type: 'section',
-          navigation_location: 'footer',
-          destination: item.target
-        });
-        smoothTo(item.target);
-      }
-
-      function onFooterClick(e) {
-        if (ignoreNextClick) {
-          ignoreNextClick = false;
-          e.preventDefault();
-          return;
-        }
-        navigateFromFooterLink(e);
-      }
-
-      function onFooterTouch(e) {
-        ignoreNextClick = true;
-        navigateFromFooterLink(e);
-        window.setTimeout(function () {
-          ignoreNextClick = false;
-        }, 500);
-      }
-
-      node.addEventListener('click', onFooterClick);
-      node.addEventListener('touchend', onFooterTouch, { passive: false });
-      var iconBtn = node.querySelector('button');
-      if (iconBtn) {
-        iconBtn.addEventListener('click', onFooterClick);
-        iconBtn.addEventListener('touchend', onFooterTouch, { passive: false });
-      }
-    });
-  }
-
-  initFooterQuickLinksNavigation();
-
-  // Bubble workflows are absent in standalone mode, so wire nav/CTA clicks by visible label.
-  document.querySelectorAll('.clickable-element').forEach(function (node) {
+  // Keep navigation analytics while allowing anchors to retain native hash semantics.
+  document.querySelectorAll('a[href^="#"]').forEach(function (node) {
     var labelNode = node.querySelector('.label-item, .bubble-element.Text');
     if (!labelNode) return;
     var text = (labelNode.textContent || '').trim();
     var target = sectionMap[text];
     if (!target) return;
-    if (node.closest('#groupFooter')) return;
 
-    node.addEventListener('click', function (e) {
-      e.preventDefault();
-      var navigationLocation = node.closest('.baTaSaSl') ? 'header' : 'page_content';
+    node.addEventListener('click', function () {
+      var navigationLocation = node.closest('#groupFooter')
+        ? 'footer'
+        : (node.closest('.baTaSaSl') ? 'header' : 'page_content');
       analytics.track('navigation_click', {
         navigation_type: 'section',
         navigation_location: navigationLocation,
         destination: target
       });
-      smoothTo(target);
     });
   });
 
@@ -434,10 +368,10 @@
   function getAccordionSectionName(group) {
     var section = group.closest('[id]');
     var sectionNames = {
-      groupTechnology: 'technology',
+      technology: 'technology',
       groupOfferings: 'offerings',
-      groupMethodology: 'methodology',
-      groupAboutUs: 'about'
+      methodology: 'methodology',
+      about: 'about'
     };
     return section ? (sectionNames[section.id] || section.id) : 'page_content';
   }
@@ -596,13 +530,6 @@
   };
   var RATHAN_LINKEDIN_URL = window.__ixRathanLinkedInUrl || 'https://www.linkedin.com/in/rathan-xplode';
   var sectionMap = window.__ixSectionMap || {};
-  var smoothTo = window.__ixSmoothTo || function (id) {
-    var el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
   function hideTinyCornerArtifactsOnMobileTablet() {
     if (window.innerWidth > 1024) return;
 
@@ -785,24 +712,21 @@
     var linksWrap = menu.querySelector('.ix-responsive-menu-links');
     if (linksWrap && !linksWrap.children.length) {
       menuItems.forEach(function (item) {
-        var btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'ix-responsive-menu-link';
-        btn.innerHTML =
+        var link = document.createElement('a');
+        link.href = '#' + sectionMap[item.label];
+        link.className = 'ix-responsive-menu-link';
+        link.innerHTML =
           '<span class="ix-responsive-menu-link-icon" aria-hidden="true"><i class="fa ' + item.icon + '"></i></span>' +
           '<span class="ix-responsive-menu-link-label">' + item.label + '</span>';
-        btn.addEventListener('click', function () {
+        link.addEventListener('click', function () {
           analytics.track('navigation_click', {
             navigation_type: 'section',
             navigation_location: 'responsive_menu',
             destination: sectionMap[item.label]
           });
           closeMenu('navigation');
-          window.requestAnimationFrame(function () {
-            smoothTo(sectionMap[item.label]);
-          });
         });
-        linksWrap.appendChild(btn);
+        linksWrap.appendChild(link);
       });
     }
 
@@ -1366,14 +1290,14 @@
 
   function initAnalyticsSectionTracking() {
     analytics.observeSections([
-      { selector: '#groupFastDevelopment', name: 'fast_development', position: 1 },
-      { selector: '#groupTechnology', name: 'technology', position: 2 },
+      { selector: '#fast-development', name: 'fast_development', position: 1 },
+      { selector: '#technology', name: 'technology', position: 2 },
       { selector: '#groupOfferings', name: 'offerings', position: 3 },
-      { selector: '#groupMethodology', name: 'methodology', position: 4 },
-      { selector: '#groupAboutUs', name: 'about', position: 5 },
-      { selector: '#groupPricing', name: 'pricing', position: 6 },
+      { selector: '#methodology', name: 'methodology', position: 4 },
+      { selector: '#about', name: 'about', position: 5 },
+      { selector: '#pricing', name: 'pricing', position: 6 },
       { selector: '#groupCTA', name: 'footer_ctas', position: 7 },
-      { selector: '#groupContact', name: 'contact', position: 8 }
+      { selector: '#contact', name: 'contact', position: 8 }
     ]);
   }
 
