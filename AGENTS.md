@@ -22,6 +22,6 @@
 
 1. The blog is static: its listing is `blog/index.html`, and posts use `blog/<three-digit-serial>-<slug>/index.html`. Serial numbers are permanent, organizational only, and used in URLs and asset filenames—not displayed in the UI.
 2. Use the latest published post as the reference when adding a post. Preserve the blog’s overall visual, responsive, and accessibility standards, while allowing content-appropriate variations. Keep reusable presentation and behaviour in `blog/blog.css`, `blog/story.css`, and `blog/article.js`; do not create post-specific stylesheets.
-3. Hero/social images live in `blog/images/` as `<serial>.jpg`; `cover.jpg` is reserved for the blog-index hero.
+3. Hero/social images live in `blog/images/` as `<serial>.jpg`; `000-cover.jpg` is reserved for the blog-index hero.
 4. For a new post, assign the next serial and integrate the supplied content/image, accurate publication details, reading time, alt text, and analytics identifier. Feature it as the latest post on the blog and main-page listings, keep other posts newest-first, and select genuinely relevant related posts. Check every reused title, summary, link, and asset.
 5. Give every public page accurate canonical, robots, Open Graph, X, and JSON-LD metadata (`BlogPosting`/`Blog` and `BreadcrumbList` as appropriate). When indexable public routes or meaningful page content change, update the canonical-only HTTPS `sitemap.xml` and relevant `<lastmod>` values; keep `robots.txt` pointing to it and verify internal links, metadata, structured data, and sitemap coverage together.
