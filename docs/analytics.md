@@ -1,142 +1,165 @@
 # Google Analytics 4 integration
 
-## Activate analytics
+## Property and stream
 
-The site is fully instrumented, but collection is intentionally disabled while the placeholder
-Measurement ID remains in `analytics-config.js`.
+The site sends analytics to GA4 Measurement ID `G-ZFGV1LD430` through `analytics-config.js`.
+No API secret, service-account credential, or Google Tag Manager container is required. Never put a
+Google Analytics Data API credential in these public files.
 
-1. In Google Analytics, create or select an account named `ideaXplode Technologies`.
-2. Create a GA4 property with:
-   - Property name: `ideaXplode Website`
-   - Reporting time zone: `India (GMT+05:30)`
-   - Currency: `Indian Rupee (INR)`
-3. Create a **Web** data stream with:
-   - Website URL: `https://www.ideaxplode.com`
-   - Stream name: `ideaXplode website`
-   - Enhanced measurement: enabled
-4. Copy the stream's **Measurement ID**. It starts with `G-`.
-5. Replace `G-XXXXXXXXXX` in `analytics-config.js` with that Measurement ID.
-6. Temporarily set `debug: true`, deploy, and exercise the tracked interactions.
-7. Confirm the events and parameters in **Reports > Realtime** and **Admin > Data display > DebugView**.
-8. Set `debug: false` after verification.
+The expected GA4 configuration is:
 
-No API secret, service-account credential, or Google Tag Manager container is required for this
-client-side integration. Never add a Google Analytics Data API credential to these public files.
+- Account: `ideaXplode Technologies`
+- Property: `ideaXplode Website`
+- Time zone: India (GMT+05:30)
+- Currency: Indian Rupee (INR)
+- Web stream URL: `https://www.ideaxplode.com`
+- Web stream name: `ideaXplode website`
+- Enhanced measurement: enabled
+
+For verification, temporarily set `debug: true`, deploy, exercise the interactions, confirm them in
+DebugView, and then restore `debug: false`.
+
+## Architecture
+
+- `analytics-config.js` owns the Measurement ID, consent default, and query parameters that must be
+  removed before GA initializes.
+- `analytics.js` is the only file that talks to `gtag`. It loads GA, sanitizes parameters, registers
+  interaction definitions, tracks page views, observes sections, and records scroll milestones.
+- `analytics-interactions.js` is the central registry of landing-page controls and their permanent,
+  human-readable identities.
+- Feature code calls `IXAnalytics.trackInteraction(...)`; it never calls `gtag` directly.
+- `blog/analytics.js` applies the same schema to blog navigation and article links.
+- Every public page supplies `data-analytics-content-type` and `data-analytics-content-name` on its
+  `<body>` and loads the shared analytics files.
+
+New interactions should be registered once and then referenced by their stable `interaction_id`.
+Renaming visible text should not change an existing ID unless the meaning of the control changes.
+
+## Common interaction schema
+
+Every meaningful UI interaction includes these parameters:
+
+| Parameter | Purpose | Example |
+| --- | --- | --- |
+| `interaction_id` | Permanent, unique machine identifier | `technology_human_in_control_tools` |
+| `interaction_label` | Clear visible or curated label | `What tools do you use?` |
+| `interaction_category` | Broad behavior type | `content`, `cta`, `navigation`, `contact` |
+| `interaction_context` | The subject affected by the action | `Human in Control` |
+| `interaction_location` | Where the control appears | `technology` |
+| `interaction_action` | What occurred | `click`, `expand`, `collapse`, `open`, `send` |
+| `interaction_level` | Hierarchy where useful | `primary`, `nested` |
+
+For example, `hero_how_fast_can_you_build` identifies the “How fast can you build?” CTA. Filtering
+for this ID gives its exact Event count, Total users, and Sessions.
+
+All 22 expandable controls have explicit IDs. This includes the repeated “What tools do you use?”
+controls and the six formerly ambiguous Methodology “How?” controls. The complete registry is in
+`analytics-interactions.js`.
 
 ## Event taxonomy
 
-All event and parameter names use lower-case `snake_case`. Values are stable categorical labels;
-message bodies, email text, and other visitor-provided content are deliberately excluded.
+| Event | Meaning |
+| --- | --- |
+| `page_view` | Manual page view, including page content type and name |
+| `section_view` | First view of a major landing-page section during a page load |
+| `content_progress` | A 25%, 50%, 75%, or 90% page/article scroll milestone |
+| `navigation_click` | Header, footer, responsive-menu, blog, section, or scroll-to-top navigation |
+| `menu_toggle` | A responsive navigation menu opens or closes |
+| `content_toggle` | A primary or nested information panel expands or collapses |
+| `testimonial_view` | Previous/next testimonial navigation completes |
+| `profile_link_click` | Founder or testimonial LinkedIn link is selected |
+| `client_website_click` | A client logo link is selected |
+| `cta_click` | A business CTA opens the contact journey |
+| `modal_open` / `modal_close` | WhatsApp or email contact dialog changes state |
+| `form_start` | The visitor first edits the WhatsApp or email message |
+| `contact_method_switch` | The visitor switches between WhatsApp and email |
+| `contact_link_click` | An alternative contact link is selected |
+| `generate_lead` | A WhatsApp or email handoff is initiated |
+| `share` | An article link is successfully copied |
 
-| Event | When it fires | Important parameters |
-| --- | --- | --- |
-| `page_view` | Every page load; sent manually to prevent duplicate views and support future client-side routing | `content_type`, `content_name`, plus GA's page title and location |
-| `section_view` | The first time a major landing-page section reaches the reading area | `section_name`, `section_position` |
-| `content_progress` | At 25%, 50%, 75%, and 90% scroll depth on a page or article | `content_type`, `content_name`, `percent_scrolled` |
-| `navigation_click` | Header, responsive-menu, footer, article-home, section, and scroll-to-top navigation | `navigation_type`, `navigation_location`, `destination` |
-| `menu_toggle` | Responsive navigation opens or closes | `menu_name`, `toggle_action`, `close_method` |
-| `content_toggle` | A primary or nested information panel expands or collapses | `content_name`, `content_context`, `content_group`, `content_level`, `toggle_action` |
-| `testimonial_view` | A visitor navigates to another testimonial | `testimonial_name`, `testimonial_position`, `navigation_direction` |
-| `profile_link_click` | Founder or testimonial LinkedIn link is selected | `profile_type`, `profile_name`, `link_platform`, `link_location` |
-| `client_website_click` | A linked client logo is selected | `client_name`, `link_location` |
-| `cta_click` | A tracked business CTA opens the WhatsApp dialog | `cta_name`, `cta_location`, `cta_destination` |
-| `modal_open` | The WhatsApp or email dialog opens, including switches between them | `modal_name`, `trigger_name`, `trigger_location` |
-| `modal_close` | A dialog closes via its button, backdrop, or Escape key | `modal_name`, `close_method` |
-| `form_start` | A visitor first edits the WhatsApp or email message field | `form_name`, `contact_method` |
-| `contact_method_switch` | A visitor switches between WhatsApp and email | `from_method`, `to_method`, `cta_name` |
-| `contact_link_click` | The LinkedIn alternative in the contact dialog is selected | `contact_method`, `link_location` |
-| `generate_lead` | A WhatsApp message or email handoff is initiated | `lead_source`, `contact_method`, `cta_name`, `cta_location`, `message_customized` |
+Visitor-entered message bodies, email text, names, and contact details are deliberately excluded.
+`generate_lead` should be the primary GA4 key event.
 
-`generate_lead` is GA4's recommended lead event and should be the primary business key event.
+## GA4 custom definitions
 
-## GA4 reporting configuration
+Create event-scoped custom dimensions with these simple display names and exact event parameters:
 
-### Key event
+| Display name | Event parameter |
+| --- | --- |
+| Interaction ID | `interaction_id` |
+| Interaction Label | `interaction_label` |
+| Interaction Category | `interaction_category` |
+| Interaction Context | `interaction_context` |
+| Interaction Location | `interaction_location` |
+| Interaction Action | `interaction_action` |
+| Interaction Level | `interaction_level` |
+| Origin Interaction ID | `origin_interaction_id` |
+| Origin Interaction Label | `origin_interaction_label` |
 
-In **Admin > Data display > Events**, mark `generate_lead` as a key event. Use the default counting
-method unless the business later needs one lead per session rather than every initiated contact.
+Also register the event-specific parameters needed for deeper reports: `content_type`,
+`content_name`, `section_name`, `navigation_type`, `navigation_location`, `destination`,
+`content_context`, `content_group`, `content_level`, `toggle_action`, `cta_name`, `cta_location`,
+`cta_destination`, `modal_name`, `trigger_name`, `trigger_location`, `contact_method`, `lead_source`,
+`message_customized`, `from_method`, `to_method`, `testimonial_name`, `navigation_direction`,
+`profile_type`, `profile_name`, `link_platform`, `link_location`, `client_name`, `close_method`,
+`form_name`, and `menu_name`.
 
-### Custom dimensions
+Create event-scoped custom metrics for `section_position`, `testimonial_position`, and
+`percent_scrolled` only if numeric charts require them. GA already provides Page title, Page location,
+Page path, Event name, Event count, Total users, and Sessions.
 
-GA receives custom parameters immediately, but parameters must be registered as event-scoped custom
-dimensions before they are convenient to use in standard reports and Explorations. In
-**Admin > Data display > Custom definitions**, create event-scoped dimensions whose Event parameter
-exactly matches each name below.
+## Recommended reports
 
-Recommended core dimensions:
+Create an Exploration named **Interaction Statistics** with:
 
-- `content_type`
-- `content_name`
-- `section_name`
-- `navigation_type`
-- `navigation_location`
-- `destination`
-- `content_context`
-- `content_group`
-- `content_level`
-- `toggle_action`
-- `cta_name`
-- `cta_location`
-- `modal_name`
-- `trigger_name`
-- `trigger_location`
-- `contact_method`
-- `lead_source`
-- `message_customized`
-- `from_method`
-- `to_method`
-- `testimonial_name`
-- `navigation_direction`
-- `profile_type`
-- `link_platform`
-- `link_location`
-- `client_name`
-- `close_method`
+- Rows: Interaction Location, Interaction Context, Interaction Label, Interaction Action,
+  Interaction ID
+- Values: Event count, Total users, Sessions
+- Optional filters: Event name or Interaction Category
 
-Optional dimensions, useful for deeper UI analysis:
+Useful tabs are:
 
-- `cta_destination`
-- `profile_name`
-- `form_name`
-- `menu_name`
+- **CTA Performance:** `interaction_category = cta`
+- **Content Expansions:** `event_name = content_toggle` and `interaction_action = expand`
+- **Testimonials:** `event_name = testimonial_view`
+- **Contact Actions:** contact/modal events broken down by Interaction Label and CTA Name
+- **Lead Funnel:** `cta_click` → `modal_open` → `form_start` → `generate_lead`
 
-Create event-scoped custom metrics for these numeric parameters if charts need numeric aggregation:
+Path Exploration is useful for aggregate event paths. User Explorer provides a pseudonymous
+browser/device timeline. Neither guarantees a known person's complete history across browsers,
+devices, cookie deletion, consent refusal, or blocking software.
 
-- `section_position`
-- `testimonial_position`
-- `percent_scrolled`
+## BigQuery journey export
 
-Do not create custom definitions for page title, page location, page path, or other dimensions GA4
-already provides.
+Enable the GA4 daily BigQuery export as soon as practical because it does not backfill earlier data.
+`docs/ga4-visitor-journey.sql` is a starter query that orders anonymous journeys by pseudo-user,
+session, timestamp, and GA batch-ordering fields. Replace its project and dataset placeholders after
+the GA4 link creates the dataset. Keep raw user-level exports access-controlled.
 
-## Suggested Explorations
+## Acquisition links
 
-- **Lead funnel:** `section_view` → `cta_click` → `modal_open` → `form_start` → `generate_lead`, broken down by `cta_name` and `contact_method`.
-- **Content engagement:** `section_view` and `content_progress`, broken down by `content_name`.
-- **Expandable content:** `content_toggle`, filtered to `toggle_action = expand`, broken down by `content_group`, `content_context`, and `content_name`.
-- **Social proof:** `testimonial_view` followed by `profile_link_click`, broken down by `testimonial_name`.
+Use UTMs for campaigns and channels, not individual people. Example:
 
-## Architecture and future pages
-
-- `analytics-config.js` contains environment configuration and the only value needed to activate GA4.
-- `analytics.js` owns Google tag loading, parameter sanitization, consent updates, page views, declarative link tracking, section observation, and content-progress tracking.
-- Feature code calls `window.IXAnalytics.track(...)`; it never calls `gtag` directly.
-- New static pages should include both analytics scripts and add `data-analytics-content-type` and
-  `data-analytics-content-name` to `<body>`.
-- Declarative links can use `data-analytics-event` and `data-analytics-param-*` attributes, as the blog page does.
-- A future client-side router must call `IXAnalytics.trackPageView()` after each completed route change.
-
-## Consent and privacy
-
-The current configuration uses `defaultConsent: 'granted'`, which matches a site that has determined
-Analytics consent is not required for a visitor. If the site serves regions or visitors for whom
-prior analytics consent is required, change it to `defaultConsent: 'denied'` and connect the consent
-banner/CMP choice to:
-
-```js
-window.IXAnalytics.setConsent(true); // grant after opt-in
-window.IXAnalytics.setConsent(false); // withdraw
+```text
+?utm_source=facebook&utm_medium=social&utm_campaign=product_engineering&utm_content=human_in_control
 ```
 
-The appropriate consent policy depends on the site's jurisdictions and legal/privacy policy; GA4
-configuration alone does not replace that assessment.
+## Consent and person-specific privacy
+
+`ref_id`, `user_id`, `email`, and `phone` query parameters are removed from the browser URL before GA
+initializes. They are never retained or forwarded by this implementation. Do not register `ref_id`
+as a GA custom dimension and never place a name, email address, phone number, or hashed contact value
+in GA parameters or URLs.
+
+A future known-person research journey requires a separate, first-party implementation with explicit
+informed consent, an opaque random token, restricted access, and a retention/deletion policy. A future
+authenticated application may use GA User-ID according to Google's policy; a shared referral link is
+not an authenticated User-ID.
+
+The current configuration uses `defaultConsent: 'granted'`. If prior opt-in is required for the
+site's visitors, change it to `denied` and connect the consent banner/CMP to:
+
+```js
+window.IXAnalytics.setConsent(true);  // grant after opt-in
+window.IXAnalytics.setConsent(false); // withdraw
+```

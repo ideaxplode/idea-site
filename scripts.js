@@ -1,5 +1,12 @@
 (function () {
-  var analytics = window.IXAnalytics || { track: function () {} };
+  var analytics = window.IXAnalytics || {
+    track: function () {},
+    trackInteraction: function (eventName, interactionId, parameters) {
+      this.track(eventName, parameters);
+    }
+  };
+  var interactionMaps = window.IX_ANALYTICS_INTERACTION_MAPS || {};
+  var accordionByClass = interactionMaps.accordionByClass || {};
   var RATHAN_LINKEDIN_URL = 'https://www.linkedin.com/in/rathan-xplode';
   window.__ixRathanLinkedInUrl = RATHAN_LINKEDIN_URL;
   var sectionMap = window.__ixSectionMap || {
@@ -109,7 +116,8 @@
     founderLinkedInButton.title = "Visit Rathan's LinkedIn profile";
     founderLinkedInButton.addEventListener('click', function (e) {
       e.preventDefault();
-      analytics.track('profile_link_click', {
+      analytics.trackInteraction('profile_link_click', 'about_founder_linkedin', {
+        interaction_action: 'click',
         profile_type: 'founder',
         profile_name: 'rathan',
         link_platform: 'linkedin',
@@ -257,11 +265,17 @@
       window.setTimeout(function () {
         currentIndex = (currentIndex + step + count) % count;
         renderCurrentStory();
-        analytics.track('testimonial_view', {
-          testimonial_name: testimonials[currentIndex].name,
-          testimonial_position: currentIndex + 1,
-          navigation_direction: direction > 0 ? 'next' : 'previous'
-        });
+        analytics.trackInteraction(
+          'testimonial_view',
+          direction > 0 ? 'testimonials_next' : 'testimonials_previous',
+          {
+            interaction_context: testimonials[currentIndex].name,
+            interaction_action: direction > 0 ? 'next' : 'previous',
+            testimonial_name: testimonials[currentIndex].name,
+            testimonial_position: currentIndex + 1,
+            navigation_direction: direction > 0 ? 'next' : 'previous'
+          }
+        );
 
         storyWrapNode.style.transition = 'none';
         storyWrapNode.style.opacity = '0';
@@ -293,7 +307,9 @@
       var url = linkedinBtn.dataset.linkedinUrl;
       if (!url) return;
       e.preventDefault();
-      analytics.track('profile_link_click', {
+      analytics.trackInteraction('profile_link_click', 'testimonials_client_linkedin', {
+        interaction_context: testimonials[currentIndex].name,
+        interaction_action: 'click',
         profile_type: 'client',
         profile_name: testimonials[currentIndex].name,
         link_platform: 'linkedin',
@@ -327,7 +343,15 @@
       var navigationLocation = node.closest('#groupFooter')
         ? 'footer'
         : (node.closest('.baTaSaSl') ? 'header' : 'page_content');
-      analytics.track('navigation_click', {
+      var interactionId = text === 'How fast can you build?'
+        ? 'hero_how_fast_can_you_build'
+        : 'navigation_' + navigationLocation + '_' + target.replace(/-/g, '_');
+      analytics.trackInteraction('navigation_click', interactionId, {
+        interaction_label: text,
+        interaction_category: text === 'How fast can you build?' ? 'cta' : 'navigation',
+        interaction_context: navigationLocation === 'page_content' ? 'hero' : 'primary_navigation',
+        interaction_location: navigationLocation,
+        interaction_action: 'click',
         navigation_type: 'section',
         navigation_location: navigationLocation,
         destination: target
@@ -396,6 +420,13 @@
     return '';
   }
 
+  function getAccordionAnalyticsDefinition(group) {
+    var matchingClass = Object.keys(accordionByClass).find(function (className) {
+      return group.classList.contains(className);
+    });
+    return matchingClass ? accordionByClass[matchingClass] : null;
+  }
+
   function refreshOpenAncestors(group) {
     var current = group.parentElement;
     while (current) {
@@ -422,11 +453,17 @@
     if (labelNode) {
       group.dataset.baseLabel = (labelNode.textContent || '').trim();
     }
-    group.dataset.analyticsSection = getAccordionSectionName(group);
-    group.dataset.analyticsContext = getAccordionContextName(group);
-    group.dataset.analyticsLevel = group.parentElement && group.parentElement.closest('.no-scrolling')
-      ? 'nested'
-      : 'primary';
+    var analyticsDefinition = getAccordionAnalyticsDefinition(group);
+    group.dataset.analyticsInteractionId = analyticsDefinition ? analyticsDefinition[0] : '';
+    group.dataset.analyticsSection = analyticsDefinition
+      ? analyticsDefinition[3]
+      : getAccordionSectionName(group);
+    group.dataset.analyticsContext = analyticsDefinition
+      ? analyticsDefinition[2]
+      : getAccordionContextName(group);
+    group.dataset.analyticsLevel = analyticsDefinition
+      ? analyticsDefinition[4]
+      : (group.parentElement && group.parentElement.closest('.no-scrolling') ? 'nested' : 'primary');
 
     directTexts.forEach(function (t) {
       t.style.opacity = '0.2';
@@ -463,13 +500,23 @@
     if (group.dataset.animating === 'true') return;
     group.dataset.animating = 'true';
 
-    analytics.track('content_toggle', {
-      content_name: group.dataset.baseLabel || 'details',
-      content_context: group.dataset.analyticsContext,
-      content_group: group.dataset.analyticsSection,
-      content_level: group.dataset.analyticsLevel,
-      toggle_action: isOpen ? 'collapse' : 'expand'
-    });
+    analytics.trackInteraction(
+      'content_toggle',
+      group.dataset.analyticsInteractionId || 'content_details_toggle',
+      {
+        interaction_label: group.dataset.baseLabel || 'Details',
+        interaction_category: 'content',
+        interaction_context: group.dataset.analyticsContext,
+        interaction_location: group.dataset.analyticsSection,
+        interaction_level: group.dataset.analyticsLevel,
+        interaction_action: isOpen ? 'collapse' : 'expand',
+        content_name: group.dataset.baseLabel || 'details',
+        content_context: group.dataset.analyticsContext,
+        content_group: group.dataset.analyticsSection,
+        content_level: group.dataset.analyticsLevel,
+        toggle_action: isOpen ? 'collapse' : 'expand'
+      }
+    );
 
     function finishTransition(expanded) {
       if (expanded) {
@@ -526,8 +573,13 @@
 (function () {
   var analytics = window.IXAnalytics || {
     track: function () {},
+    trackInteraction: function (eventName, interactionId, parameters) {
+      this.track(eventName, parameters);
+    },
     observeSections: function () {}
   };
+  var interactionMaps = window.IX_ANALYTICS_INTERACTION_MAPS || {};
+  var ctaByTrigger = interactionMaps.ctaByTrigger || {};
   var RATHAN_LINKEDIN_URL = window.__ixRathanLinkedInUrl || 'https://www.linkedin.com/in/rathan-xplode';
   var sectionMap = window.__ixSectionMap || {};
   function hideTinyCornerArtifactsOnMobileTablet() {
@@ -610,7 +662,8 @@
 
     btn.addEventListener('click', function (e) {
       e.preventDefault();
-      analytics.track('navigation_click', {
+      analytics.trackInteraction('navigation_click', 'navigation_scroll_to_top', {
+        interaction_action: 'click',
         navigation_type: 'scroll_to_top',
         navigation_location: 'floating_button',
         destination: 'page_top'
@@ -719,11 +772,16 @@
           '<span class="ix-responsive-menu-link-icon" aria-hidden="true"><i class="fa ' + item.icon + '"></i></span>' +
           '<span class="ix-responsive-menu-link-label">' + item.label + '</span>';
         link.addEventListener('click', function () {
-          analytics.track('navigation_click', {
-            navigation_type: 'section',
-            navigation_location: 'responsive_menu',
-            destination: sectionMap[item.label]
-          });
+          analytics.trackInteraction(
+            'navigation_click',
+            'navigation_responsive_menu_' + sectionMap[item.label].replace(/-/g, '_'),
+            {
+              interaction_action: 'click',
+              navigation_type: 'section',
+              navigation_location: 'responsive_menu',
+              destination: sectionMap[item.label]
+            }
+          );
           closeMenu('navigation');
         });
         linksWrap.appendChild(link);
@@ -742,7 +800,8 @@
       document.body.classList.add('ix-menu-open');
       toggleBtn.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
       toggleBtn.setAttribute('aria-label', 'Close menu');
-      analytics.track('menu_toggle', {
+      analytics.trackInteraction('menu_toggle', 'responsive_primary_menu', {
+        interaction_action: 'open',
         menu_name: 'primary_navigation',
         toggle_action: 'open'
       });
@@ -755,7 +814,8 @@
       toggleBtn.innerHTML = '<i class="fa fa-bars" aria-hidden="true"></i>';
       toggleBtn.setAttribute('aria-label', 'Open menu');
       if (wasOpen) {
-        analytics.track('menu_toggle', {
+        analytics.trackInteraction('menu_toggle', 'responsive_primary_menu', {
+          interaction_action: 'close',
           menu_name: 'primary_navigation',
           toggle_action: 'close',
           close_method: closeMethod || 'unknown'
@@ -822,7 +882,13 @@
           event.preventDefault();
           event.stopPropagation();
         }
-        analytics.track('client_website_click', {
+        var clientInteractionName = (brandTitle || 'client').replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+        analytics.trackInteraction('client_website_click', 'clients_' + clientInteractionName + '_website', {
+          interaction_label: (brandTitle || 'Client') + ' website',
+          interaction_category: 'external_link',
+          interaction_context: brandTitle || 'client',
+          interaction_location: 'client_logos',
+          interaction_action: 'click',
           client_name: brandTitle || 'client',
           link_location: 'client_logos'
         });
@@ -1034,15 +1100,22 @@
       whatsappFormStarted = false;
       messageNode.textContent = activeMessage;
       messageNode.value = activeMessage;
-      analytics.track('cta_click', {
+      var ctaDefinition = ctaByTrigger[activeTrigger.name + '|' + activeTrigger.location];
+      var ctaInteractionId = ctaDefinition ? ctaDefinition[0] : 'cta_contact_unknown';
+      activeTrigger.interactionId = ctaInteractionId;
+      activeTrigger.label = ctaDefinition ? ctaDefinition[1] : activeTrigger.name.replace(/_/g, ' ');
+      analytics.trackInteraction('cta_click', ctaInteractionId, {
+        interaction_action: 'click',
         cta_name: activeTrigger.name,
         cta_location: activeTrigger.location,
         cta_destination: 'whatsapp_dialog'
       });
-      analytics.track('modal_open', {
+      analytics.trackInteraction('modal_open', 'contact_whatsapp_modal_open', {
         modal_name: 'whatsapp_contact',
         trigger_name: activeTrigger.name,
-        trigger_location: activeTrigger.location
+        trigger_location: activeTrigger.location,
+        origin_interaction_id: activeTrigger.interactionId,
+        origin_interaction_label: activeTrigger.label
       });
       showModal(modal, true);
     }
@@ -1081,7 +1154,8 @@
     });
 
     closeBtn.addEventListener('click', function () {
-      analytics.track('modal_close', {
+      analytics.trackInteraction('modal_close', 'contact_whatsapp_modal_close', {
+        interaction_context: 'close_button',
         modal_name: 'whatsapp_contact',
         close_method: 'close_button'
       });
@@ -1089,7 +1163,8 @@
     });
 
     emailCloseBtn.addEventListener('click', function () {
-      analytics.track('modal_close', {
+      analytics.trackInteraction('modal_close', 'contact_email_modal_close', {
+        interaction_context: 'close_button',
         modal_name: 'email_contact',
         close_method: 'close_button'
       });
@@ -1098,7 +1173,8 @@
 
     modal.addEventListener('click', function (e) {
       if (e.target === modal) {
-        analytics.track('modal_close', {
+        analytics.trackInteraction('modal_close', 'contact_whatsapp_modal_close', {
+          interaction_context: 'backdrop',
           modal_name: 'whatsapp_contact',
           close_method: 'backdrop'
         });
@@ -1108,7 +1184,8 @@
 
     emailModal.addEventListener('click', function (e) {
       if (e.target === emailModal) {
-        analytics.track('modal_close', {
+        analytics.trackInteraction('modal_close', 'contact_email_modal_close', {
+          interaction_context: 'backdrop',
           modal_name: 'email_contact',
           close_method: 'backdrop'
         });
@@ -1118,14 +1195,16 @@
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-        analytics.track('modal_close', {
+        analytics.trackInteraction('modal_close', 'contact_whatsapp_modal_close', {
+          interaction_context: 'escape_key',
           modal_name: 'whatsapp_contact',
           close_method: 'escape_key'
         });
         closeModal(modal);
       }
       if (e.key === 'Escape' && emailModal.classList.contains('is-open')) {
-        analytics.track('modal_close', {
+        analytics.trackInteraction('modal_close', 'contact_email_modal_close', {
+          interaction_context: 'escape_key',
           modal_name: 'email_contact',
           close_method: 'escape_key'
         });
@@ -1136,7 +1215,7 @@
     messageNode.addEventListener('input', function () {
       if (whatsappFormStarted) return;
       whatsappFormStarted = true;
-      analytics.track('form_start', {
+      analytics.trackInteraction('form_start', 'contact_whatsapp_message_edit', {
         form_name: 'whatsapp_contact',
         contact_method: 'whatsapp'
       });
@@ -1145,7 +1224,7 @@
     emailMessageNode.addEventListener('input', function () {
       if (emailFormStarted) return;
       emailFormStarted = true;
-      analytics.track('form_start', {
+      analytics.trackInteraction('form_start', 'contact_email_message_edit', {
         form_name: 'email_contact',
         contact_method: 'email'
       });
@@ -1155,11 +1234,14 @@
       var finalMessage = (messageNode.value || activeMessage || '').trim();
       if (!finalMessage) finalMessage = activeMessage;
       var url = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(finalMessage);
-      analytics.track('generate_lead', {
+      analytics.trackInteraction('generate_lead', 'contact_whatsapp_send', {
+        interaction_context: activeTrigger.label,
         lead_source: 'website_whatsapp',
         contact_method: 'whatsapp',
         cta_name: activeTrigger.name,
         cta_location: activeTrigger.location,
+        origin_interaction_id: activeTrigger.interactionId,
+        origin_interaction_label: activeTrigger.label,
         message_customized: finalMessage !== initialMessage
       });
       window.open(url, '_blank', 'noopener');
@@ -1169,15 +1251,17 @@
     fallbackBtn.addEventListener('click', function () {
       var finalMessage = (messageNode.value || activeMessage || '').trim();
       if (!finalMessage) finalMessage = activeMessage;
-      analytics.track('contact_method_switch', {
+      analytics.trackInteraction('contact_method_switch', 'contact_switch_whatsapp_to_email', {
         from_method: 'whatsapp',
         to_method: 'email',
         cta_name: activeTrigger.name
       });
-      analytics.track('modal_open', {
+      analytics.trackInteraction('modal_open', 'contact_email_modal_open', {
         modal_name: 'email_contact',
         trigger_name: 'whatsapp_fallback',
-        trigger_location: 'whatsapp_contact'
+        trigger_location: 'whatsapp_contact',
+        origin_interaction_id: activeTrigger.interactionId,
+        origin_interaction_label: activeTrigger.label
       });
       switchModal(modal, emailModal, function () {
         activeMessage = finalMessage;
@@ -1204,11 +1288,14 @@
       var isAndroid = /Android/i.test(ua);
       var isIOS = /iPhone|iPad|iPod/i.test(ua);
 
-      analytics.track('generate_lead', {
+      analytics.trackInteraction('generate_lead', 'contact_email_send', {
+        interaction_context: activeTrigger.label,
         lead_source: 'website_email',
         contact_method: 'email',
         cta_name: activeTrigger.name,
         cta_location: activeTrigger.location,
+        origin_interaction_id: activeTrigger.interactionId,
+        origin_interaction_label: activeTrigger.label,
         message_customized: finalBody !== initialMessage
       });
 
@@ -1247,15 +1334,17 @@
     emailBackBtn.addEventListener('click', function () {
       var finalMessage = (emailMessageNode.value || activeMessage || '').trim();
       if (!finalMessage) finalMessage = activeMessage;
-      analytics.track('contact_method_switch', {
+      analytics.trackInteraction('contact_method_switch', 'contact_switch_email_to_whatsapp', {
         from_method: 'email',
         to_method: 'whatsapp',
         cta_name: activeTrigger.name
       });
-      analytics.track('modal_open', {
+      analytics.trackInteraction('modal_open', 'contact_whatsapp_modal_open', {
         modal_name: 'whatsapp_contact',
         trigger_name: 'email_backlink',
-        trigger_location: 'email_contact'
+        trigger_location: 'email_contact',
+        origin_interaction_id: activeTrigger.interactionId,
+        origin_interaction_label: activeTrigger.label
       });
       switchModal(emailModal, modal, function () {
         activeMessage = finalMessage;
@@ -1268,7 +1357,8 @@
 
     if (emailLinkedInLink) {
       emailLinkedInLink.addEventListener('click', function () {
-        analytics.track('contact_link_click', {
+        analytics.trackInteraction('contact_link_click', 'contact_email_linkedin', {
+          interaction_action: 'click',
           contact_method: 'linkedin',
           link_location: 'email_contact'
         });
@@ -1277,11 +1367,15 @@
 
     if (emailDirectLink) {
       emailDirectLink.addEventListener('click', function () {
-        analytics.track('generate_lead', {
+        analytics.trackInteraction('generate_lead', 'contact_direct_email', {
+          interaction_context: activeTrigger.label,
+          interaction_action: 'send',
           lead_source: 'website_email_link',
           contact_method: 'email',
           cta_name: activeTrigger.name,
           cta_location: 'email_contact_footer',
+          origin_interaction_id: activeTrigger.interactionId,
+          origin_interaction_label: activeTrigger.label,
           message_customized: false
         });
       });
@@ -1290,14 +1384,14 @@
 
   function initAnalyticsSectionTracking() {
     analytics.observeSections([
-      { selector: '#fast-development', name: 'fast_development', position: 1 },
-      { selector: '#technology', name: 'technology', position: 2 },
-      { selector: '#groupOfferings', name: 'offerings', position: 3 },
-      { selector: '#methodology', name: 'methodology', position: 4 },
-      { selector: '#about', name: 'about', position: 5 },
-      { selector: '#pricing', name: 'pricing', position: 6 },
-      { selector: '#groupCTA', name: 'footer_ctas', position: 7 },
-      { selector: '#contact', name: 'contact', position: 8 }
+      { selector: '#fast-development', name: 'fast_development', label: 'Fast development', position: 1 },
+      { selector: '#technology', name: 'technology', label: 'Technology', position: 2 },
+      { selector: '#groupOfferings', name: 'offerings', label: 'Offerings', position: 3 },
+      { selector: '#methodology', name: 'methodology', label: 'Methodology', position: 4 },
+      { selector: '#about', name: 'about', label: 'About', position: 5 },
+      { selector: '#pricing', name: 'pricing', label: 'Pricing', position: 6 },
+      { selector: '#groupCTA', name: 'footer_ctas', label: 'Footer calls to action', position: 7 },
+      { selector: '#contact', name: 'contact', label: 'Contact', position: 8 }
     ]);
   }
 

@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="/blog/blog.css">
   <link rel="stylesheet" href="/blog/story.css">
   <script src="/blog/article.js" defer></script>
+  <script src="/blog/analytics.js" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -83,7 +84,7 @@
 
   <header class="site-header">
     <div class="site-header__inner">
-      <a class="site-logo" href="/" aria-label="ideaXplode home" data-analytics-event="navigation_click" data-analytics-param-navigation_type="internal_page" data-analytics-param-navigation_location="article_header_logo" data-analytics-param-destination="home">
+      <a class="site-logo" href="/" aria-label="ideaXplode home">
         <img src="/assets/images/ideaXplode Logo.png" alt="ideaXplode" width="626" height="169">
       </a>
       <nav class="article-nav" aria-label="Company sections">
@@ -93,7 +94,7 @@
         <a href="/#pricing">Pricing</a>
         <a href="/#contact">Contact</a>
       </nav>
-      <a class="back-link" href="/blog/" aria-label="Browse all blog articles" data-analytics-event="navigation_click" data-analytics-param-navigation_type="internal_page" data-analytics-param-navigation_location="article_header" data-analytics-param-destination="blog_index">
+      <a class="back-link" href="/blog/" aria-label="Browse all blog articles">
         <svg aria-hidden="true" viewBox="0 0 20 20">
           <rect x="2.5" y="2.5" width="5.5" height="5.5" rx="1"></rect>
           <rect x="12" y="2.5" width="5.5" height="5.5" rx="1"></rect>
@@ -351,5 +352,6 @@
   </footer>
   <script src="/analytics-config.js"></script>
   <script src="/analytics.js"></script>
+  <script src="/analytics-interactions.js"></script>
 </body>
 </html>

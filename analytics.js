@@ -6,6 +6,7 @@
   var config = window.IX_ANALYTICS_CONFIG || {};
   var measurementId = String(config.measurementId || '').trim();
   var debugEvents = [];
+  var interactionRegistry = {};
   var observedSections = {};
   var progressMilestones = {};
   var initialized = false;
@@ -45,6 +46,79 @@
     });
 
     return sanitized;
+  }
+
+  function registerInteractions(definitions) {
+    Object.keys(definitions || {}).forEach(function (interactionId) {
+      var definition = definitions[interactionId] || {};
+      if (!/^[a-z][a-z0-9_]{0,99}$/.test(interactionId)) {
+        debugLog('Ignored invalid interaction ID: ' + interactionId);
+        return;
+      }
+
+      interactionRegistry[interactionId] = {
+        label: definition.label,
+        category: definition.category,
+        context: definition.context,
+        location: definition.location,
+        level: definition.level,
+        action: definition.action
+      };
+    });
+  }
+
+  function trackInteraction(eventName, interactionId, parameters) {
+    var definition = interactionRegistry[interactionId] || {};
+    var enrichedParameters = {
+      interaction_id: interactionId,
+      interaction_label: definition.label,
+      interaction_category: definition.category,
+      interaction_context: definition.context,
+      interaction_location: definition.location,
+      interaction_level: definition.level,
+      interaction_action: definition.action
+    };
+
+    Object.keys(parameters || {}).forEach(function (key) {
+      enrichedParameters[key] = parameters[key];
+    });
+
+    if (!definition.label && !enrichedParameters.interaction_label) {
+      debugLog('Unregistered interaction ID: ' + interactionId);
+    }
+
+    track(eventName, enrichedParameters);
+  }
+
+  function stripSensitiveQueryParameters() {
+    if (!window.URL || !window.history || !window.history.replaceState) return;
+
+    var sensitiveParameters = config.sensitiveQueryParameters || ['ref_id'];
+    var currentUrl;
+    var changed = false;
+
+    try {
+      currentUrl = new URL(window.location.href);
+      var sensitiveNames = sensitiveParameters.map(function (parameterName) {
+        return String(parameterName).toLowerCase();
+      });
+      Array.from(currentUrl.searchParams.keys()).forEach(function (parameterName) {
+        if (sensitiveNames.indexOf(parameterName.toLowerCase()) === -1) return;
+        currentUrl.searchParams.delete(parameterName);
+        changed = true;
+      });
+
+      if (changed) {
+        window.history.replaceState(
+          window.history.state,
+          document.title,
+          currentUrl.pathname + currentUrl.search + currentUrl.hash
+        );
+        debugLog('Removed sensitive query parameters before analytics initialized.');
+      }
+    } catch (_) {
+      debugLog('Could not sanitize the page URL.');
+    }
   }
 
   function track(eventName, parameters) {
@@ -109,7 +183,12 @@
         if (!definition || observedSections[definition.name]) return;
 
         observedSections[definition.name] = true;
-        track('section_view', {
+        trackInteraction('section_view', 'section_' + definition.name + '_view', {
+          interaction_label: definition.label || definition.name.replace(/_/g, ' '),
+          interaction_category: 'section',
+          interaction_context: 'page_content',
+          interaction_location: definition.name,
+          interaction_action: 'view',
           section_name: definition.name,
           section_position: definition.position
         });
@@ -152,7 +231,12 @@
         if (percentage < milestone || progressMilestones[milestoneKey]) return;
 
         progressMilestones[milestoneKey] = true;
-        track('content_progress', {
+        trackInteraction('content_progress', 'content_progress_' + milestone, {
+          interaction_label: milestone + '% content progress',
+          interaction_category: 'engagement',
+          interaction_context: contentName,
+          interaction_location: contentType,
+          interaction_action: 'reach',
           content_type: contentType,
           content_name: contentName,
           percent_scrolled: milestone
@@ -183,13 +267,21 @@
         parameters[attribute.name.slice(prefix.length)] = attribute.value;
       });
 
-      track(element.getAttribute('data-analytics-event'), parameters);
+      var interactionId = element.getAttribute('data-analytics-interaction-id');
+      if (interactionId) {
+        trackInteraction(element.getAttribute('data-analytics-event'), interactionId, parameters);
+      } else {
+        track(element.getAttribute('data-analytics-event'), parameters);
+      }
     });
   }
 
   function initialize() {
     if (initialized) return;
     initialized = true;
+
+    // Query parameters reserved for first-party or consented research must never leak into GA URLs.
+    stripSensitiveQueryParameters();
 
     if (isConfigured()) {
       window.dataLayer = window.dataLayer || [];
@@ -215,11 +307,19 @@
 
   window.IXAnalytics = {
     track: track,
+    trackInteraction: trackInteraction,
+    registerInteractions: registerInteractions,
     trackPageView: trackPageView,
     observeSections: observeSections,
     setConsent: setConsent,
     isConfigured: isConfigured,
-    getDebugEvents: function () { return debugEvents.slice(); }
+    getDebugEvents: function () { return debugEvents.slice(); },
+    getRegisteredInteractions: function () {
+      return Object.keys(interactionRegistry).reduce(function (copy, interactionId) {
+        copy[interactionId] = Object.assign({}, interactionRegistry[interactionId]);
+        return copy;
+      }, {});
+    }
   };
 
   if (document.readyState === 'loading') {

@@ -30,6 +30,7 @@
   <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="/blog/index.css">
   <script src="/blog/index.js" defer></script>
+  <script src="/blog/analytics.js" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -61,7 +62,7 @@
   }
   </script>
 </head>
-<body>
+<body data-analytics-content-type="blog_index" data-analytics-content-name="blog">
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="site-header">
@@ -248,5 +249,8 @@
       </section>
     </div>
   </footer>
+  <script src="/analytics-config.js"></script>
+  <script src="/analytics.js"></script>
+  <script src="/analytics-interactions.js"></script>
 </body>
 </html>

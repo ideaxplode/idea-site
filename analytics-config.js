@@ -1,10 +1,11 @@
 (function () {
-  // Replace this placeholder with the GA4 web stream Measurement ID (for example, G-ABC123DE45).
-  // Keeping the placeholder disables Google Analytics without breaking the site's tracking calls.
+  // GA4 environment settings. No private credential belongs in this public file.
   window.IX_ANALYTICS_CONFIG = window.IX_ANALYTICS_CONFIG || {
     measurementId: 'G-ZFGV1LD430',
     enabled: true,
     debug: false,
-    defaultConsent: 'granted'
+    defaultConsent: 'granted',
+    // Never send person-specific or contact identifiers in GA page URLs.
+    sensitiveQueryParameters: ['ref_id', 'user_id', 'email', 'phone']
   };
 })();

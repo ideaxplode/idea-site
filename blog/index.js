@@ -1,13 +1,27 @@
 (function () {
+  var analytics = window.IXAnalytics || { trackInteraction: function () {} };
   var menuButton = document.querySelector('.menu-button');
   var navigation = document.querySelector('.primary-nav');
 
   if (!menuButton || !navigation) return;
 
-  function closeMenu() {
+  function closeMenu(closeMethod) {
+    var wasOpen = menuButton.getAttribute('aria-expanded') === 'true';
     menuButton.setAttribute('aria-expanded', 'false');
     navigation.classList.remove('is-open');
     document.body.classList.remove('menu-open');
+    if (wasOpen) {
+      analytics.trackInteraction('menu_toggle', 'blog_primary_menu', {
+        interaction_label: 'Blog primary navigation menu',
+        interaction_category: 'menu',
+        interaction_context: 'primary_navigation',
+        interaction_location: 'blog_header',
+        interaction_action: 'close',
+        menu_name: 'blog_primary_navigation',
+        toggle_action: 'close',
+        close_method: closeMethod || 'unknown'
+      });
+    }
   }
 
   menuButton.addEventListener('click', function () {
@@ -15,21 +29,43 @@
     menuButton.setAttribute('aria-expanded', String(!isOpen));
     navigation.classList.toggle('is-open', !isOpen);
     document.body.classList.toggle('menu-open', !isOpen);
+    if (!isOpen) {
+      analytics.trackInteraction('menu_toggle', 'blog_primary_menu', {
+        interaction_label: 'Blog primary navigation menu',
+        interaction_category: 'menu',
+        interaction_context: 'primary_navigation',
+        interaction_location: 'blog_header',
+        interaction_action: 'open',
+        menu_name: 'blog_primary_navigation',
+        toggle_action: 'open'
+      });
+    } else {
+      analytics.trackInteraction('menu_toggle', 'blog_primary_menu', {
+        interaction_label: 'Blog primary navigation menu',
+        interaction_category: 'menu',
+        interaction_context: 'primary_navigation',
+        interaction_location: 'blog_header',
+        interaction_action: 'close',
+        menu_name: 'blog_primary_navigation',
+        toggle_action: 'close',
+        close_method: 'toggle_button'
+      });
+    }
   });
 
   navigation.addEventListener('click', function (event) {
-    if (event.target.closest('a')) closeMenu();
+    if (event.target.closest('a')) closeMenu('navigation');
   });
 
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
-      closeMenu();
+      closeMenu('escape_key');
       menuButton.focus();
     }
   });
 
   window.addEventListener('resize', function () {
-    if (window.innerWidth > 780) closeMenu();
+    if (window.innerWidth > 780) closeMenu('viewport_resize');
   });
 })();
 
