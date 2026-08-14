@@ -20,10 +20,19 @@
 
 ## Blog System
 
-1. The blog is static: drafts are supplied in `blog/drafts/`, the listing is `blog/index.html`, and published posts use `blog/<three-digit-serial>-<slug>/index.html`. Serials are permanent and organizational only—use them in URLs and asset filenames, never in the UI.
-2. A post’s hero/social image is `blog/images/<serial>.jpg`: require a 1200 × 630 sRGB JPEG. `000-cover.jpg` is reserved for the blog-index hero; author images belong in `blog/images/authors/`, with `placeholder.svg` used only until an approved headshot is supplied.
-3. Treat a request to “publish the new blog post according to the established workflow” as an instruction to complete every publishing step below without requiring the requester to restate the checklist.
-4. Match the supplied draft and image by serial, validate both, and create the permanent post route. Integrate the exact title, description, author, body, pull quotes, useful headings, reading time, publication date, image alt text, and analytics identifier. Use the latest published post as the reference while allowing content-appropriate variations. Keep reusable presentation and behaviour in `blog/blog.css`, `blog/story.css`, and `blog/article.js`; do not add post-specific stylesheets.
-5. Make the post the newest item everywhere it is surfaced: update the blog index, homepage cards, related posts, author imagery, and every reused title, summary, URL, and asset. Keep listings newest-first and select related posts by genuine subject relevance.
-6. Add accurate canonical, robots, Open Graph, X, `BlogPosting`, and `BreadcrumbList` metadata. Update the canonical HTTPS entry and relevant `<lastmod>` values in `sitemap.xml`; keep `robots.txt` pointing to it.
-7. Before finishing, verify the page at desktop and mobile sizes, accessibility basics, internal links, assets, metadata, structured data, image dimensions, listing order, related posts, and sitemap coverage. Finalized drafts may remain in `blog/drafts/` but must not be linked from public pages.
+### General Blog System
+
+1. The blog is static: its listing is `blog/index.html`, and posts use `blog/<three-digit-serial>-<slug>/index.html`. Drafts in `blog/drafts/` are source material and must not be linked publicly.
+2. Serials are permanent and organizational only—use them in URLs and asset filenames, never in the UI. Hero/social images are 1200 × 630 sRGB JPEGs at `blog/images/<serial>.jpg`; `000-cover.jpg` is the blog-index hero, and author images belong in `blog/images/authors/`.
+3. Use the latest published post as the reference while allowing content-appropriate variations. Keep shared presentation and behaviour in `blog/blog.css`, `blog/story.css`, and `blog/article.js`; do not add post-specific stylesheets.
+4. Public blog pages require canonical, robots, Open Graph, X, and appropriate JSON-LD metadata. `sitemap.xml` contains canonical HTTPS routes, and `robots.txt` points crawlers to it.
+
+### Publishing a New Blog Post
+
+A request to publish according to the established workflow means completing this sequence:
+
+1. Match and validate the supplied serialized draft and hero image.
+2. Create the permanent post route with the supplied content, author, publication details, reading time, pull quotes, alt text, and analytics identifier.
+3. Make it the newest post on the blog index and homepage; update listing order, genuinely relevant related posts, author imagery, and all reused links and copy.
+4. Add complete page and social metadata, structured data, and the canonical sitemap entry; update relevant `<lastmod>` values.
+5. Verify desktop/mobile presentation, accessibility basics, links, assets, metadata, structured data, image dimensions, listing order, related posts, and sitemap coverage.
