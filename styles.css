@@ -4939,7 +4939,7 @@ body.ix-menu-open {
 
 .ix-home-blog__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 28px;
 }
 
@@ -5036,10 +5036,6 @@ body.ix-menu-open {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .ix-home-blog__post:last-child {
-    grid-column: 1 / -1;
-    width: calc(50% - 14px);
-  }
 }
 
 @media (max-width: 600px) {
@@ -5064,11 +5060,6 @@ body.ix-menu-open {
   .ix-home-blog__grid {
     grid-template-columns: 1fr;
     gap: 42px;
-  }
-
-  .ix-home-blog__post:last-child {
-    grid-column: auto;
-    width: 100%;
   }
 
   .ix-home-blog__image {

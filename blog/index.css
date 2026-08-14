@@ -463,6 +463,10 @@ input {
   gap: 24px;
 }
 
+.insight-list:has(> .insight-row:only-child) {
+  grid-template-columns: minmax(0, 560px);
+}
+
 .insight-row {
   position: relative;
   min-width: 0;
@@ -1162,6 +1166,10 @@ input {
 
 @media (max-width: 640px) {
   .insight-list {
+    grid-template-columns: 1fr;
+  }
+
+  .insight-list:has(> .insight-row:only-child) {
     grid-template-columns: 1fr;
   }
 }

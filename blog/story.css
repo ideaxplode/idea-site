@@ -210,6 +210,23 @@
   margin-bottom: 0;
 }
 
+.story-section__body > ul {
+  margin: 4px 0 26px;
+  padding-left: 26px;
+  color: #292a2d;
+  font-family: var(--reading-font);
+  font-size: clamp(17px, 1.65vw, 19px);
+  line-height: 1.75;
+}
+
+.story-section__body > ul li + li {
+  margin-top: 8px;
+}
+
+.story-section__body > ul li::marker {
+  color: var(--story-accent-deep);
+}
+
 .story-section {
   padding: 34px 0;
   border-top: 1px solid var(--border);
