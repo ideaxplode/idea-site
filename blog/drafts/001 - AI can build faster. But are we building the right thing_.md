@@ -10,6 +10,10 @@ AI can build faster. But are we building the right thing?
 
 AI can help us build software faster than ever. But speed only matters when we are building the right thing.
 
+## Author
+
+Rathan 
+
 ## Pull Quote 1
 
 AI can build fast. But can it decide what is worth building?

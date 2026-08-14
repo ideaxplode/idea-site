@@ -10,6 +10,10 @@ AI is unpredictable. Does your software have to be?
 
 AI can be uncertain by nature. Good software engineering makes sure the system around it is not.
 
+## Author
+
+Benita 
+
 ## Pull Quote 1
 
 AI may be probabilistic. Your business-critical software cannot be careless.
