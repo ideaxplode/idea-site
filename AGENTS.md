@@ -30,21 +30,22 @@
 6. Use draft `001` as the structural reference. A draft needs only a title (bold text optionally marks the accented title phrase), author, publication date (`YYYY-MM-DD`), article-page/blog-index/homepage summaries, and the article. Optional `## Lead` and `## Conclusion` sections contain one paragraph each; the conclusion receives the larger centered closing-line treatment. Within `## Article`, `###` headings become section headings, and standard Markdown paragraphs, lists, bold, and italics retain their meaning. Do not use pull quotes.
 7. Strip only the title’s Markdown formatting and use its editorial text unchanged for the H1, listing and related-card titles, Open Graph and X titles, JSON-LD headline, and breadcrumb. Use the same title plus the fixed ` | ideaXplode` suffix for the browser `<title>`; never generate an alternative SEO title.
 8. Derive implementation details from the draft, matching image, and existing conventions: serial and asset references, slug, author image, modification date, reading time, metadata section, accent theme (`coral`, `blue`, or `plum`), image alt text, related posts, SEO and social descriptions, canonical URLs, HTML and analytics identifiers, structured data, and sitemap entries. Do not ask HA to supply these unless they cannot be derived reliably.
-9. Google offers no programmatic per-URL indexing request for ordinary articles. After an affected page is deployed, tell HA to use Search Console’s URL Inspection flow for its canonical URL: **Test live URL**, then **Request indexing**. If deployment is outside the request, report this step as pending.
+9. Google offers no programmatic per-URL indexing request for an ordinary article. After every new or significantly updated post is verified live, explicitly prompt HA to open Search Console, select `ideaxplode.com`, inspect the exact canonical URL, select **Test live URL**, then **Request indexing**. Provide each affected URL in its own copyable code block; never give this prompt before deployment.
 
 ### Publishing a New Blog Post
 
-A request to publish according to the established workflow means completing this sequence:
+A request to publish according to the established workflow authorizes this complete sequence:
 
-1. Use the serial named in the publishing request; when none is supplied, select the most recent draft (the highest serialized draft filename). Match its hero image and validate the required editorial content and assets.
-2. Derive the implementation details listed above, then create the permanent route and render the supplied editorial content and formatting exactly.
-3. Make it the newest post on the blog index and homepage; update listing order, relevant related posts, author imagery, and all reused links and supplied copy.
-4. Add complete SEO and social metadata, structured data, and the canonical sitemap entry; update relevant `<lastmod>` values.
-5. Verify desktop/mobile presentation, accessibility basics, links, assets, metadata, structured data, image dimensions, listing order, related posts, and sitemap coverage.
-6. After deployment, ask HA to request indexing for the new canonical URL using the Search Console flow above.
+1. Use the serial named in the request; otherwise select the highest serialized draft. Identify its draft, hero image, and any supplied author asset while preserving unrelated work.
+2. Move uncommitted draft-related changes from the current branch to an untracked publication branch created from the latest `origin/main`, named `rathan-publish-blog-<serial>` (or `rathan-publish-blogs-<serials>`), and commit those inputs there before implementation. Use that branch for all publication work. If inputs are already committed, cherry-pick the relevant commits and do not rewrite the source branch without HA’s explicit permission.
+3. Validate the editorial inputs, derive the implementation details, create each permanent route, and render the supplied content and formatting exactly.
+4. Make the new post or posts the newest entries on the blog index and homepage; update ordering, relevant related posts, author imagery, reused links, and supplied copy.
+5. Add complete SEO/social metadata, structured data, and sitemap entries with accurate `<lastmod>` values, then perform all standard desktop/mobile, accessibility, link, asset, metadata, image, ordering, related-post, and sitemap checks.
+6. Commit the completed publication work, consummate the publication branch using the global workflow, deploy `origin/main` to `origin/live` once, and verify every new canonical URL on the live site.
+7. Only after successful live verification, prompt HA to request Google indexing using the General Blog System instructions, listing every newly published URL separately.
 
 ### Updating a Published Blog Post
 
 1. Apply the supplied editorial changes exactly. Preserve the post’s serial, route, publication date, and listing position unless HA explicitly changes them; a modification does not become a new publication.
 2. Update every affected reuse of the content plus SEO/social metadata, structured data, related posts, and author details. Set the article modification date and all relevant sitemap `<lastmod>` dates to the significant-update date.
-3. Run the same publication checks, then ask HA to request indexing for the canonical URL after the update is live; otherwise report the indexing step as pending.
+3. Run the same publication checks and complete the requested Git/deployment workflow. After verifying the update live, prompt HA to request indexing for the exact canonical URL using the General Blog System instructions.
