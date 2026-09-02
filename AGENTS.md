@@ -26,13 +26,16 @@
 2. Serials are permanent and organizational only—use them in URLs and asset filenames, never in the UI. Hero/social images are 1200 × 630 sRGB JPEGs at `blog/images/<serial>.jpg`; `000-cover.jpg` is the blog-index hero, and author images belong in `blog/images/authors/`.
 3. Use the latest published post as the reference while allowing content-appropriate variations. Keep shared presentation and behaviour in `blog/blog.css`, `blog/story.css`, and `blog/article.js`; do not add post-specific stylesheets.
 4. Public blog pages require canonical, robots, Open Graph, X, and appropriate JSON-LD metadata. `sitemap.xml` contains canonical HTTPS routes, and `robots.txt` points crawlers to it.
+5. The supplied draft is the editorial source of truth. Preserve its title, author, summaries, headings, paragraphs, lists, emphasis, takeaway, wording, casing, punctuation, and order exactly. Never rewrite, shorten, expand, paraphrase, or otherwise alter editorial content; ask HA only when editorial content is missing or ambiguous.
+6. Use draft `001` as the structural reference. A draft needs only a title (bold text optionally marks the accented title phrase), author, article-page/blog-index/homepage summaries, and the complete article body. The first article paragraph is the optional lead; `###` headings become article section headings; standard Markdown lists, bold, and italics retain their meaning; and at most one blockquote becomes a full-width key takeaway.
+7. Derive implementation details from the draft, matching image, and existing conventions: serial and asset references, slug, author image, publication and modification dates, reading time, metadata section, accent theme (`coral`, `blue`, or `plum`), image alt text, related posts, SEO and social metadata, canonical URLs, HTML and analytics identifiers, structured data, and sitemap entries. Do not ask HA to supply these unless they cannot be derived reliably.
 
 ### Publishing a New Blog Post
 
 A request to publish according to the established workflow means completing this sequence:
 
-1. Match and validate the supplied serialized draft and hero image.
-2. Create the permanent post route with the supplied content, author, publication details, reading time, pull quotes, alt text, and analytics identifier.
-3. Make it the newest post on the blog index and homepage; update listing order, genuinely relevant related posts, author imagery, and all reused links and copy.
-4. Add complete page and social metadata, structured data, and the canonical sitemap entry; update relevant `<lastmod>` values.
+1. Use the serial named in the publishing request; when none is supplied, select the most recent draft (the highest serialized draft filename). Match its hero image and validate the required editorial content and assets.
+2. Derive the implementation details listed above, then create the permanent route and render the supplied editorial content and formatting exactly.
+3. Make it the newest post on the blog index and homepage; update listing order, relevant related posts, author imagery, and all reused links and supplied copy.
+4. Add complete SEO and social metadata, structured data, and the canonical sitemap entry; update relevant `<lastmod>` values.
 5. Verify desktop/mobile presentation, accessibility basics, links, assets, metadata, structured data, image dimensions, listing order, related posts, and sitemap coverage.

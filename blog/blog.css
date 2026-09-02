@@ -453,7 +453,7 @@ button {
 }
 
 .article-emphasis {
-  color: var(--story-accent-deep, var(--coral-deep));
+  color: inherit;
   font-weight: 600;
 }
 

@@ -1,32 +1,14 @@
-# Blog Post
+# AI can build faster. **But are we building the right thing?**
 
-*This document specifies the details for a new blog post in ideaXplode’s blog site.*
+**Author:** Rathan
 
-## Title
+## Summaries
 
-AI can build faster. But are we building the right thing?
+- **Article page:** AI can help us build software faster than ever. But speed only matters when we are building the right thing.
+- **Blog index:** AI can help us build software faster than ever. But speed only matters when we are building the right thing.
+- **Homepage:** Speed only matters when we are building the right thing.
 
-## Description
-
-AI can help us build software faster than ever. But speed only matters when we are building the right thing.
-
-## Author
-
-Rathan 
-
-## Pull Quote 1
-
-AI can build fast. But can it decide what is worth building?
-
-## Pull Quote 2
-
-The faster we build, the faster we can also build the wrong thing.
-
-## Read duration
-
-2 min read
-
-## Blog Body
+## Article
 
 AI is making software development incredibly fast.
 
@@ -46,21 +28,25 @@ And another:
 
 That is where things get interesting.
 
+### Direction still comes before execution
+
 AI can generate an impressive application from a prompt. But it does not automatically know whether customers need it, whether it solves the real business problem, or whether half its features should exist.
 
 So before asking AI to build, we still need to ask:
 
-* Who is this for?  
-* What problem are they facing?  
-* What really needs to change?  
-* What is the smallest useful solution?  
-* What should we *not* build?
+- Who is this for?
+- What problem are they facing?
+- What really needs to change?
+- What is the smallest useful solution?
+- What should we *not* build?
 
 These questions matter even more now.
 
 Why?
 
 Because when building becomes cheap and fast, it becomes very easy to start too early.
+
+### Speed amplifies the decisions behind it
 
 We can automate a broken process instead of fixing it.
 
@@ -74,6 +60,8 @@ Not really.
 
 **It may have done exactly what we asked. We simply asked it to build the wrong thing.**
 
+### Product thinking matters more, not less
+
 So does AI make experienced product thinking less important?
 
 Quite the opposite.
@@ -83,6 +71,8 @@ AI is excellent at execution.
 Humans still need to provide direction.
 
 We need to understand the business, talk to users, challenge assumptions, make trade-offs and decide what actually creates value.
+
+### Point the speed in the right direction
 
 The best approach is therefore simple:
 
@@ -96,7 +86,4 @@ But first:
 
 **“Is this the right thing to build?”**
 
-Because speed is powerful.
-
-But only when it is pointed in the right direction.
-
+> Because speed is powerful. But only when it is pointed in the right direction.
