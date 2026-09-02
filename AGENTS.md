@@ -12,6 +12,12 @@
   * The index.html was originally saved from Chrome using the “web page, complete” option.  
   * We have changed/edited the index.html so far to make it standalone without having any Bubble.io dependencies; we also should continue to do so.
 
+## Hosting and Deployment
+
+1. The production website is statically hosted on GitHub Pages at `https://www.ideaxplode.com`; the root `CNAME` file configures the custom domain.
+2. Production deployment is triggered by updating `origin/live`. Follow the global deployment workflows rather than pushing ad hoc changes directly to `live`.
+3. GitHub Pages provides no application server or runtime routing. Keep public routes compatible with static files and directory `index.html` pages, use case-correct paths, and verify root-relative assets against the production domain.
+
 ## Browser Tool (Vercel’s agent-browser)
 
 1. **How to use:** For direct/manual browser actions, use **agent-browser** commands directly (example: **agent-browser \--session dev open [http://localhost:\\](http://localhost:\\)\<port\>** (you can use the active dev URL), then **agent-browser \--session dev snapshot \-i**).  
