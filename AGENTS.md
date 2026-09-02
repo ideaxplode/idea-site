@@ -30,8 +30,7 @@
 6. Use draft `001` as the structural reference. A draft needs only a title (bold text optionally marks the accented title phrase), author, publication date (`YYYY-MM-DD`), article-page/blog-index/homepage summaries, and the article. Optional `## Lead` and `## Conclusion` sections contain one paragraph each; the conclusion receives the larger centered closing-line treatment. Within `## Article`, `###` headings become section headings, and standard Markdown paragraphs, lists, bold, and italics retain their meaning. Do not use pull quotes.
 7. Strip only the title’s Markdown formatting and use its editorial text unchanged for the H1, listing and related-card titles, Open Graph and X titles, JSON-LD headline, and breadcrumb. Use the same title plus the fixed ` | ideaXplode` suffix for the browser `<title>`; never generate an alternative SEO title.
 8. Derive implementation details from the draft, matching image, and existing conventions: serial and asset references, slug, author image, modification date, reading time, metadata section, accent theme (`coral`, `blue`, or `plum`), image alt text, related posts, SEO and social descriptions, canonical URLs, HTML and analytics identifiers, structured data, and sitemap entries. Do not ask HA to supply these unless they cannot be derived reliably.
-9. Google offers no programmatic per-URL indexing request for ordinary articles. After an affected page is deployed, use `node scripts/notify-google.mjs --url <canonical-url>` to validate the live page/sitemap and submit the sitemap through the Search Console API. Never use Google’s restricted Indexing API for blog posts.
-10. Search Console authentication is one-time setup: enable its API, create a service account, grant that account access to the property, keep its JSON key outside the repository, and set `GOOGLE_APPLICATION_CREDENTIALS`. The script defaults to `sc-domain:ideaxplode.com`; use `--property` or `GOOGLE_SEARCH_CONSOLE_SITE_URL` if the configured property differs. A short-lived `GOOGLE_SEARCH_CONSOLE_ACCESS_TOKEN` also works.
+9. Google offers no programmatic per-URL indexing request for ordinary articles. After an affected page is deployed, tell HA to use Search Console’s URL Inspection flow for its canonical URL: **Test live URL**, then **Request indexing**. If deployment is outside the request, report this step as pending.
 
 ### Publishing a New Blog Post
 
@@ -42,10 +41,10 @@ A request to publish according to the established workflow means completing this
 3. Make it the newest post on the blog index and homepage; update listing order, relevant related posts, author imagery, and all reused links and supplied copy.
 4. Add complete SEO and social metadata, structured data, and the canonical sitemap entry; update relevant `<lastmod>` values.
 5. Verify desktop/mobile presentation, accessibility basics, links, assets, metadata, structured data, image dimensions, listing order, related posts, and sitemap coverage.
-6. After deployment, run the Google notifier for the new canonical URL. If deployment is outside the request, report this step as pending; for urgent indexing, tell HA that Search Console’s manual URL Inspection → Request indexing action is the only direct per-URL option.
+6. After deployment, ask HA to request indexing for the new canonical URL using the Search Console flow above.
 
 ### Updating a Published Blog Post
 
 1. Apply the supplied editorial changes exactly. Preserve the post’s serial, route, publication date, and listing position unless HA explicitly changes them; a modification does not become a new publication.
 2. Update every affected reuse of the content plus SEO/social metadata, structured data, related posts, and author details. Set the article modification date and all relevant sitemap `<lastmod>` dates to the significant-update date.
-3. Run the same publication checks, then run the Google notifier for the canonical URL after the update is live; otherwise report the notification as pending.
+3. Run the same publication checks, then ask HA to request indexing for the canonical URL after the update is live; otherwise report the indexing step as pending.
