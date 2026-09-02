@@ -1,6 +1,7 @@
 # AI can build faster. **But are we building the right thing?**
 
 **Author:** Rathan
+**Publication date:** 2026-09-02
 
 ## Summaries
 
@@ -8,9 +9,11 @@
 - **Blog index:** AI can help us build software faster than ever. But speed only matters when we are building the right thing.
 - **Homepage:** Speed only matters when we are building the right thing.
 
-## Article
+## Lead
 
 AI is making software development incredibly fast.
+
+## Article
 
 Code? Faster. Designs? Faster. Testing? Faster. Prototypes? Sometimes almost instant.
 
@@ -86,4 +89,6 @@ But first:
 
 **“Is this the right thing to build?”**
 
-> Because speed is powerful. But only when it is pointed in the right direction.
+## Conclusion
+
+Because speed is powerful. But only when it is pointed in the right direction.
